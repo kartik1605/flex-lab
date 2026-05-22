@@ -29,8 +29,12 @@
       height:180px; display:flex; align-items:center; justify-content:center;
       font-size:3rem; position:relative; overflow:hidden;
     }
+    .pr-thumb img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; opacity:.88; border-radius:0; display:block;
+    }
     .pr-thumb::after {
-      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      content:''; position:absolute; top:0; left:0; right:0; height:2px; z-index:1;
       background:linear-gradient(90deg,var(--violet),var(--cyan));
       transform:scaleX(0); transform-origin:left; transition:transform .4s;
     }
@@ -166,19 +170,6 @@
   <div class="stat-item"><h3 data-count="100" data-suffix="%">0</h3><p>Quality Promise</p></div>
 </div>
 
-<!-- ══ Showcase Hero Image — Wedding stationery flat-lay ══ -->
-<div class="feat-grid-full">
-  <figure class="feat-img-wrap" data-cursor-text="View">
-    <img class="feat-img" loading="lazy"
-         src="images/print-wedding-stationery.webp"
-         alt="Premium wedding stationery flat-lay — invitation, RSVP card, calligraphy and wax seal on white marble"/>
-    <figcaption class="feat-caption">
-      <div class="feat-eyebrow">◆ Featured Work</div>
-      <div class="feat-title">A wedding suite hand-finished for a Mumbai client — letterpress, gold foil, vellum overlays.</div>
-    </figcaption>
-  </figure>
-</div>
-
 <!-- Categories -->
 <section id="categories" style="padding:9rem 5rem;">
   <div class="s-label">What We Print</div>
@@ -189,7 +180,7 @@
 
     <div class="pr-card">
       <span class="pr-num">01</span>
-      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(184,164,126,.14),rgba(244,232,215,.05));">💌</div>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(184,164,126,.14),rgba(244,232,215,.05));"><img src="images/card-print-wedding.png" alt="Wedding stationery" loading="lazy"></div>
       <div class="pr-body">
         <h3>Wedding Stationery</h3>
         <p>Hand-finished invitation suites that set the tone before the first guest arrives. Letterpress, foil, vellum overlays — anything you can dream.</p>
@@ -206,7 +197,7 @@
 
     <div class="pr-card">
       <span class="pr-num">02</span>
-      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.04));">🏷️</div>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.04));"><img src="images/card-print-stickers.png" alt="Stickers and labels" loading="lazy"></div>
       <div class="pr-body">
         <h3>Stickers &amp; Labels</h3>
         <p>Custom-cut, holographic, paper, vinyl, transparent — branded stickers and product labels designed for shelf, packaging and retail impact.</p>
@@ -223,7 +214,7 @@
 
     <div class="pr-card">
       <span class="pr-num">03</span>
-      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(16,185,129,.04));">📑</div>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(16,185,129,.04));"><img src="images/card-print-brochures.png" alt="Pamphlets and brochures" loading="lazy"></div>
       <div class="pr-body">
         <h3>Pamphlets &amp; Brochures</h3>
         <p>Tri-folds, bi-folds, accordion folds and saddle-stitched booklets — marketing collateral that gets picked up and kept, not binned.</p>
@@ -240,7 +231,7 @@
 
     <div class="pr-card">
       <span class="pr-num">04</span>
-      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(244,63,94,.1),rgba(245,158,11,.05));">🎀</div>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(244,63,94,.1),rgba(245,158,11,.05));"><img src="images/card-print-hangtags.png" alt="Hang tags and swing tags" loading="lazy"></div>
       <div class="pr-body">
         <h3>Hang Tags &amp; Swing Tags</h3>
         <p>Premium retail tags, gift tags, luggage tags and bottle neckers — finished with string, eyelets, and tactile uncoated boards.</p>
@@ -256,7 +247,7 @@
 
     <div class="pr-card">
       <span class="pr-num">05</span>
-      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(244,63,94,.05));">🪧</div>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(244,63,94,.05));"><img src="images/card-print-posters.png" alt="Posters flyers and banners" loading="lazy"></div>
       <div class="pr-body">
         <h3>Posters, Flyers &amp; Banners</h3>
         <p>Indoor and outdoor large-format printing — show banners, exhibition graphics, posters, mounted prints and pull-up stands.</p>
@@ -273,7 +264,7 @@
 
     <div class="pr-card">
       <span class="pr-num">06</span>
-      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(124,58,237,.04));">📦</div>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(124,58,237,.04));"><img src="images/card-print-packaging.png" alt="Custom packaging" loading="lazy"></div>
       <div class="pr-body">
         <h3>Custom Packaging</h3>
         <p>Branded boxes, sleeves, mailers, tissue, sticker seals and inserts — packaging that turns unboxing into part of the brand experience.</p>
@@ -290,7 +281,7 @@
 
     <div class="pr-card">
       <span class="pr-num">07</span>
-      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(184,164,126,.1),rgba(124,58,237,.04));">📓</div>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(184,164,126,.1),rgba(124,58,237,.04));"><img src="images/card-print-stationery.png" alt="Corporate stationery" loading="lazy"></div>
       <div class="pr-body">
         <h3>Corporate Stationery</h3>
         <p>Letterheads, envelopes, notebooks, journals, compliment slips and folders — the everyday brand touchpoints printed at gallery quality.</p>
@@ -306,7 +297,7 @@
 
     <div class="pr-card">
       <span class="pr-num">08</span>
-      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(184,164,126,.05));">🗓️</div>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(184,164,126,.05));"><img src="images/card-print-calendars.png" alt="Calendars and diaries" loading="lazy"></div>
       <div class="pr-body">
         <h3>Calendars &amp; Diaries</h3>
         <p>Year-end gifting essentials — desktop calendars, wall calendars, planners and dated diaries with hardback bindings and custom layouts.</p>
@@ -321,7 +312,7 @@
 
     <div class="pr-card">
       <span class="pr-num">09</span>
-      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(244,63,94,.08),rgba(184,164,126,.05));">💳</div>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(244,63,94,.08),rgba(184,164,126,.05));"><img src="images/card-print-bizcards.png" alt="Business and visiting cards" loading="lazy"></div>
       <div class="pr-body">
         <h3>Business &amp; Visiting Cards</h3>
         <p>Letterpress, foil, painted edges, plastic, bamboo, metal — visiting cards as memorable as the handshake that comes with them.</p>
@@ -337,28 +328,6 @@
 
   </div>
 </section>
-
-<!-- ══ Two-up showcase — business cards macro + brochure spread ══ -->
-<div class="feat-grid-2">
-  <figure class="feat-img-wrap">
-    <img class="feat-img" loading="lazy"
-         src="images/print-business-cards.webp"
-         alt="Stack of premium matte black business cards with gold foil letterpress finish"/>
-    <figcaption class="feat-caption">
-      <div class="feat-eyebrow">◆ Business Cards</div>
-      <div class="feat-title">Letterpress + painted-edge finish on 600 gsm cotton stock.</div>
-    </figcaption>
-  </figure>
-  <figure class="feat-img-wrap">
-    <img class="feat-img" loading="lazy"
-         src="images/print-brochure-spread.webp"
-         alt="Open luxury brand lookbook with minimalist editorial layout and clean typography"/>
-    <figcaption class="feat-caption">
-      <div class="feat-eyebrow">◆ Brochures &amp; Lookbooks</div>
-      <div class="feat-title">Saddle-stitched booklet with matte uncoated paper and spot UV.</div>
-    </figcaption>
-  </figure>
-</div>
 
 <!-- Why -->
 <section style="padding:0 5rem 9rem;background:var(--bg2);">

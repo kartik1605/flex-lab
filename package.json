@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "generate:images": "node scripts/generate-card-images.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.6.0"
+  },
+  "devDependencies": {
+    "dotenv": "^17.4.2"
+  }
+}

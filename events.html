@@ -28,6 +28,12 @@
       position:absolute; inset:0; opacity:.08;
       transition:opacity .4s;
     }
+    .etype-img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; opacity:.15; z-index:0; border-radius:22px;
+      transition:opacity .4s;
+    }
+    .etype:hover .etype-img { opacity:.25; }
     .etype:hover .etype-bg { opacity:.14; }
     .etype:hover { border-color:rgba(6,182,212,.25); transform:translateY(-4px); }
     .etype::after {
@@ -131,19 +137,6 @@
   <div class="stat-item rv d3"><h3 data-count="1" data-suffix=" POC">0</h3><p>Point of Contact</p></div>
 </div>
 
-<!-- ══ Showcase image — Cinematic event hall ══ -->
-<div class="feat-grid-full">
-  <figure class="feat-img-wrap">
-    <img class="feat-img" loading="lazy"
-         src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1800&q=85"
-         alt="Overhead view of elegant luxury event banquet with round tables, floral centrepieces and warm lighting"/>
-    <figcaption class="feat-caption">
-      <div class="feat-eyebrow">◆ Signature Event</div>
-      <div class="feat-title">From intimate gatherings to thousand-guest launches — every detail orchestrated.</div>
-    </figcaption>
-  </figure>
-</div>
-
 <!-- Event Types -->
 <section id="types" style="padding:9rem 5rem;">
   <div class="s-label rv">Event Types</div>
@@ -152,6 +145,7 @@
   <div class="event-types">
     <div class="etype rv">
       <div class="etype-bg" style="background:radial-gradient(circle at 30% 50%,var(--cyan),transparent)"></div>
+      <img class="etype-img" src="images/card-events-corporate.png" alt="" loading="lazy">
       <div class="etype-icon">🏢</div>
       <h3>Corporate Events</h3>
       <p>Annual meetings, product launches, team off-sites, award nights, and conference management at any scale.</p>
@@ -159,6 +153,7 @@
     </div>
     <div class="etype rv d1">
       <div class="etype-bg" style="background:radial-gradient(circle at 70% 50%,var(--rose),transparent)"></div>
+      <img class="etype-img" src="images/card-events-wedding.png" alt="" loading="lazy">
       <div class="etype-icon">💍</div>
       <h3>Weddings & Celebrations</h3>
       <p>Mehndi, sangeet, wedding day, reception — complete wedding management with decor, catering coordination, and photography.</p>
@@ -166,6 +161,7 @@
     </div>
     <div class="etype rv d1">
       <div class="etype-bg" style="background:radial-gradient(circle at 30% 50%,var(--violet),transparent)"></div>
+      <img class="etype-img" src="images/card-events-activation.png" alt="" loading="lazy">
       <div class="etype-icon">🚀</div>
       <h3>Brand Activations</h3>
       <p>Pop-ups, experiential campaigns, and brand launches that create buzz, drive footfall, and deliver measurable ROI.</p>
@@ -173,6 +169,7 @@
     </div>
     <div class="etype rv d2">
       <div class="etype-bg" style="background:radial-gradient(circle at 70% 50%,var(--amber),transparent)"></div>
+      <img class="etype-img" src="images/card-events-social.png" alt="" loading="lazy">
       <div class="etype-icon">🎉</div>
       <h3>Social & Private Events</h3>
       <p>Birthday milestones, anniversaries, baby showers, and family gatherings — crafted with personal touches that make them truly special.</p>
