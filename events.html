@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Events Lab — FLex LAB</title>
+  <meta name="description" content="FLex LAB Events Lab: Corporate events, weddings, product launches, and social gatherings. Every detail covered."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="anim.css"/>
+  <link rel="stylesheet" href="premium.css"/>
+  <style>
+    .page-hero { background:var(--bg2); }
+    /* Event types */
+    .event-types {
+      display:grid; grid-template-columns:repeat(2,1fr);
+      gap:1.25rem; margin-top:3.5rem;
+    }
+    .etype {
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:22px; padding:2.5rem; overflow:hidden;
+      position:relative; cursor:pointer; transition:all .35s;
+      min-height:220px; display:flex; flex-direction:column; justify-content:flex-end;
+    }
+    .etype-bg {
+      position:absolute; inset:0; opacity:.08;
+      transition:opacity .4s;
+    }
+    .etype:hover .etype-bg { opacity:.14; }
+    .etype:hover { border-color:rgba(6,182,212,.25); transform:translateY(-4px); }
+    .etype::after {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--cyan),#06b6d4);
+      transform:scaleX(0); transform-origin:left; transition:transform .45s;
+    }
+    .etype:hover::after { transform:scaleX(1); }
+    .etype-icon { font-size:2.2rem; margin-bottom:1rem; position:relative; z-index:1; }
+    .etype h3 { font-family:var(--ff-d); font-size:1.3rem; font-weight:800; margin-bottom:.5rem; position:relative; z-index:1; }
+    .etype p  { color:var(--muted); font-size:.84rem; line-height:1.7; position:relative; z-index:1; }
+    .etype-tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:1rem; position:relative; z-index:1; }
+    .etag { background:rgba(255,255,255,.06); border:1px solid var(--border); color:var(--muted); font-size:.65rem; padding:.2rem .65rem; border-radius:100px; }
+
+    /* Services list */
+    .svc-list { display:flex; flex-direction:column; gap:.75rem; margin-top:2rem; }
+    .svc-row {
+      display:flex; align-items:center; gap:1.5rem; padding:1.25rem 1.5rem;
+      background:var(--bg2); border:1px solid var(--border); border-radius:14px;
+      transition:all .3s;
+    }
+    .svc-row:hover { border-color:rgba(6,182,212,.25); background:rgba(6,182,212,.03); }
+    .svc-row-icon { font-size:1.3rem; width:40px; flex-shrink:0; text-align:center; }
+    .svc-row h4 { font-weight:700; font-size:.9rem; margin-bottom:.2rem; }
+    .svc-row p  { color:var(--muted); font-size:.8rem; }
+
+    /* Why split */
+    .split-2 { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .feat-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .feat-item {
+      background:var(--bg3); border:1px solid var(--border); border-radius:16px;
+      padding:1.5rem; transition:all .3s;
+    }
+    .feat-item:hover { border-color:rgba(6,182,212,.2); transform:translateY(-3px); }
+    .feat-item h4 { font-family:var(--ff-d); font-size:.9rem; font-weight:700; margin-bottom:.4rem; }
+    .feat-item p  { color:var(--muted); font-size:.78rem; line-height:1.6; }
+    .feat-emoji { font-size:1.4rem; margin-bottom:.75rem; }
+
+    @media(max-width:1100px){
+      .event-types { grid-template-columns:1fr; }
+      .split-2 { grid-template-columns:1fr; gap:3rem; }
+    }
+  </style>
+</head>
+<body>
+<div id="scroll-progress"><div id="sp-fill"></div></div>
+<div id="page-trans"><div class="pt-panel"></div><div class="pt-panel"></div></div>
+<canvas id="noise-canvas"></canvas>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<span id="cur-label"></span>
+<div id="mob-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="branding.html" onclick="closeMob()">Branding</a>
+  <a href="events.html" onclick="closeMob()">Events</a>
+  <a href="gifting.html" onclick="closeMob()">Gifting</a>
+  <a href="social.html" onclick="closeMob()">Social</a>
+  <a href="digital.html" onclick="closeMob()">Digital</a>
+  <a href="print.html" onclick="closeMob()">Print</a>
+  <a href="blvckcard.html" onclick="closeMob()">BLVCKCARD</a>
+  <a href="contact.html" onclick="closeMob()" style="color:var(--cyan)">Contact Us</a>
+</div>
+<nav id="nav">
+  <a href="index.html" class="logo cd-mini" aria-label="FLEX LAB home"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Labs ▾</a>
+      <div class="drop">
+        <a href="branding.html"><span class="drop-icon">🎨</span>Branding Lab</a>
+        <a href="events.html"><span class="drop-icon">🎪</span>Events Lab</a>
+        <a href="gifting.html"><span class="drop-icon">🎁</span>Gift Lab</a>
+        <a href="social.html"><span class="drop-icon">📱</span>Social Lab</a>
+        <a href="digital.html"><span class="drop-icon">🌐</span>Digital Lab</a>
+        <a href="print.html"><span class="drop-icon">🖨️</span>Print Lab</a>
+      </div>
+    </li>
+    <li><a href="blvckcard.html">BLVCKCARD</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-btn">Start Project</a>
+  <button id="ham" onclick="toggleMob()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="page-hero">
+  <div class="orb orb-hero-1" style="background:radial-gradient(circle,rgba(6,182,212,.14),transparent 65%)"></div>
+  <div class="orb orb-hero-2"></div>
+  <div class="page-hero-inner">
+    <div class="s-label rv">Lab 02</div>
+    <h1 class="rv d1">Events That<br>Create <span class="grad">Memories</span></h1>
+    <p class="rv d2">From intimate gatherings to large-scale corporate spectacles — FLex LAB handles every detail of your event so you can be present in the moment.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;" class="rv d3">
+      <a href="contact.html" class="btn-p">Plan My Event</a>
+      <a href="#types" class="btn-g">Explore Event Types ↓</a>
+    </div>
+  </div>
+</section>
+
+<div class="stat-bar">
+  <div class="stat-item rv"><h3 data-count="200" data-suffix="+">0</h3><p>Events Executed</p></div>
+  <div class="stat-item rv d1"><h3 data-count="5000" data-suffix="+">0</h3><p>Guests Hosted</p></div>
+  <div class="stat-item rv d2"><h3 data-count="100" data-suffix="%">0</h3><p>On-time Delivery</p></div>
+  <div class="stat-item rv d3"><h3 data-count="1" data-suffix=" POC">0</h3><p>Point of Contact</p></div>
+</div>
+
+<!-- Event Types -->
+<section id="types" style="padding:9rem 5rem;">
+  <div class="s-label rv">Event Types</div>
+  <h2 class="s-title rv d1">We Handle Every<br>Kind of <span class="grad">Event</span></h2>
+  <p class="s-sub rv d2">No event is too big or too intimate. If it matters to you, it matters to us.</p>
+  <div class="event-types">
+    <div class="etype rv">
+      <div class="etype-bg" style="background:radial-gradient(circle at 30% 50%,var(--cyan),transparent)"></div>
+      <div class="etype-icon">🏢</div>
+      <h3>Corporate Events</h3>
+      <p>Annual meetings, product launches, team off-sites, award nights, and conference management at any scale.</p>
+      <div class="etype-tags"><span class="etag">Product Launch</span><span class="etag">Award Night</span><span class="etag">Conference</span><span class="etag">Team Outing</span></div>
+    </div>
+    <div class="etype rv d1">
+      <div class="etype-bg" style="background:radial-gradient(circle at 70% 50%,var(--rose),transparent)"></div>
+      <div class="etype-icon">💍</div>
+      <h3>Weddings & Celebrations</h3>
+      <p>Mehndi, sangeet, wedding day, reception — complete wedding management with decor, catering coordination, and photography.</p>
+      <div class="etype-tags"><span class="etag">Wedding</span><span class="etag">Engagement</span><span class="etag">Sangeet</span><span class="etag">Reception</span></div>
+    </div>
+    <div class="etype rv d1">
+      <div class="etype-bg" style="background:radial-gradient(circle at 30% 50%,var(--violet),transparent)"></div>
+      <div class="etype-icon">🚀</div>
+      <h3>Brand Activations</h3>
+      <p>Pop-ups, experiential campaigns, and brand launches that create buzz, drive footfall, and deliver measurable ROI.</p>
+      <div class="etype-tags"><span class="etag">Pop-up</span><span class="etag">Activation</span><span class="etag">Exhibition</span><span class="etag">Launch</span></div>
+    </div>
+    <div class="etype rv d2">
+      <div class="etype-bg" style="background:radial-gradient(circle at 70% 50%,var(--amber),transparent)"></div>
+      <div class="etype-icon">🎉</div>
+      <h3>Social & Private Events</h3>
+      <p>Birthday milestones, anniversaries, baby showers, and family gatherings — crafted with personal touches that make them truly special.</p>
+      <div class="etype-tags"><span class="etag">Birthday</span><span class="etag">Anniversary</span><span class="etag">Baby Shower</span><span class="etag">Private Party</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- What's included -->
+<section style="padding:0 5rem 9rem;background:var(--bg2);">
+  <div style="padding-top:6rem;">
+    <div class="split-2">
+      <div>
+        <div class="s-label rv">What We Cover</div>
+        <h2 class="s-title rv d1">Full-Service<br><span class="grad">Event Management</span></h2>
+        <p class="rv d2" style="color:var(--muted);font-size:.95rem;line-height:1.75;margin-bottom:2rem;">We handle every dimension of your event — from the first planning call to the last guest leaving. You show up, we take care of the rest.</p>
+        <div class="svc-list">
+          <div class="svc-row rv"><span class="svc-row-icon">📋</span><div><h4>Concept & Planning</h4><p>Theme development, budgeting, vendor selection, and timeline management.</p></div></div>
+          <div class="svc-row rv d1"><span class="svc-row-icon">🎨</span><div><h4>Decor & Staging</h4><p>Custom decor, floral arrangements, stage design, and ambient lighting.</p></div></div>
+          <div class="svc-row rv d2"><span class="svc-row-icon">🎵</span><div><h4>Entertainment</h4><p>Artists, DJs, emcees, performers, and AV production.</p></div></div>
+          <div class="svc-row rv d3"><span class="svc-row-icon">📸</span><div><h4>Photography & Video</h4><p>Professional photography, videography, live streaming, and reels.</p></div></div>
+          <div class="svc-row rv d4"><span class="svc-row-icon">🍽️</span><div><h4>Catering Coordination</h4><p>Curated menu selection, vendor management, and service oversight.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="feat-grid">
+          <div class="feat-item rv"><div class="feat-emoji">💡</div><h4>Creative Direction</h4><p>We bring a unified creative vision to every element of your event.</p></div>
+          <div class="feat-item rv d1"><div class="feat-emoji">📞</div><h4>One POC</h4><p>Single point of contact — no confusion, no dropped balls.</p></div>
+          <div class="feat-item rv d2"><div class="feat-emoji">⏱️</div><h4>On-Time, Always</h4><p>Meticulous timelines and contingency planning for every scenario.</p></div>
+          <div class="feat-item rv d3"><div class="feat-emoji">🌍</div><h4>Pan-India Reach</h4><p>We execute events across India with local expertise.</p></div>
+          <div class="feat-item rv d1 col-span-2" style="grid-column:span 2"><div class="feat-emoji">✅</div><h4>Post-Event Wrap-up</h4><p>Vendor settlement, media compilation, and a full post-event report so you know exactly how it went.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section style="padding:9rem 5rem;">
+  <div class="s-label rv">Our Process</div>
+  <h2 class="s-title rv d1">From Vision to<br><span class="grad">Flawless Execution</span></h2>
+  <div class="process-row rv d2">
+    <div class="p-step"><div class="p-num">01</div><h3>Brief Call</h3><p>We understand your vision, guest count, budget, and non-negotiables in a focused discovery call.</p></div>
+    <div class="p-step"><div class="p-num">02</div><h3>Proposal</h3><p>A detailed event proposal with theme concepts, vendor recommendations, and a transparent budget.</p></div>
+    <div class="p-step"><div class="p-num">03</div><h3>Execute</h3><p>Our team manages every vendor, timeline, and detail — you just approve the key decisions.</p></div>
+    <div class="p-step"><div class="p-num">04</div><h3>Wrap-up</h3><p>Complete media package, vendor settlements, and a post-event debrief — we close the loop completely.</p></div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <div class="s-label rv" style="justify-content:center;">Plan an Event</div>
+  <h2 class="rv d1">Your Next Event<br>Deserves to be <span class="grad">Extraordinary</span></h2>
+  <p class="rv d2">Tell us about your event and we'll send a tailored proposal within 24 hours.</p>
+  <div class="cta-btns rv d3">
+    <a href="contact.html" class="btn-p">Plan My Event</a>
+    <a href="index.html" class="btn-g">← Back to Home</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="f-brand">
+    <div class="logo cd-mini"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></div><p>India's premium creative agency — events, branding, gifting, social, and digital presence under one roof.</p><div class="socials"><a href="#" class="soc">in</a><a href="#" class="soc">ig</a><a href="#" class="soc">fb</a><a href="#" class="soc">yt</a></div></div>
+  <div class="f-col"><h5>Our Labs</h5><ul><li><a href="branding.html">Branding Lab</a></li><li><a href="events.html">Events Lab</a></li><li><a href="gifting.html">Gift Lab</a></li><li><a href="social.html">Social Lab</a></li><li><a href="digital.html">Digital Lab</a></li><li><a href="print.html">Print Lab</a></li></ul></div>
+  <div class="f-col"><h5>Products</h5><ul><li><a href="blvckcard.html">BLVCKCARD</a></li><li><a href="print.html">Wedding Stationery</a></li><li><a href="print.html">Custom Packaging</a></li></ul></div>
+  <div class="f-col"><h5>Company</h5><ul><li><a href="#">About Us</a></li><li><a href="#">Our Work</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  <div class="f-col"><h5>Contact</h5><ul><li><a href="mailto:hello@flexlab.co.in">hello@flexlab.co.in</a></li><li><a href="https://www.flexlab.co.in">flexlab.co.in</a></li></ul></div>
+</footer>
+<div class="f-bottom"><p>© 2024 FLex LAB. All rights reserved.</p><p>Made with ♥ in India</p></div>
+<script src="main.js"></script>
+<script src="animations.js"></script>
+<script src="premium.js"></script>
+</body>
+</html>

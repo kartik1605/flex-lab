@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 260" width="100%" height="100%">
+  <!-- FLEX (Solid) -->
+  <path class="logo-flex" fill="currentColor" stroke="none" d="
+    M 20,20 H 84 V 44 H 44 V 70 H 78 V 94 H 44 V 120 H 20 Z
+    M 86,20 H 110 V 96 H 150 V 120 H 86 Z
+    M 152,20 H 216 V 44 H 176 V 68 H 208 V 92 H 176 V 96 H 216 V 120 H 152 Z
+    M 218,20 H 242 L 258,56 L 274,20 H 298 L 278,70 L 298,120 H 274 L 258,84 L 242,120 H 218 L 238,70 Z
+  " />
+  
+  <!-- LAB (Outline) -->
+  <path class="logo-lab-outline" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="miter" d="
+    M 20,140 H 44 V 216 H 120 V 240 H 20 Z
+    M 155,140 L 210,240 H 186 L 170.6,212 H 139.4 L 124,240 H 100 Z 
+    M 155,166 L 166.4,190 H 143.6 Z
+    M 190,140 H 254 C 278,140 298,150 298,165 C 298,178 288,188 274,190 C 288,192 298,202 298,215 C 298,230 278,240 254,240 H 190 Z 
+    M 214,156 H 248 C 258,156 266,161 266,167 C 266,173 258,178 248,178 H 214 Z 
+    M 214,202 H 248 C 258,202 266,207 266,213 C 266,219 258,224 248,224 H 214 Z
+  " />
+</svg>

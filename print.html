@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Print Lab — FLex LAB</title>
+  <meta name="description" content="FLex LAB Print Lab: Wedding stationery, stickers, pamphlets, hang tags, posters, catalogues and every print solution under one roof — finished to a luxury standard."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="anim.css"/>
+  <link rel="stylesheet" href="premium.css"/>
+  <style>
+    .page-hero { background:var(--bg2); }
+
+    /* Print categories grid */
+    .pr-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1.25rem; margin-top:3.5rem;
+    }
+    .pr-card {
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:22px; overflow:hidden; transition:all .35s; cursor:pointer;
+      position:relative;
+    }
+    .pr-card:hover { transform:translateY(-5px); border-color:rgba(184,164,126,.3); }
+    .pr-thumb {
+      height:180px; display:flex; align-items:center; justify-content:center;
+      font-size:3rem; position:relative; overflow:hidden;
+    }
+    .pr-thumb::after {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--violet),var(--cyan));
+      transform:scaleX(0); transform-origin:left; transition:transform .4s;
+    }
+    .pr-card:hover .pr-thumb::after { transform:scaleX(1); }
+    .pr-body { padding:1.75rem; }
+    .pr-num { position:absolute; top:1rem; right:1.25rem; font-family:var(--ff-d); font-size:.7rem; color:var(--muted); letter-spacing:.08em; }
+    .pr-body h3 { font-family:var(--ff-d); font-size:1.15rem; font-weight:800; margin-bottom:.5rem; }
+    .pr-body p  { color:var(--muted); font-size:.83rem; line-height:1.7; margin-bottom:1.1rem; }
+    .pr-tags { display:flex; flex-wrap:wrap; gap:.4rem; }
+    .pr-tag {
+      background:rgba(255,255,255,.04); border:1px solid var(--border);
+      color:var(--muted); font-size:.65rem; padding:.2rem .65rem; border-radius:100px;
+      letter-spacing:.04em;
+    }
+
+    /* Finishes strip */
+    .finish-strip {
+      display:flex; flex-wrap:wrap; gap:.6rem;
+      margin-top:1.75rem; justify-content:center;
+    }
+    .finish-chip {
+      background:rgba(184,164,126,.06);
+      border:1px solid rgba(184,164,126,.18);
+      color:#cbb693;
+      font-family:'Space Grotesk', monospace;
+      font-size:.72rem; font-weight:600;
+      letter-spacing:.12em; text-transform:uppercase;
+      padding:.45rem 1rem; border-radius:100px;
+    }
+
+    /* Why-us split */
+    .why-split { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .why-list { display:flex; flex-direction:column; gap:1.5rem; }
+    .why-item { display:flex; gap:1.25rem; align-items:flex-start; }
+    .why-icon {
+      width:46px; height:46px; flex-shrink:0; border-radius:14px;
+      display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+    }
+    .why-item h4 { font-family:var(--ff-d); font-size:.95rem; font-weight:700; margin-bottom:.35rem; }
+    .why-item p  { color:var(--muted); font-size:.82rem; line-height:1.65; }
+
+    /* CTA quote box */
+    .quote-box {
+      background:linear-gradient(135deg,rgba(184,164,126,.08),rgba(124,58,237,.04));
+      border:1px solid rgba(184,164,126,.22); border-radius:22px;
+      padding:3rem; display:flex; align-items:center; justify-content:space-between; gap:2rem;
+      margin-top:4rem;
+    }
+    .quote-box h3 { font-family:var(--ff-d); font-size:1.5rem; font-weight:800; margin-bottom:.4rem; }
+    .quote-box p  { color:var(--muted); font-size:.88rem; line-height:1.7; max-width:480px; }
+
+    @media(max-width:1100px) {
+      .pr-grid { grid-template-columns:1fr 1fr; }
+      .why-split { grid-template-columns:1fr; gap:3rem; }
+      .quote-box { flex-direction:column; text-align:center; padding:2.5rem 1.75rem; }
+    }
+    @media(max-width:700px) {
+      .pr-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"><div id="sp-fill"></div></div>
+<div id="page-trans"><div class="pt-panel"></div><div class="pt-panel"></div></div>
+<canvas id="noise-canvas"></canvas>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<span id="cur-label"></span>
+
+<div id="mob-menu">
+  <a href="index.html"     onclick="closeMob()">Home</a>
+  <a href="branding.html"  onclick="closeMob()">Branding</a>
+  <a href="events.html"    onclick="closeMob()">Events</a>
+  <a href="gifting.html"   onclick="closeMob()">Gifting</a>
+  <a href="social.html"    onclick="closeMob()">Social</a>
+  <a href="digital.html"   onclick="closeMob()">Digital</a>
+  <a href="print.html"     onclick="closeMob()">Print</a>
+  <a href="blvckcard.html" onclick="closeMob()">BLVCKCARD</a>
+  <a href="contact.html"   onclick="closeMob()" style="color:var(--cyan)">Contact Us</a>
+</div>
+
+<nav id="nav">
+  <a href="index.html" class="logo cd-mini" aria-label="FLEX LAB home"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Labs ▾</a>
+      <div class="drop">
+        <a href="branding.html"><span class="drop-icon">🎨</span>Branding Lab</a>
+        <a href="events.html"><span class="drop-icon">🎪</span>Events Lab</a>
+        <a href="gifting.html"><span class="drop-icon">🎁</span>Gift Lab</a>
+        <a href="social.html"><span class="drop-icon">📱</span>Social Lab</a>
+        <a href="digital.html"><span class="drop-icon">🌐</span>Digital Lab</a>
+        <a href="print.html"><span class="drop-icon">🖨️</span>Print Lab</a>
+      </div>
+    </li>
+    <li><a href="blvckcard.html">BLVCKCARD</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-btn magnetic">Start Project</a>
+  <button id="ham" onclick="toggleMob()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- Hero -->
+<section class="page-hero">
+  <div class="orb orb-hero-1" style="background:radial-gradient(circle,rgba(184,164,126,.14),transparent 65%)"></div>
+  <div class="orb orb-hero-2" style="background:radial-gradient(circle,rgba(124,58,237,.1),transparent 65%)"></div>
+  <div class="page-hero-inner">
+    <div class="s-label">Lab 06</div>
+    <h1>Things You Can<br><span class="grad">Hold &amp; Keep.</span></h1>
+    <p>From hand-finished wedding suites to die-cut stickers, hang tags, brochures and large-format banners — Print Lab makes the tangible side of your brand worth showing off.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="contact.html" class="btn-p magnetic">Get a Quote</a>
+      <a href="#categories" class="btn-g magnetic">See What We Print ↓</a>
+    </div>
+    <div class="finish-strip">
+      <span class="finish-chip">◆ Velvet</span>
+      <span class="finish-chip">◆ Matte</span>
+      <span class="finish-chip">◆ Gloss</span>
+      <span class="finish-chip">◆ UV Spot</span>
+      <span class="finish-chip">◆ Foil Stamp</span>
+      <span class="finish-chip">◆ Letterpress</span>
+      <span class="finish-chip">◆ Die Cut</span>
+      <span class="finish-chip">◆ Emboss</span>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stat-bar">
+  <div class="stat-item"><h3 data-count="500" data-suffix="K+">0</h3><p>Pieces Printed</p></div>
+  <div class="stat-item"><h3 data-count="40" data-suffix="+">0</h3><p>Finish Options</p></div>
+  <div class="stat-item"><h3 data-count="3" data-suffix=" Days">0</h3><p>Standard Turnaround</p></div>
+  <div class="stat-item"><h3 data-count="100" data-suffix="%">0</h3><p>Quality Promise</p></div>
+</div>
+
+<!-- Categories -->
+<section id="categories" style="padding:9rem 5rem;">
+  <div class="s-label">What We Print</div>
+  <h2 class="s-title">Every Print Solution,<br>Under <span class="grad">One Roof.</span></h2>
+  <p class="s-sub">Stationery, signage, packaging, marketing collateral, retail — if it's printable, we make it beautifully.</p>
+
+  <div class="pr-grid">
+
+    <div class="pr-card">
+      <span class="pr-num">01</span>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(184,164,126,.14),rgba(244,232,215,.05));">💌</div>
+      <div class="pr-body">
+        <h3>Wedding Stationery</h3>
+        <p>Hand-finished invitation suites that set the tone before the first guest arrives. Letterpress, foil, vellum overlays — anything you can dream.</p>
+        <div class="pr-tags">
+          <span class="pr-tag">Invitations</span>
+          <span class="pr-tag">RSVPs</span>
+          <span class="pr-tag">Save the Dates</span>
+          <span class="pr-tag">Menus</span>
+          <span class="pr-tag">Place Cards</span>
+          <span class="pr-tag">Programs</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-card">
+      <span class="pr-num">02</span>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.04));">🏷️</div>
+      <div class="pr-body">
+        <h3>Stickers &amp; Labels</h3>
+        <p>Custom-cut, holographic, paper, vinyl, transparent — branded stickers and product labels designed for shelf, packaging and retail impact.</p>
+        <div class="pr-tags">
+          <span class="pr-tag">Die-Cut</span>
+          <span class="pr-tag">Holographic</span>
+          <span class="pr-tag">Vinyl</span>
+          <span class="pr-tag">Product Labels</span>
+          <span class="pr-tag">Packaging</span>
+          <span class="pr-tag">Stamps</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-card">
+      <span class="pr-num">03</span>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(16,185,129,.04));">📑</div>
+      <div class="pr-body">
+        <h3>Pamphlets &amp; Brochures</h3>
+        <p>Tri-folds, bi-folds, accordion folds and saddle-stitched booklets — marketing collateral that gets picked up and kept, not binned.</p>
+        <div class="pr-tags">
+          <span class="pr-tag">Tri-Fold</span>
+          <span class="pr-tag">Bi-Fold</span>
+          <span class="pr-tag">Booklets</span>
+          <span class="pr-tag">Catalogues</span>
+          <span class="pr-tag">Lookbooks</span>
+          <span class="pr-tag">Magazines</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-card">
+      <span class="pr-num">04</span>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(244,63,94,.1),rgba(245,158,11,.05));">🎀</div>
+      <div class="pr-body">
+        <h3>Hang Tags &amp; Swing Tags</h3>
+        <p>Premium retail tags, gift tags, luggage tags and bottle neckers — finished with string, eyelets, and tactile uncoated boards.</p>
+        <div class="pr-tags">
+          <span class="pr-tag">Retail Tags</span>
+          <span class="pr-tag">Gift Tags</span>
+          <span class="pr-tag">Luggage Tags</span>
+          <span class="pr-tag">Bottle Neckers</span>
+          <span class="pr-tag">Swing Tags</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-card">
+      <span class="pr-num">05</span>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(244,63,94,.05));">🪧</div>
+      <div class="pr-body">
+        <h3>Posters, Flyers &amp; Banners</h3>
+        <p>Indoor and outdoor large-format printing — show banners, exhibition graphics, posters, mounted prints and pull-up stands.</p>
+        <div class="pr-tags">
+          <span class="pr-tag">Posters</span>
+          <span class="pr-tag">Flyers</span>
+          <span class="pr-tag">Banners</span>
+          <span class="pr-tag">Pull-Ups</span>
+          <span class="pr-tag">Exhibition</span>
+          <span class="pr-tag">Backdrops</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-card">
+      <span class="pr-num">06</span>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(124,58,237,.04));">📦</div>
+      <div class="pr-body">
+        <h3>Custom Packaging</h3>
+        <p>Branded boxes, sleeves, mailers, tissue, sticker seals and inserts — packaging that turns unboxing into part of the brand experience.</p>
+        <div class="pr-tags">
+          <span class="pr-tag">Custom Boxes</span>
+          <span class="pr-tag">Mailers</span>
+          <span class="pr-tag">Sleeves</span>
+          <span class="pr-tag">Tissue Paper</span>
+          <span class="pr-tag">Inserts</span>
+          <span class="pr-tag">Seals</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-card">
+      <span class="pr-num">07</span>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(184,164,126,.1),rgba(124,58,237,.04));">📓</div>
+      <div class="pr-body">
+        <h3>Corporate Stationery</h3>
+        <p>Letterheads, envelopes, notebooks, journals, compliment slips and folders — the everyday brand touchpoints printed at gallery quality.</p>
+        <div class="pr-tags">
+          <span class="pr-tag">Letterheads</span>
+          <span class="pr-tag">Envelopes</span>
+          <span class="pr-tag">Notebooks</span>
+          <span class="pr-tag">Journals</span>
+          <span class="pr-tag">Folders</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-card">
+      <span class="pr-num">08</span>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(184,164,126,.05));">🗓️</div>
+      <div class="pr-body">
+        <h3>Calendars &amp; Diaries</h3>
+        <p>Year-end gifting essentials — desktop calendars, wall calendars, planners and dated diaries with hardback bindings and custom layouts.</p>
+        <div class="pr-tags">
+          <span class="pr-tag">Wall Calendars</span>
+          <span class="pr-tag">Desk Calendars</span>
+          <span class="pr-tag">Planners</span>
+          <span class="pr-tag">Diaries</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-card">
+      <span class="pr-num">09</span>
+      <div class="pr-thumb" style="background:linear-gradient(135deg,rgba(244,63,94,.08),rgba(184,164,126,.05));">💳</div>
+      <div class="pr-body">
+        <h3>Business &amp; Visiting Cards</h3>
+        <p>Letterpress, foil, painted edges, plastic, bamboo, metal — visiting cards as memorable as the handshake that comes with them.</p>
+        <div class="pr-tags">
+          <span class="pr-tag">Letterpress</span>
+          <span class="pr-tag">Foil</span>
+          <span class="pr-tag">Painted Edge</span>
+          <span class="pr-tag">Metal</span>
+          <span class="pr-tag">Plastic</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Why -->
+<section style="padding:0 5rem 9rem;background:var(--bg2);">
+  <div style="padding-top:6rem;">
+    <div class="why-split">
+      <div>
+        <div class="s-label">Why Print With Us</div>
+        <h2 class="s-title">Print That's<br><span class="grad">Felt Before Read.</span></h2>
+        <p class="s-sub" style="margin-bottom:0;">Paper weight, finish, texture, ink — every variable is curated by our team and inspected by hand before a single piece reaches you.</p>
+      </div>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="why-icon" style="background:rgba(184,164,126,.1);border:1px solid rgba(184,164,126,.22);">🎯</div>
+          <div><h4>One Brief, Full Service</h4><p>Design, paper sourcing, print, finishing and delivery — all coordinated by us. You speak to one team, not five suppliers.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon" style="background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.22);">🪨</div>
+          <div><h4>Premium Substrates Only</h4><p>Cotton boards, recycled craft, handmade Indian paper, mirror metallics — we stock and source what mainstream printers won't.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon" style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.22);">🔬</div>
+          <div><h4>Test Prints Before Run</h4><p>Every job gets a physical proof. You sign off the colour and finish in your hand before we print the full quantity.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon" style="background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.22);">⚡</div>
+          <div><h4>Express Available</h4><p>Standard 3–5 day turnaround; rush 48-hour service available on most finishes for last-minute launches and events.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon" style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.22);">🌿</div>
+          <div><h4>Sustainable Options</h4><p>FSC-certified paper, soy inks, recycled cotton boards — every category has an eco track for brands who care.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section style="padding:9rem 5rem;">
+  <div class="s-label">Process</div>
+  <h2 class="s-title">From Brief to <span class="grad">Box.</span></h2>
+  <p class="s-sub">Five steps. Zero confusion. One team owning every detail.</p>
+  <div class="process-row" style="position:relative;">
+    <div class="p-step"><div class="p-num">01</div><h3>Brief</h3><p>Tell us what you need, the quantity, your timeline and budget. We'll suggest paper, finish, and format.</p></div>
+    <div class="p-step"><div class="p-num">02</div><h3>Design</h3><p>Send your artwork or have our Branding Lab create it. We prep files to print-ready spec, free of charge.</p></div>
+    <div class="p-step"><div class="p-num">03</div><h3>Sample</h3><p>A physical proof is printed and couriered for your sign-off. No surprises, no off-screen colour shifts.</p></div>
+    <div class="p-step"><div class="p-num">04</div><h3>Print</h3><p>Full run printed, finished, hand-checked and packed by our team. Nothing leaves without a final QC.</p></div>
+  </div>
+</section>
+
+<!-- Quote box -->
+<section style="padding:0 5rem 9rem;">
+  <div class="quote-box">
+    <div>
+      <h3>Have Something Specific in Mind?</h3>
+      <p>Send us your project details — quantity, finish, paper, deadline — and we'll respond with a tailored quote and turnaround within hours.</p>
+    </div>
+    <div style="display:flex;gap:1rem;flex-shrink:0;flex-wrap:wrap;">
+      <a href="contact.html" class="btn-p magnetic">Request a Quote</a>
+      <a href="contact.html" class="btn-g magnetic">WhatsApp Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="s-label" style="justify-content:center;">Make It Real</div>
+  <h2>Your Brand,<br><span class="grad">Printed Beautifully.</span></h2>
+  <p>Whether it's 50 invites or 50,000 catalogues — every job gets the same obsession over paper, ink and finish.</p>
+  <div class="cta-btns">
+    <a href="contact.html" class="btn-p magnetic">Start a Print Project</a>
+    <a href="index.html" class="btn-g magnetic">← Back to Home</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="f-brand">
+    <div class="logo cd-mini"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></div>
+    <p>India's premium creative agency — events, branding, gifting, social, digital, and print under one roof.</p>
+    <div class="socials"><a href="#" class="soc">in</a><a href="#" class="soc">ig</a><a href="#" class="soc">fb</a><a href="#" class="soc">yt</a></div>
+  </div>
+  <div class="f-col"><h5>Our Labs</h5><ul>
+    <li><a href="branding.html">Branding Lab</a></li>
+    <li><a href="events.html">Events Lab</a></li>
+    <li><a href="gifting.html">Gift Lab</a></li>
+    <li><a href="social.html">Social Lab</a></li>
+    <li><a href="digital.html">Digital Lab</a></li>
+    <li><a href="print.html">Print Lab</a></li>
+  </ul></div>
+  <div class="f-col"><h5>Products</h5><ul>
+    <li><a href="blvckcard.html">BLVCKCARD</a></li>
+    <li><a href="print.html">Wedding Stationery</a></li>
+    <li><a href="print.html">Custom Packaging</a></li>
+  </ul></div>
+  <div class="f-col"><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  <div class="f-col"><h5>Contact</h5><ul><li><a href="mailto:hello@flexlab.co.in">hello@flexlab.co.in</a></li></ul></div>
+</footer>
+<div class="f-bottom"><p>© 2024 FLex LAB. All rights reserved.</p><p>Made with ♥ in India</p></div>
+
+<script src="main.js"></script>
+<script src="animations.js"></script>
+<script src="premium.js"></script>
+</body>
+</html>

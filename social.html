@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Social Lab — FLex LAB</title>
+  <meta name="description" content="FLex LAB Social Lab: Social media management, content creation, and digital campaigns that actually convert."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="anim.css"/>
+  <link rel="stylesheet" href="premium.css"/>
+  <style>
+    .page-hero{background:var(--bg2);}
+    /* Platforms */
+    .platform-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2.5rem;}
+    .plat{
+      display:flex;align-items:center;gap:.75rem;
+      background:var(--bg2);border:1px solid var(--border);
+      border-radius:100px;padding:.55rem 1.2rem;
+      font-size:.82rem;font-weight:600;color:var(--muted);
+      transition:all .3s;cursor:default;
+    }
+    .plat:hover{color:var(--text);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.05);}
+    .plat-icon{font-size:1.1rem;}
+    /* Services 2-col */
+    .svc-2col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:3.5rem;}
+    .svc2{
+      background:var(--bg2);border:1px solid var(--border);
+      border-radius:20px;padding:2.25rem;
+      display:flex;gap:1.5rem;align-items:flex-start;
+      transition:all .35s;
+    }
+    .svc2:hover{border-color:rgba(245,158,11,.25);transform:translateY(-3px);}
+    .svc2-icon{
+      width:48px;height:48px;flex-shrink:0;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+    }
+    .svc2 h3{font-family:var(--ff-d);font-size:1rem;font-weight:700;margin-bottom:.45rem;}
+    .svc2 p{color:var(--muted);font-size:.82rem;line-height:1.7;}
+    /* Packages */
+    .pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem;}
+    .pkg{
+      background:var(--bg2);border:1px solid var(--border);
+      border-radius:22px;padding:2.5rem;
+      transition:all .35s;position:relative;overflow:hidden;
+    }
+    .pkg.featured{
+      border-color:rgba(245,158,11,.4);
+      background:linear-gradient(135deg,rgba(245,158,11,.05),rgba(244,63,94,.03));
+    }
+    .pkg-badge{
+      position:absolute;top:1.5rem;right:1.5rem;
+      background:var(--amber);color:#000;
+      font-size:.62rem;font-weight:800;letter-spacing:.08em;
+      text-transform:uppercase;padding:.25rem .75rem;border-radius:100px;
+    }
+    .pkg:hover{transform:translateY(-4px);}
+    .pkg-name{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
+    .pkg-price{font-family:var(--ff-d);font-size:2.2rem;font-weight:900;letter-spacing:-.04em;margin-bottom:.25rem;}
+    .pkg-price span{font-size:.85rem;font-weight:500;color:var(--muted);}
+    .pkg-desc{color:var(--muted);font-size:.82rem;margin-bottom:1.75rem;line-height:1.65;}
+    .pkg-list{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem;}
+    .pkg-list li{font-size:.83rem;color:var(--muted);display:flex;gap:.6rem;align-items:flex-start;}
+    .pkg-list li::before{content:'✓';color:var(--green);font-size:.75rem;margin-top:.1rem;flex-shrink:0;}
+    /* Results */
+    .results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:3rem;}
+    .res-item{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:2rem;text-align:center;transition:all .3s;}
+    .res-item:hover{border-color:rgba(245,158,11,.2);transform:translateY(-3px);}
+    .res-num{font-family:var(--ff-d);font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,var(--amber),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .res-label{color:var(--muted);font-size:.75rem;margin-top:.35rem;}
+    @media(max-width:1100px){.svc-2col,.pkg-grid{grid-template-columns:1fr;}.results-grid{grid-template-columns:repeat(2,1fr);}}
+  </style>
+</head>
+<body>
+<div id="scroll-progress"><div id="sp-fill"></div></div>
+<div id="page-trans"><div class="pt-panel"></div><div class="pt-panel"></div></div>
+<canvas id="noise-canvas"></canvas>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<span id="cur-label"></span>
+<div id="mob-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="branding.html" onclick="closeMob()">Branding</a>
+  <a href="events.html" onclick="closeMob()">Events</a>
+  <a href="gifting.html" onclick="closeMob()">Gifting</a>
+  <a href="social.html" onclick="closeMob()">Social</a>
+  <a href="digital.html" onclick="closeMob()">Digital</a>
+  <a href="print.html" onclick="closeMob()">Print</a>
+  <a href="blvckcard.html" onclick="closeMob()">BLVCKCARD</a>
+  <a href="contact.html" onclick="closeMob()" style="color:var(--cyan)">Contact Us</a>
+</div>
+<nav id="nav">
+  <a href="index.html" class="logo cd-mini" aria-label="FLEX LAB home"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Labs ▾</a>
+      <div class="drop">
+        <a href="branding.html"><span class="drop-icon">🎨</span>Branding Lab</a>
+        <a href="events.html"><span class="drop-icon">🎪</span>Events Lab</a>
+        <a href="gifting.html"><span class="drop-icon">🎁</span>Gift Lab</a>
+        <a href="social.html"><span class="drop-icon">📱</span>Social Lab</a>
+        <a href="digital.html"><span class="drop-icon">🌐</span>Digital Lab</a>
+        <a href="print.html"><span class="drop-icon">🖨️</span>Print Lab</a>
+      </div>
+    </li>
+    <li><a href="blvckcard.html">BLVCKCARD</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-btn">Start Project</a>
+  <button id="ham" onclick="toggleMob()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="page-hero">
+  <div class="orb orb-hero-1" style="background:radial-gradient(circle,rgba(245,158,11,.14),transparent 65%)"></div>
+  <div class="orb orb-hero-2" style="background:radial-gradient(circle,rgba(244,63,94,.1),transparent 65%)"></div>
+  <div class="page-hero-inner">
+    <div class="s-label rv">Lab 04</div>
+    <h1 class="rv d1">Social Media That<br>Actually <span class="grad">Converts</span></h1>
+    <p class="rv d2">Strategy, content, and community management that builds real audiences and drives real results — not just vanity metrics.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;" class="rv d3">
+      <a href="contact.html" class="btn-p">Grow My Social</a>
+      <a href="#services" class="btn-g">See Services ↓</a>
+    </div>
+    <div class="platform-row rv d4">
+      <div class="plat"><span class="plat-icon">📸</span>Instagram</div>
+      <div class="plat"><span class="plat-icon">💼</span>LinkedIn</div>
+      <div class="plat"><span class="plat-icon">▶️</span>YouTube</div>
+      <div class="plat"><span class="plat-icon">🎵</span>Facebook</div>
+      <div class="plat"><span class="plat-icon">𝕏</span>X / Twitter</div>
+    </div>
+  </div>
+</section>
+
+<div class="stat-bar">
+  <div class="stat-item rv"><h3 data-count="50" data-suffix="+">0</h3><p>Brands Managed</p></div>
+  <div class="stat-item rv d1"><h3 data-count="2" data-suffix="M+">0</h3><p>Total Reach</p></div>
+  <div class="stat-item rv d2"><h3 data-count="300" data-suffix="%">0</h3><p>Avg. Growth Rate</p></div>
+  <div class="stat-item rv d3"><h3 data-count="30" data-suffix="d">0</h3><p>First Results In</p></div>
+</div>
+
+<!-- Services -->
+<section id="services" style="padding:9rem 5rem;">
+  <div class="s-label rv">Services</div>
+  <h2 class="s-title rv d1">Everything Your Social<br>Presence <span class="grad">Needs</span></h2>
+  <p class="s-sub rv d2">From daily posting to full-scale campaign management — we handle it all so you can focus on running your business.</p>
+  <div class="svc-2col">
+    <div class="svc2 rv"><div class="svc2-icon" style="background:rgba(245,158,11,.12)">📊</div><div><h3>Social Media Strategy</h3><p>A custom roadmap for each platform — defining your voice, content pillars, posting frequency, and growth targets aligned to your business goals.</p></div></div>
+    <div class="svc2 rv d1"><div class="svc2-icon" style="background:rgba(244,63,94,.12)">🎨</div><div><h3>Content Creation</h3><p>Scroll-stopping graphics, carousels, reels, and stories — designed to your brand guidelines and crafted to perform on each platform's algorithm.</p></div></div>
+    <div class="svc2 rv d2"><div class="svc2-icon" style="background:rgba(124,58,237,.12)">📅</div><div><h3>Content Calendar & Scheduling</h3><p>A monthly content calendar shared in advance for your approval — then published at peak engagement times, automatically.</p></div></div>
+    <div class="svc2 rv d3"><div class="svc2-icon" style="background:rgba(6,182,212,.12)">💬</div><div><h3>Community Management</h3><p>Timely responses to comments, DMs, and mentions — building a loyal community and protecting your brand's reputation.</p></div></div>
+    <div class="svc2 rv d2"><div class="svc2-icon" style="background:rgba(16,185,129,.12)">🚀</div><div><h3>Paid Campaigns</h3><p>Meta, Google, and LinkedIn ad campaigns managed with precision — targeting the right audience at the right time to maximise ROI.</p></div></div>
+    <div class="svc2 rv d3"><div class="svc2-icon" style="background:rgba(168,85,247,.12)">📈</div><div><h3>Analytics & Reporting</h3><p>Monthly performance reports with clear insights — follower growth, engagement rate, reach, and recommendations for what's next.</p></div></div>
+  </div>
+</section>
+
+<!-- Packages -->
+<section style="padding:0 5rem 9rem;background:var(--bg2);">
+  <div style="padding-top:6rem;">
+    <div class="s-label rv">Packages</div>
+    <h2 class="s-title rv d1">Simple, Transparent <span class="grad">Pricing</span></h2>
+    <p class="s-sub rv d2">All plans include dedicated account management and a custom content strategy.</p>
+    <div class="pkg-grid">
+      <div class="pkg rv">
+        <div class="pkg-name">Starter</div>
+        <div class="pkg-price">₹12,000<span>/month</span></div>
+        <div class="pkg-desc">Perfect for small businesses and startups building their first social presence.</div>
+        <ul class="pkg-list">
+          <li>2 platforms managed</li>
+          <li>12 posts per month</li>
+          <li>Basic graphic design</li>
+          <li>Monthly analytics report</li>
+          <li>Comment moderation</li>
+        </ul>
+        <a href="contact.html" class="btn-g" style="width:100%;justify-content:center;">Get Started</a>
+      </div>
+      <div class="pkg featured rv d1">
+        <div class="pkg-badge">Most Popular</div>
+        <div class="pkg-name">Growth</div>
+        <div class="pkg-price">₹25,000<span>/month</span></div>
+        <div class="pkg-desc">For growing brands that need consistent, high-quality content and real engagement.</div>
+        <ul class="pkg-list">
+          <li>3 platforms managed</li>
+          <li>24 posts + 8 stories/month</li>
+          <li>Premium graphics + Reels</li>
+          <li>Paid ad management (₹10k budget)</li>
+          <li>Full community management</li>
+          <li>Weekly performance insights</li>
+        </ul>
+        <a href="contact.html" class="btn-p" style="width:100%;justify-content:center;">Get Started</a>
+      </div>
+      <div class="pkg rv d2">
+        <div class="pkg-name">Premium</div>
+        <div class="pkg-price">₹45,000<span>/month</span></div>
+        <div class="pkg-desc">Full-service social media domination for established brands with ambitious growth targets.</div>
+        <ul class="pkg-list">
+          <li>All 5 platforms managed</li>
+          <li>40 posts + unlimited stories</li>
+          <li>Video production + Reels</li>
+          <li>Influencer coordination</li>
+          <li>Paid campaigns management</li>
+          <li>Dedicated account manager</li>
+          <li>Weekly strategy calls</li>
+        </ul>
+        <a href="contact.html" class="btn-g" style="width:100%;justify-content:center;">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Results -->
+<section style="padding:9rem 5rem;">
+  <div class="s-label rv">Results We Deliver</div>
+  <h2 class="s-title rv d1">Numbers That <span class="grad">Actually Matter</span></h2>
+  <div class="results-grid">
+    <div class="res-item rv"><div class="res-num">3x</div><div class="res-label">Average engagement increase in 60 days</div></div>
+    <div class="res-item rv d1"><div class="res-num">+10k</div><div class="res-label">Average follower growth per brand per year</div></div>
+    <div class="res-item rv d2"><div class="res-num">₹4 ROAS</div><div class="res-label">Average return on ad spend for paid campaigns</div></div>
+    <div class="res-item rv d3"><div class="res-num">48h</div><div class="res-label">Maximum response time to all comments and DMs</div></div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <div class="s-label rv" style="justify-content:center;">Get Social</div>
+  <h2 class="rv d1">Ready to Build a Social<br>Presence That <span class="grad">Converts?</span></h2>
+  <p class="rv d2">Book a free 30-minute strategy call — we'll audit your current presence and show you exactly what's possible.</p>
+  <div class="cta-btns rv d3">
+    <a href="contact.html" class="btn-p">Book Free Audit</a>
+    <a href="index.html" class="btn-g">← Back to Home</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="f-brand">
+    <div class="logo cd-mini"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></div><p>India's premium creative agency — events, branding, gifting, social, and digital presence under one roof.</p><div class="socials"><a href="#" class="soc">in</a><a href="#" class="soc">ig</a><a href="#" class="soc">fb</a><a href="#" class="soc">yt</a></div></div>
+  <div class="f-col"><h5>Our Labs</h5><ul><li><a href="branding.html">Branding Lab</a></li><li><a href="events.html">Events Lab</a></li><li><a href="gifting.html">Gift Lab</a></li><li><a href="social.html">Social Lab</a></li><li><a href="digital.html">Digital Lab</a></li><li><a href="print.html">Print Lab</a></li></ul></div>
+  <div class="f-col"><h5>Products</h5><ul><li><a href="blvckcard.html">BLVCKCARD</a></li><li><a href="print.html">Wedding Stationery</a></li><li><a href="print.html">Custom Packaging</a></li></ul></div>
+  <div class="f-col"><h5>Company</h5><ul><li><a href="#">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  <div class="f-col"><h5>Contact</h5><ul><li><a href="mailto:hello@flexlab.co.in">hello@flexlab.co.in</a></li></ul></div>
+</footer>
+<div class="f-bottom"><p>© 2024 FLex LAB. All rights reserved.</p><p>Made with ♥ in India</p></div>
+<script src="main.js"></script>
+<script src="animations.js"></script>
+<script src="premium.js"></script>
+</body>
+</html>

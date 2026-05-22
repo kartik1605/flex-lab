@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Contact Us — FLex LAB</title>
+  <meta name="description" content="Get in touch with FLex LAB. Start a project, request a quote, or just say hello. India's premium creative agency."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="anim.css"/>
+  <link rel="stylesheet" href="premium.css"/>
+  <style>
+    /* ── Contact layout ── */
+    #contact-main {
+      padding: 10rem 5rem 9rem;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 7rem;
+      align-items: start;
+    }
+
+    /* ── Left info panel ── */
+    .contact-info { position: sticky; top: 7rem; }
+    .contact-info h1 {
+      font-family: var(--ff-d); font-size: clamp(2.5rem,5vw,4rem);
+      font-weight: 900; letter-spacing: -.04em; line-height: 1.05;
+      margin-bottom: 1.25rem;
+    }
+    .contact-info > p { color: var(--muted); font-size: .95rem; line-height: 1.8; margin-bottom: 3rem; }
+
+    .c-methods { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem; }
+    .c-method {
+      display: flex; align-items: center; gap: 1.25rem;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.25rem 1.5rem;
+      text-decoration: none; transition: all .3s;
+    }
+    .c-method:hover { border-color: rgba(124,58,237,.3); transform: translateX(4px); }
+    .c-method-icon {
+      width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .c-method-label { font-size: .7rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: .2rem; }
+    .c-method-val   { font-size: .9rem; font-weight: 600; color: var(--text); }
+
+    .c-labs { margin-bottom: 2.5rem; }
+    .c-labs h4 { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .c-lab-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .lab-chip {
+      background: var(--glass); border: 1px solid var(--border);
+      color: var(--muted); font-size: .72rem; font-weight: 500;
+      padding: .3rem .9rem; border-radius: 100px; cursor: pointer;
+      transition: all .25s;
+    }
+    .lab-chip:hover, .lab-chip.sel {
+      background: rgba(124,58,237,.12);
+      border-color: rgba(124,58,237,.4); color: var(--text);
+    }
+
+    /* ── Form card ── */
+    .form-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 26px; padding: 3rem; position: relative; overflow: hidden;
+    }
+    .form-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--violet), var(--cyan));
+    }
+    .form-card h2 {
+      font-family: var(--ff-d); font-size: 1.5rem; font-weight: 800;
+      letter-spacing: -.02em; margin-bottom: .5rem;
+    }
+    .form-card > p { color: var(--muted); font-size: .85rem; margin-bottom: 2rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.1rem; }
+    .form-group label { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: 12px; padding: .85rem 1.1rem;
+      color: var(--text); font-family: var(--ff-b); font-size: .88rem;
+      transition: border-color .25s, box-shadow .25s; outline: none; width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--muted); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: rgba(124,58,237,.5);
+      box-shadow: 0 0 0 3px rgba(124,58,237,.1);
+    }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: #0a0a14; color: var(--text); }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    /* Budget radio buttons */
+    .budget-opts { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .b-opt { display: none; }
+    .b-opt + label {
+      background: var(--glass); border: 1px solid var(--border);
+      color: var(--muted); font-size: .78rem; font-weight: 500;
+      padding: .45rem 1rem; border-radius: 100px; cursor: pointer;
+      transition: all .25s;
+    }
+    .b-opt:checked + label {
+      background: rgba(124,58,237,.15);
+      border-color: rgba(124,58,237,.5); color: var(--text);
+    }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%; padding: 1rem; border-radius: 14px;
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      color: #fff; font-family: var(--ff-d); font-size: 1rem; font-weight: 700;
+      border: none; cursor: pointer; position: relative; overflow: hidden;
+      box-shadow: 0 0 48px rgba(124,58,237,.25); margin-top: .5rem;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .submit-btn::after {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      transition: left .55s;
+    }
+    .submit-btn:hover::after { left: 100%; }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 0 64px rgba(124,58,237,.4); }
+    .submit-btn:active { transform: scale(.98); }
+
+    /* Success state */
+    #form-success {
+      display: none; text-align: center; padding: 3rem 2rem;
+    }
+    #form-success .tick {
+      width: 70px; height: 70px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; margin: 0 auto 1.5rem;
+      animation: pop .5s cubic-bezier(.175,.885,.32,1.275);
+    }
+    @keyframes pop { from{transform:scale(0)} to{transform:scale(1)} }
+    #form-success h3 { font-family: var(--ff-d); font-size: 1.5rem; font-weight: 800; margin-bottom: .5rem; }
+    #form-success p  { color: var(--muted); font-size: .9rem; line-height: 1.75; }
+
+    /* ── Quick cards row ── */
+    .quick-row {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.25rem; padding: 0 5rem 9rem;
+    }
+    .quick-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem; text-align: center;
+      text-decoration: none; transition: all .35s; display: block;
+    }
+    .quick-card:hover { border-color: rgba(124,58,237,.3); transform: translateY(-4px); }
+    .quick-card .qicon { font-size: 2rem; margin-bottom: .75rem; }
+    .quick-card h4 { font-family: var(--ff-d); font-size: 1rem; font-weight: 700; margin-bottom: .4rem; }
+    .quick-card p  { color: var(--muted); font-size: .82rem; line-height: 1.6; }
+
+    @media(max-width:1100px) {
+      #contact-main { grid-template-columns: 1fr; gap: 4rem; padding: 9rem 2rem 6rem; }
+      .contact-info { position: static; }
+      .form-row { grid-template-columns: 1fr; }
+      .quick-row { grid-template-columns: 1fr; padding: 0 2rem 6rem; }
+    }
+    @media(max-width:700px) {
+      .form-card { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<div id="scroll-progress"><div id="sp-fill"></div></div>
+<div id="page-trans"><div class="pt-panel"></div><div class="pt-panel"></div></div>
+<canvas id="noise-canvas"></canvas>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<span id="cur-label"></span>
+<div id="mob-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="branding.html" onclick="closeMob()">Branding</a>
+  <a href="events.html" onclick="closeMob()">Events</a>
+  <a href="gifting.html" onclick="closeMob()">Gifting</a>
+  <a href="social.html" onclick="closeMob()">Social</a>
+  <a href="digital.html" onclick="closeMob()">Digital</a>
+  <a href="print.html" onclick="closeMob()">Print</a>
+  <a href="blvckcard.html" onclick="closeMob()">BLVCKCARD</a>
+  <a href="contact.html" onclick="closeMob()" style="color:var(--cyan)">Contact Us</a>
+</div>
+<nav id="nav">
+  <a href="index.html" class="logo cd-mini" aria-label="FLEX LAB home"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Labs ▾</a>
+      <div class="drop">
+        <a href="branding.html"><span class="drop-icon">🎨</span>Branding Lab</a>
+        <a href="events.html"><span class="drop-icon">🎪</span>Events Lab</a>
+        <a href="gifting.html"><span class="drop-icon">🎁</span>Gift Lab</a>
+        <a href="social.html"><span class="drop-icon">📱</span>Social Lab</a>
+        <a href="digital.html"><span class="drop-icon">🌐</span>Digital Lab</a>
+        <a href="print.html"><span class="drop-icon">🖨️</span>Print Lab</a>
+      </div>
+    </li>
+    <li><a href="blvckcard.html">BLVCKCARD</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-btn">Start Project</a>
+  <button id="ham" onclick="toggleMob()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- Main contact grid -->
+<main id="contact-main">
+
+  <!-- Left: Info -->
+  <div class="contact-info">
+    <div class="s-label rv">Get In Touch</div>
+    <h1 class="rv d1">Let's Build<br>Something <span class="grad">Great</span></h1>
+    <p class="rv d2">Tell us about your project and we'll send a tailored proposal within 24 hours. Every client gets a dedicated strategy — we don't do cookie-cutter.</p>
+
+    <div class="c-methods rv d2">
+      <a href="mailto:hello@flexlab.co.in" class="c-method">
+        <div class="c-method-icon" style="background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.2);">✉️</div>
+        <div><div class="c-method-label">Email Us</div><div class="c-method-val">hello@flexlab.co.in</div></div>
+      </a>
+      <a href="tel:+91" class="c-method">
+        <div class="c-method-icon" style="background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.2);">📞</div>
+        <div><div class="c-method-label">Call / WhatsApp</div><div class="c-method-val">+91 &nbsp;— Call Us</div></div>
+      </a>
+      <a href="https://www.flexlab.co.in" target="_blank" class="c-method">
+        <div class="c-method-icon" style="background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.2);">🌐</div>
+        <div><div class="c-method-label">Website</div><div class="c-method-val">www.flexlab.co.in</div></div>
+      </a>
+      <div class="c-method" style="cursor:default;">
+        <div class="c-method-icon" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.2);">📍</div>
+        <div><div class="c-method-label">Location</div><div class="c-method-val">India</div></div>
+      </div>
+    </div>
+
+    <div class="c-labs rv d3">
+      <h4>I'm Interested In</h4>
+      <div class="c-lab-chips">
+        <span class="lab-chip" onclick="selectLab(this,'Branding Lab')">🎨 Branding</span>
+        <span class="lab-chip" onclick="selectLab(this,'Events Lab')">🎪 Events</span>
+        <span class="lab-chip" onclick="selectLab(this,'Gift Lab')">🎁 Gifting</span>
+        <span class="lab-chip" onclick="selectLab(this,'Social Lab')">📱 Social Media</span>
+        <span class="lab-chip" onclick="selectLab(this,'Digital Lab')">🌐 Digital</span>
+        <span class="lab-chip" onclick="selectLab(this,'BLVCKCARD')">💳 BLVCKCARD</span>
+        <span class="lab-chip" onclick="selectLab(this,'Printing')">🖨️ Printing</span>
+      </div>
+    </div>
+
+    <div class="rv d4" style="display:flex;gap:.65rem;flex-wrap:wrap;">
+      <a href="#" class="soc" style="width:40px;height:40px;font-size:.85rem;">in</a>
+      <a href="#" class="soc" style="width:40px;height:40px;font-size:.85rem;">ig</a>
+      <a href="#" class="soc" style="width:40px;height:40px;font-size:.85rem;">fb</a>
+      <a href="#" class="soc" style="width:40px;height:40px;font-size:.85rem;">yt</a>
+    </div>
+  </div>
+
+  <!-- Right: Form -->
+  <div class="form-card rv">
+    <h2>Start Your Project</h2>
+    <p>Fill in the details below and we'll get back to you within 24 hours — usually much sooner.</p>
+
+    <form id="contact-form" onsubmit="submitForm(event)" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" id="fname" placeholder="Rahul" required/>
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" id="lname" placeholder="Kapoor" required/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="email" placeholder="you@company.com" required/>
+        </div>
+        <div class="form-group">
+          <label>Phone / WhatsApp</label>
+          <input type="tel" id="phone" placeholder="+91 98765 43210"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Company / Brand Name</label>
+        <input type="text" id="company" placeholder="Your Company Name"/>
+      </div>
+      <div class="form-group">
+        <label>Service Required *</label>
+        <select id="service" required>
+          <option value="" disabled selected>Select a service…</option>
+          <option value="branding">Branding Lab — Logo & Identity</option>
+          <option value="events">Events Lab — Event Management</option>
+          <option value="gifting">Gift Lab — Corporate & Wedding Gifting</option>
+          <option value="social">Social Lab — Social Media Management</option>
+          <option value="digital">Digital Lab — Website & SEO</option>
+          <option value="blvckcard">BLVCKCARD — NFC Business Card</option>
+          <option value="printing">Printing — Visiting Cards</option>
+          <option value="multiple">Multiple Services</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Estimated Budget</label>
+        <div class="budget-opts">
+          <input type="radio" name="budget" id="b1" class="b-opt" value="Under ₹10k"/>
+          <label for="b1">Under ₹10k</label>
+          <input type="radio" name="budget" id="b2" class="b-opt" value="₹10k–₹25k"/>
+          <label for="b2">₹10k – ₹25k</label>
+          <input type="radio" name="budget" id="b3" class="b-opt" value="₹25k–₹50k"/>
+          <label for="b3">₹25k – ₹50k</label>
+          <input type="radio" name="budget" id="b4" class="b-opt" value="₹50k+"/>
+          <label for="b4">₹50k+</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tell Us About Your Project *</label>
+        <textarea id="message" placeholder="Describe your project, goals, timeline, and anything else we should know…" required></textarea>
+      </div>
+      <div class="form-group">
+        <label>How Did You Hear About Us?</label>
+        <select id="source">
+          <option value="" disabled selected>Select…</option>
+          <option>Google Search</option>
+          <option>Instagram</option>
+          <option>LinkedIn</option>
+          <option>Referral / Word of Mouth</option>
+          <option>Existing Client</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <button type="submit" class="submit-btn">Send Message — We'll Reply Within 24 Hours ✦</button>
+    </form>
+
+    <div id="form-success">
+      <div class="tick">✓</div>
+      <h3>Message Received!</h3>
+      <p>Thank you for reaching out. Our team will review your project details and get back to you within 24 hours — usually much sooner.<br><br>In the meantime, follow us on Instagram for inspiration.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;margin-top:2rem;">
+        <a href="index.html" class="btn-p">Back to Home</a>
+        <a href="print.html" class="btn-g">View Pricing</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Quick links -->
+<div class="quick-row">
+  <a href="print.html" class="quick-card rv">
+    <div class="qicon">🖨️</div>
+    <h4>View Printing Prices</h4>
+    <p>Velvet, Matt & Gloss visiting cards starting at ₹700 for 500 pcs.</p>
+  </a>
+  <a href="blvckcard.html" class="quick-card rv d1">
+    <div class="qicon">💳</div>
+    <h4>Order BLVCKCARD</h4>
+    <p>Premium NFC business cards starting at ₹999. Tap to connect.</p>
+  </a>
+  <a href="social.html" class="quick-card rv d2">
+    <div class="qicon">📊</div>
+    <h4>Free Social Audit</h4>
+    <p>Book a free 30-minute social media audit call with our team.</p>
+  </a>
+</div>
+
+<footer class="footer">
+  <div class="f-brand">
+    <div class="logo cd-mini"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></div><p>India's premium creative agency — events, branding, gifting, social, and digital presence under one roof.</p><div class="socials"><a href="#" class="soc">in</a><a href="#" class="soc">ig</a><a href="#" class="soc">fb</a><a href="#" class="soc">yt</a></div></div>
+  <div class="f-col"><h5>Our Labs</h5><ul><li><a href="branding.html">Branding Lab</a></li><li><a href="events.html">Events Lab</a></li><li><a href="gifting.html">Gift Lab</a></li><li><a href="social.html">Social Lab</a></li><li><a href="digital.html">Digital Lab</a></li><li><a href="print.html">Print Lab</a></li></ul></div>
+  <div class="f-col"><h5>Products</h5><ul><li><a href="blvckcard.html">BLVCKCARD</a></li><li><a href="print.html">Wedding Stationery</a></li><li><a href="print.html">Custom Packaging</a></li></ul></div>
+  <div class="f-col"><h5>Company</h5><ul><li><a href="#">About Us</a></li><li><a href="#">Our Work</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  <div class="f-col"><h5>Contact</h5><ul><li><a href="mailto:hello@flexlab.co.in">hello@flexlab.co.in</a></li><li><a href="https://www.flexlab.co.in">flexlab.co.in</a></li></ul></div>
+</footer>
+<div class="f-bottom"><p>© 2024 FLex LAB. All rights reserved.</p><p>Made with ♥ in India</p></div>
+
+<script src="main.js"></script>
+<script src="animations.js"></script>
+<script src="premium.js"></script>
+<script>
+  /* Lab chip selection syncs to service dropdown */
+  function selectLab(chip, value) {
+    document.querySelectorAll('.lab-chip').forEach(c => c.classList.remove('sel'));
+    chip.classList.add('sel');
+    const map = {
+      'Branding Lab':'branding','Events Lab':'events','Gift Lab':'gifting',
+      'Social Lab':'social','Digital Lab':'digital','BLVCKCARD':'blvckcard','Printing':'printing'
+    };
+    const sel = document.getElementById('service');
+    if(sel && map[value]) sel.value = map[value];
+  }
+
+  /* Form submit */
+  function submitForm(e) {
+    e.preventDefault();
+    const fname   = document.getElementById('fname').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const service = document.getElementById('service').value;
+    const message = document.getElementById('message').value.trim();
+    if(!fname || !email || !service || !message) {
+      const fields = [
+        {id:'fname',val:fname},{id:'email',val:email},
+        {id:'service',val:service},{id:'message',val:message}
+      ];
+      fields.forEach(f => {
+        const el = document.getElementById(f.id);
+        if(!f.val) {
+          el.style.borderColor = 'rgba(244,63,94,.6)';
+          el.style.boxShadow   = '0 0 0 3px rgba(244,63,94,.1)';
+          el.addEventListener('input', () => { el.style.borderColor=''; el.style.boxShadow=''; }, {once:true});
+        }
+      });
+      return;
+    }
+    // Simulate submission
+    const btn = document.querySelector('.submit-btn');
+    btn.textContent = 'Sending…';
+    btn.style.opacity = '.7';
+    btn.disabled = true;
+    setTimeout(() => {
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }, 1200);
+  }
+</script>
+</body>
+</html>

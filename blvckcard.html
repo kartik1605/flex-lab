@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>BLVCKCARD — Premium NFC Business Cards | FLex LAB</title>
+  <meta name="description" content="BLVCKCARD by FLex LAB: Premium NFC business cards for modern professionals. Share your contact, portfolio, and socials with one tap."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="anim.css"/>
+  <link rel="stylesheet" href="premium.css"/>
+  <style>
+    body { background:#04040a; }
+    /* Hero — full dark special */
+    #hero {
+      min-height:100vh; display:flex; align-items:center;
+      padding:10rem 5rem 6rem; position:relative; overflow:hidden;
+      background:linear-gradient(135deg,#04040a 0%,#080420 50%,#02080f 100%);
+    }
+    .hero-inner { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; width:100%; max-width:1200px; margin:0 auto; }
+    .o1{width:700px;height:700px;top:-200px;left:-200px;background:radial-gradient(circle,rgba(124,58,237,.18),transparent 65%);animation:drift 12s ease-in-out infinite;}
+    .o2{width:500px;height:500px;bottom:-100px;right:-100px;background:radial-gradient(circle,rgba(6,182,212,.12),transparent 65%);animation:drift 9s ease-in-out infinite reverse;}
+    .bc-badge {
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+      border-radius:100px;padding:.38rem 1.1rem;
+      font-size:.7rem;font-weight:700;color:rgba(255,255,255,.5);
+      letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.75rem;
+    }
+    .bc-badge span{color:var(--cyan);}
+    #hero h1{font-family:var(--ff-d);font-size:clamp(3rem,6vw,5.5rem);font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:1.5rem;}
+    #hero p{color:var(--muted);font-size:1rem;line-height:1.8;max-width:460px;margin-bottom:2.5rem;}
+    .bc-feats{display:flex;flex-direction:column;gap:.85rem;margin-bottom:2.75rem;}
+    .bcf{display:flex;align-items:center;gap:.75rem;font-size:.85rem;color:var(--muted);}
+    .bcf-check{width:20px;height:20px;background:rgba(16,185,129,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--green);flex-shrink:0;}
+    /* Card 3D visual */
+    .card-stage{position:relative;display:flex;align-items:center;justify-content:center;height:400px;}
+    .glow-ring{position:absolute;width:340px;height:340px;border-radius:50%;border:1px solid rgba(124,58,237,.15);animation:ring-pulse 3s ease-in-out infinite;}
+    .glow-ring:nth-child(2){width:420px;height:420px;animation-delay:.5s;border-color:rgba(6,182,212,.1);}
+    .glow-ring:nth-child(3){width:500px;height:500px;animation-delay:1s;border-color:rgba(124,58,237,.06);}
+    @keyframes ring-pulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.04);opacity:.4}}
+    .bc-card {
+      width:340px;height:200px;border-radius:20px;
+      background:linear-gradient(135deg,#110822,#061524,#080f20);
+      border:1px solid rgba(255,255,255,.12);
+      display:flex;flex-direction:column;justify-content:space-between;
+      padding:1.75rem 2rem; position:relative; overflow:hidden;
+      box-shadow:0 50px 100px rgba(0,0,0,.6),0 0 80px rgba(124,58,237,.2);
+      animation:card-float 6s ease-in-out infinite;
+      z-index:2;
+    }
+    @keyframes card-float{0%,100%{transform:perspective(900px) rotateY(-10deg) rotateX(5deg) translateY(0);}50%{transform:perspective(900px) rotateY(10deg) rotateX(-5deg) translateY(-12px);}}
+    .bc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(6,182,212,.08),transparent 60%);}
+    .bc-card-top{display:flex;align-items:flex-start;justify-content:space-between;position:relative;z-index:1;}
+    .bc-chip{width:36px;height:28px;background:linear-gradient(135deg,rgba(245,158,11,.7),rgba(245,158,11,.4));border-radius:6px;}
+    .bc-nfc{font-size:.6rem;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;text-align:right;line-height:1.5;}
+    .bc-card-bot{position:relative;z-index:1;}
+    .bc-name{font-family:var(--ff-d);font-size:1.15rem;font-weight:900;letter-spacing:.06em;color:#fff;}
+    .bc-name em{font-style:normal;color:var(--cyan);}
+    .bc-tagline{font-size:.6rem;color:rgba(255,255,255,.35);letter-spacing:.12em;margin-top:.2rem;}
+    .bc-shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.06) 50%,transparent 60%);animation:shine 4s ease-in-out infinite;}
+    @keyframes shine{0%,100%{transform:translateX(-100%)}50%{transform:translateX(200%)}}
+    /* Features grid */
+    .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem;}
+    .feat-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:2.25rem;transition:all .35s;}
+    .feat-card:hover{border-color:rgba(124,58,237,.3);transform:translateY(-4px);}
+    .feat-emoji{font-size:2rem;margin-bottom:1rem;}
+    .feat-card h3{font-family:var(--ff-d);font-size:1rem;font-weight:700;margin-bottom:.55rem;}
+    .feat-card p{color:var(--muted);font-size:.83rem;line-height:1.75;}
+    /* How it works */
+    .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3.5rem;}
+    .how-step{text-align:center;padding:2rem 1.5rem;}
+    .how-num{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(6,182,212,.15));border:1px solid rgba(124,58,237,.3);display:flex;align-items:center;justify-content:center;font-family:var(--ff-d);font-size:1.1rem;font-weight:800;margin:0 auto 1.25rem;}
+    .how-step h4{font-family:var(--ff-d);font-size:.95rem;font-weight:700;margin-bottom:.5rem;}
+    .how-step p{color:var(--muted);font-size:.8rem;line-height:1.7;}
+    /* Pricing */
+    .bc-pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem;}
+    .bc-pkg{background:var(--bg2);border:1px solid var(--border);border-radius:22px;padding:2.5rem;transition:all .35s;position:relative;overflow:hidden;}
+    .bc-pkg.feat{border-color:rgba(124,58,237,.45);background:linear-gradient(135deg,rgba(124,58,237,.07),rgba(6,182,212,.04));}
+    .bc-pkg:hover{transform:translateY(-4px);}
+    .bc-badge-feat{position:absolute;top:1.5rem;right:1.5rem;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .75rem;border-radius:100px;}
+    .bc-pkg-name{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
+    .bc-pkg-price{font-family:var(--ff-d);font-size:2.4rem;font-weight:900;letter-spacing:-.04em;margin-bottom:.35rem;}
+    .bc-pkg-desc{color:var(--muted);font-size:.82rem;margin-bottom:1.75rem;line-height:1.65;}
+    .bc-pkg-list{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem;}
+    .bc-pkg-list li{font-size:.83rem;color:var(--muted);display:flex;gap:.6rem;}
+    .bc-pkg-list li::before{content:'✓';color:var(--cyan);font-size:.75rem;flex-shrink:0;margin-top:.05rem;}
+    @media(max-width:1100px){.hero-inner{grid-template-columns:1fr;}.card-stage{height:300px;}.feat-grid,.bc-pkg-grid{grid-template-columns:1fr 1fr;}.how-grid{grid-template-columns:repeat(2,1fr);}.bc-card{width:280px;height:165px;}#hero{padding:9rem 2rem 5rem;}}
+    @media(max-width:700px){.feat-grid,.bc-pkg-grid{grid-template-columns:1fr;}.how-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+<div id="scroll-progress"><div id="sp-fill"></div></div>
+<div id="page-trans"><div class="pt-panel"></div><div class="pt-panel"></div></div>
+<canvas id="noise-canvas"></canvas>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<span id="cur-label"></span>
+<div id="mob-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="branding.html" onclick="closeMob()">Branding</a>
+  <a href="events.html" onclick="closeMob()">Events</a>
+  <a href="gifting.html" onclick="closeMob()">Gifting</a>
+  <a href="social.html" onclick="closeMob()">Social</a>
+  <a href="digital.html" onclick="closeMob()">Digital</a>
+  <a href="print.html" onclick="closeMob()">Print</a>
+  <a href="blvckcard.html" onclick="closeMob()">BLVCKCARD</a>
+  <a href="contact.html" onclick="closeMob()" style="color:var(--cyan)">Contact Us</a>
+</div>
+<nav id="nav">
+  <a href="index.html" class="logo cd-mini" aria-label="FLEX LAB home"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Labs ▾</a>
+      <div class="drop">
+        <a href="branding.html"><span class="drop-icon">🎨</span>Branding Lab</a>
+        <a href="events.html"><span class="drop-icon">🎪</span>Events Lab</a>
+        <a href="gifting.html"><span class="drop-icon">🎁</span>Gift Lab</a>
+        <a href="social.html"><span class="drop-icon">📱</span>Social Lab</a>
+        <a href="digital.html"><span class="drop-icon">🌐</span>Digital Lab</a>
+        <a href="print.html"><span class="drop-icon">🖨️</span>Print Lab</a>
+      </div>
+    </li>
+    <li><a href="blvckcard.html">BLVCKCARD</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-btn">Order Now</a>
+  <button id="ham" onclick="toggleMob()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- Hero -->
+<section id="hero" data-tint="#d4af37">
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <div class="hero-inner">
+    <div class="rv">
+      <div class="gold-badge">Premium NFC · by FLex LAB</div>
+      <h1 data-big-statement="BLVCK">Network Smarter.<br>Tap to <span class="gold-text">Connect.</span></h1>
+      <p>BLVCKCARD is a premium NFC-enabled business card that lets modern professionals share their contact, portfolio, and social media — in a single elegant tap. No app required.</p>
+      <div class="bc-feats">
+        <div class="bcf"><div class="bcf-check">✓</div>Works with any iPhone or Android — no app needed</div>
+        <div class="bcf"><div class="bcf-check">✓</div>Share contact, portfolio, LinkedIn, Instagram instantly</div>
+        <div class="bcf"><div class="bcf-check">✓</div>Premium matte black, metal, and PVC finishes</div>
+        <div class="bcf"><div class="bcf-check">✓</div>Eco-friendly — one card, reorder never</div>
+        <div class="bcf"><div class="bcf-check">✓</div>Custom branding and logo engraving available</div>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="contact.html" class="btn-p magnetic">Order BLVCKCARD</a>
+        <a href="#pricing" class="btn-g magnetic">View Pricing ↓</a>
+      </div>
+      <div class="gold-line" style="width:80px;margin:2rem 0 1rem;"></div>
+      <a href="https://blvckcard.com/" target="_blank" rel="noopener" class="inspired-by" data-cursor-text="Visit">
+        Concept inspired by BLVCKCARD.com
+      </a>
+    </div>
+    <div class="card-stage rv d2">
+      <div class="glow-ring"></div>
+      <div class="glow-ring"></div>
+      <div class="glow-ring"></div>
+      <div class="bc-card">
+        <div class="bc-shine"></div>
+        <div class="bc-card-top">
+          <div class="bc-chip"></div>
+          <div class="bc-nfc">NFC<br>ENABLED<br>◈</div>
+        </div>
+        <div class="bc-card-bot">
+          <div class="bc-name">BLVCK<em>CARD</em></div>
+          <div class="bc-tagline">TAP TO CONNECT · POWERED BY FLEX LAB</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="m-track">
+    <div class="m-item"><span class="m-dot"></span>One Tap Sharing</div>
+    <div class="m-item"><span class="m-dot"></span>No App Required</div>
+    <div class="m-item"><span class="m-dot"></span>Premium Matte Black</div>
+    <div class="m-item"><span class="m-dot"></span>Metal Edition</div>
+    <div class="m-item"><span class="m-dot"></span>Custom Branding</div>
+    <div class="m-item"><span class="m-dot"></span>Eco-Friendly</div>
+    <div class="m-item"><span class="m-dot"></span>Instant Updates</div>
+    <div class="m-item"><span class="m-dot"></span>Analytics Dashboard</div>
+    <div class="m-item"><span class="m-dot"></span>One Tap Sharing</div>
+    <div class="m-item"><span class="m-dot"></span>No App Required</div>
+    <div class="m-item"><span class="m-dot"></span>Premium Matte Black</div>
+    <div class="m-item"><span class="m-dot"></span>Metal Edition</div>
+    <div class="m-item"><span class="m-dot"></span>Custom Branding</div>
+    <div class="m-item"><span class="m-dot"></span>Eco-Friendly</div>
+    <div class="m-item"><span class="m-dot"></span>Instant Updates</div>
+    <div class="m-item"><span class="m-dot"></span>Analytics Dashboard</div>
+  </div>
+</div>
+
+<!-- Features -->
+<section style="padding:9rem 5rem;">
+  <div class="s-label rv">Features</div>
+  <h2 class="s-title rv d1">Everything a Modern<br>Professional <span class="grad">Needs</span></h2>
+  <p class="s-sub rv d2">BLVCKCARD isn't just a card — it's your entire professional profile, always up to date, always impressive.</p>
+  <div class="feat-grid">
+    <div class="feat-card rv"><div class="feat-emoji">📲</div><h3>Tap & Share Instantly</h3><p>Hold your BLVCKCARD near any smartphone — contact details, links, and portfolio open immediately. No app, no friction.</p></div>
+    <div class="feat-card rv d1"><div class="feat-emoji">✏️</div><h3>Update Anytime</h3><p>Changed your number? Got a new role? Update your digital profile from your dashboard — the card never changes, the info always does.</p></div>
+    <div class="feat-card rv d2"><div class="feat-emoji">📊</div><h3>Analytics Dashboard</h3><p>See how many times your card was tapped, which links were clicked, and where your connections are coming from.</p></div>
+    <div class="feat-card rv d1"><div class="feat-emoji">🎨</div><h3>Fully Customisable</h3><p>Your logo, brand colours, photo, bio, and links — your BLVCKCARD profile is a premium micro-website that represents you perfectly.</p></div>
+    <div class="feat-card rv d2"><div class="feat-emoji">🔗</div><h3>Share Everything</h3><p>LinkedIn, Instagram, WhatsApp, email, phone, website, portfolio, Calendly — everything in one tap.</p></div>
+    <div class="feat-card rv d3"><div class="feat-emoji">🌍</div><h3>Works Everywhere</h3><p>NFC on one side, QR code on the other — so your card works whether the recipient has NFC enabled or not.</p></div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section style="padding:0 5rem 9rem;background:var(--bg2);">
+  <div style="padding-top:6rem;">
+    <div class="s-label rv">How It Works</div>
+    <h2 class="s-title rv d1">Up and Running in<br><span class="grad">Minutes</span></h2>
+    <div class="how-grid">
+      <div class="how-step rv"><div class="how-num">1</div><h4>Order Your Card</h4><p>Choose your finish — PVC, matte black, or metal — and add custom branding if needed.</p></div>
+      <div class="how-step rv d1"><div class="how-num">2</div><h4>Set Up Your Profile</h4><p>Fill in your details, add your links, upload a photo — your digital profile is live instantly.</p></div>
+      <div class="how-step rv d2"><div class="how-num">3</div><h4>Receive Your Card</h4><p>Delivered to your door within 5–7 business days, beautifully packaged.</p></div>
+      <div class="how-step rv d3"><div class="how-num">4</div><h4>Tap & Connect</h4><p>Tap your BLVCKCARD on any phone to share your complete professional profile instantly.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" style="padding:9rem 5rem;">
+  <div class="s-label rv">Pricing</div>
+  <h2 class="s-title rv d1">One Card. <span class="grad">Endless Impressions.</span></h2>
+  <p class="s-sub rv d2">A one-time investment that pays for itself after your very first networking event.</p>
+  <div class="bc-pkg-grid">
+    <div class="bc-pkg rv">
+      <div class="bc-pkg-name">Classic PVC</div>
+      <div class="bc-pkg-price">₹999</div>
+      <div class="bc-pkg-desc">Premium PVC card with NFC chip and QR code. Perfect for professionals starting with digital networking.</div>
+      <ul class="bc-pkg-list">
+        <li>1 BLVCKCARD (PVC)</li>
+        <li>Digital profile setup</li>
+        <li>NFC + QR code</li>
+        <li>Unlimited profile updates</li>
+        <li>Basic analytics</li>
+      </ul>
+      <a href="contact.html" class="btn-g" style="width:100%;justify-content:center;">Order Now</a>
+    </div>
+    <div class="bc-pkg feat rv d1">
+      <div class="bc-badge-feat">Best Value</div>
+      <div class="bc-pkg-name">Matte Black</div>
+      <div class="bc-pkg-price">₹1,499</div>
+      <div class="bc-pkg-desc">Our most popular card — premium matte black PVC with a luxurious soft-touch finish that commands attention.</div>
+      <ul class="bc-pkg-list">
+        <li>1 BLVCKCARD (Matte Black)</li>
+        <li>Full profile customisation</li>
+        <li>NFC + QR code</li>
+        <li>Unlimited profile updates</li>
+        <li>Full analytics dashboard</li>
+        <li>Priority delivery</li>
+      </ul>
+      <a href="contact.html" class="btn-p" style="width:100%;justify-content:center;">Order Now</a>
+    </div>
+    <div class="bc-pkg rv d2">
+      <div class="bc-pkg-name">Metal Elite</div>
+      <div class="bc-pkg-price">₹2,999</div>
+      <div class="bc-pkg-desc">Stainless steel card with laser-engraved branding — for executives who demand nothing less than extraordinary.</div>
+      <ul class="bc-pkg-list">
+        <li>1 BLVCKCARD (Stainless Steel)</li>
+        <li>Laser-engraved logo & name</li>
+        <li>NFC + QR code</li>
+        <li>Premium profile with custom domain</li>
+        <li>Full analytics + CRM export</li>
+        <li>White-glove delivery</li>
+        <li>Dedicated account support</li>
+      </ul>
+      <a href="contact.html" class="btn-g" style="width:100%;justify-content:center;">Order Now</a>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band" style="background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(6,182,212,.04));">
+  <h2 class="rv">Make Your First Impression<br><span class="grad">Unforgettable</span></h2>
+  <p class="rv d1">Join hundreds of professionals who've upgraded their networking with BLVCKCARD.</p>
+  <div class="cta-btns rv d2">
+    <a href="contact.html" class="btn-p">Order Your BLVCKCARD</a>
+    <a href="index.html" class="btn-g">← Back to Home</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="f-brand">
+    <div class="logo cd-mini"><span class="cd-mini-fill">FLEX</span><span class="cd-mini-outline">LAB</span></div><p>India's premium creative agency — events, branding, gifting, social, and digital presence under one roof.</p><div class="socials"><a href="#" class="soc">in</a><a href="#" class="soc">ig</a><a href="#" class="soc">fb</a><a href="#" class="soc">yt</a></div></div>
+  <div class="f-col"><h5>Our Labs</h5><ul><li><a href="branding.html">Branding Lab</a></li><li><a href="events.html">Events Lab</a></li><li><a href="gifting.html">Gift Lab</a></li><li><a href="social.html">Social Lab</a></li><li><a href="digital.html">Digital Lab</a></li><li><a href="print.html">Print Lab</a></li></ul></div>
+  <div class="f-col"><h5>BLVCKCARD</h5><ul><li><a href="blvckcard.html">Classic PVC</a></li><li><a href="blvckcard.html">Matte Black</a></li><li><a href="blvckcard.html">Metal Elite</a></li><li><a href="print.html">Print Lab</a></li></ul></div>
+  <div class="f-col"><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  <div class="f-col"><h5>Contact</h5><ul><li><a href="mailto:hello@flexlab.co.in">hello@flexlab.co.in</a></li></ul></div>
+</footer>
+<div class="f-bottom"><p>© 2024 FLex LAB. All rights reserved.</p><p>Made with ♥ in India</p></div>
+<script src="main.js"></script>
+<script src="animations.js"></script>
+<script src="premium.js"></script>
+</body>
+</html>
