@@ -120,12 +120,12 @@
     #blvck-section .bc-side-glow-l {
       left: -180px;
       background: radial-gradient(ellipse at center,
-        rgba(212, 168, 87, 0.35), transparent 65%);
+        rgba(212, 175, 55, 0.35), transparent 65%);
     }
     #blvck-section .bc-side-glow-r {
       right: -180px;
       background: radial-gradient(ellipse at center,
-        rgba(212, 168, 87, 0.35), transparent 65%);
+        rgba(212, 175, 55, 0.35), transparent 65%);
     }
     #blvck {
       margin: 0 5rem; border-radius: 0; overflow: visible;
@@ -136,11 +136,11 @@
     }
     .blvck-badge {
       display:inline-flex; align-items:center; gap:.5rem;
-      background: rgba(212, 168, 87, 0.06);
-      border: 1px solid rgba(212, 168, 87, 0.35);
+      background: rgba(212, 175, 55, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: 100px; padding: .4rem 1.1rem;
       font-size: .68rem; font-weight: 700;
-      color: #d4a857;
+      color: #d4af37;
       letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1.5rem;
     }
     #blvck h2 {
@@ -150,7 +150,7 @@
     }
     #blvck h2 .gold,
     #blvck h2 em {
-      background: linear-gradient(135deg, #d4a857, #f5d77b 50%, #d4a857);
+      background: linear-gradient(135deg, #d4af37, #f5d77b 50%, #d4af37);
       -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent; color: transparent;
       font-style: normal;
@@ -160,62 +160,86 @@
     .bf { display: flex; align-items: center; gap: .75rem; font-size: .85rem; color: rgba(255, 255, 255, 0.6); }
     .bf::before {
       content: '✓'; width: 20px; height: 20px;
-      background: rgba(212, 168, 87, 0.12);
+      background: rgba(212, 175, 55, 0.12);
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: .65rem; color: #d4a857; flex-shrink: 0;
+      font-size: .65rem; color: #d4af37; flex-shrink: 0;
     }
     .blvck-card-vis { position: relative; display: flex; align-items: center; justify-content: center; min-height: 460px; }
-    /* The card itself — pure black with thin gold border, "BLVCKCARD" centered, gold halo */
+    /* ── Card — EXACT match to blvckcard.com reference ── */
     .card-3d {
-      width: 460px; height: 290px; border-radius: 18px;
-      background: linear-gradient(135deg, #050505, #0a0a0a, #050505);
-      border: 1.2px solid rgba(212, 168, 87, 0.6);
+      --mx: 50%;
+      --my: 50%;
+      width: 460px; height: 290px;
+      border-radius: 12px; /* rounded-xl */
+      /* bg-gradient-to-bl from-[#1a1a1a] to-black */
+      background: linear-gradient(to bottom left, #1a1a1a, #000);
+      /* border-[#d4af37]/50 */
+      border: 1px solid rgba(212, 175, 55, 0.5);
       display: flex; align-items: center; justify-content: center;
-      flex-direction: row; gap: 0;
+      /* shadow-[0_0_50px_rgba(212,175,55,0.2)] + outer ambient layers */
       box-shadow:
-        0 0 50px rgba(212, 168, 87, 0.45),
-        0 0 120px rgba(212, 168, 87, 0.28),
-        0 0 220px rgba(212, 168, 87, 0.14),
-        0 0 360px rgba(212, 168, 87, 0.06),
-        inset 0 0 30px rgba(212, 168, 87, 0.04);
+        0 0 50px rgba(212, 175, 55, 0.22),
+        0 0 130px rgba(212, 175, 55, 0.12),
+        0 0 240px rgba(212, 175, 55, 0.06);
       position: relative; overflow: hidden;
-      animation: bc-card-float 5.5s ease-in-out infinite;
+      animation: bc-card-float 6s ease-in-out infinite;
       will-change: transform;
+      transition: box-shadow .5s, border-color .5s;
+    }
+    .card-3d:hover {
+      border-color: rgba(212, 175, 55, 0.8);
+      box-shadow:
+        0 0 70px rgba(212, 175, 55, 0.32),
+        0 0 160px rgba(212, 175, 55, 0.18),
+        0 0 300px rgba(212, 175, 55, 0.08);
     }
     @keyframes bc-card-float {
-      0%, 100% { transform: perspective(900px) rotateY(-3deg) rotateX(2deg) translateY(0); }
-      50%      { transform: perspective(900px) rotateY(3deg)  rotateX(-2deg) translateY(-6px); }
+      0%, 100% { transform: perspective(1200px) rotateY(-2deg) rotateX(1deg) translateY(0); }
+      50%      { transform: perspective(1200px) rotateY(2deg)  rotateX(-1deg) translateY(-4px); }
     }
-    /* Subtle interior shine */
+    /* Gold cursor-following glow (interactive) */
     .card-3d::before {
       content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 50%,
-        rgba(212, 168, 87, 0.04), transparent 60%);
+      background: radial-gradient(circle 320px at var(--mx) var(--my),
+        rgba(212, 175, 55, 0.28) 0%,
+        rgba(212, 175, 55, 0.12) 30%,
+        transparent 65%);
       border-radius: inherit;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity .5s cubic-bezier(.23, 1, .32, 1);
+      z-index: 1;
     }
-    /* Glint border line on top */
+    .card-3d:hover::before { opacity: 1; }
+    /* Faint top hairline highlight */
     .card-3d::after {
-      content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(212, 168, 87, 0.55), transparent);
+      content: ''; position: absolute; top: 0; left: 12%; right: 12%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
       pointer-events: none;
+      z-index: 2;
     }
-    /* Logo: just "BLVCKCARD" in gold, spaced */
+    /* Logo — Bank Gothic, tracking-widest, gold #d4af37 */
     .card-logo {
-      font-family: var(--ff-d), 'Space Grotesk', sans-serif;
-      font-size: 1.5rem; font-weight: 500; letter-spacing: 0.42em;
-      color: #d4a857; text-transform: uppercase;
-      background: none; -webkit-text-fill-color: #d4a857;
-      display: inline; text-shadow: 0 0 14px rgba(212, 168, 87, 0.35);
+      font-family: 'Bank Gothic', 'Trade Gothic', 'Oxanium', 'Space Grotesk', sans-serif !important;
+      font-size: 1.25rem; /* text-xl */
+      font-weight: 700; /* font-bold */
+      letter-spacing: 0.1em; /* tracking-widest */
+      color: #d4af37 !important;
+      -webkit-text-fill-color: #d4af37 !important;
+      background: none !important;
+      text-align: center;
+      text-transform: uppercase;
+      position: relative; z-index: 3;
+      text-shadow: 0 0 18px rgba(212, 175, 55, 0.4);
     }
-    .card-logo em { font-style: normal; color: #d4a857; -webkit-text-fill-color: #d4a857; }
+    .card-logo em { font-style: normal; color: #d4af37 !important; -webkit-text-fill-color: #d4af37 !important; }
     /* Hide chip and NFC label — reference is a minimal card */
     .card-nfc, .card-chip { display: none !important; }
     /* Centered ambient golden glow under the card */
     .glow-dot {
       position: absolute; width: 560px; height: 360px; border-radius: 50%;
       background: radial-gradient(ellipse at center,
-        rgba(212, 168, 87, 0.32), transparent 65%);
+        rgba(212, 175, 55, 0.32), transparent 65%);
       filter: blur(40px);
       animation: bc-glow-pulse 4s ease-in-out infinite;
     }
@@ -691,6 +715,35 @@ document.querySelectorAll('.lab-card').forEach(function(card){
     card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
   });
 });
+
+// BLVCKCARD gold cursor glow — smooth lerped tracking
+(function(){
+  var card = document.querySelector('#blvck-section .card-3d');
+  if(!card) return;
+  var tx = 50, ty = 50, cx = 50, cy = 50, active = false, raf = null;
+  function tick(){
+    cx += (tx - cx) * 0.18;
+    cy += (ty - cy) * 0.18;
+    card.style.setProperty('--mx', cx.toFixed(2) + '%');
+    card.style.setProperty('--my', cy.toFixed(2) + '%');
+    if(active || Math.abs(cx-tx) > 0.2 || Math.abs(cy-ty) > 0.2){
+      raf = requestAnimationFrame(tick);
+    } else { raf = null; }
+  }
+  card.addEventListener('mouseenter', function(e){
+    var r = card.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width) * 100;
+    ty = ((e.clientY - r.top) / r.height) * 100;
+    active = true;
+    if(!raf) raf = requestAnimationFrame(tick);
+  });
+  card.addEventListener('mousemove', function(e){
+    var r = card.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width) * 100;
+    ty = ((e.clientY - r.top) / r.height) * 100;
+  });
+  card.addEventListener('mouseleave', function(){ active = false; });
+})();
 </script>
 </body>
 </html>

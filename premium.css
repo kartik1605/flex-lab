@@ -1167,6 +1167,122 @@ nav#nav.nav-condensed {
 /* Big-statement disabled globally — overlay was not premium */
 .big-statement { display: none !important; }
 
+/* ═══════════════════════════════════════════
+   FEATURE IMAGE UTILITY
+   (premium framed photo block for content sections)
+═══════════════════════════════════════════ */
+.feat-img-wrap {
+  position: relative;
+  display: block;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.45),
+    0 8px 20px rgba(0, 0, 0, 0.25),
+    0 0 40px color-mix(in srgb, var(--violet, #7c3aed) 8%, transparent);
+  transition: transform .6s cubic-bezier(.23, 1, .32, 1),
+              box-shadow .6s, border-color .4s;
+  isolation: isolate;
+}
+.feat-img-wrap:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--violet, #7c3aed) 35%, transparent);
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.55),
+    0 12px 28px rgba(0, 0, 0, 0.3),
+    0 0 60px color-mix(in srgb, var(--violet, #7c3aed) 18%, transparent);
+}
+.feat-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition: transform 1s cubic-bezier(.23, 1, .32, 1), filter .6s;
+  will-change: transform;
+}
+.feat-img-wrap:hover .feat-img {
+  transform: scale(1.04);
+  filter: brightness(1.05);
+}
+/* Subtle gradient overlay so image blends with dark theme */
+.feat-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    transparent 55%,
+    rgba(10, 11, 20, 0.4) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+/* Optional gold/violet edge accent */
+.feat-img-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--violet, #7c3aed) 35%, transparent) 0%,
+    color-mix(in srgb, var(--cyan, #d4a857) 25%, transparent) 50%,
+    transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.7;
+}
+
+/* Caption */
+.feat-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.75rem;
+  right: 1.75rem;
+  z-index: 3;
+  color: rgba(244, 232, 215, 0.92);
+  pointer-events: none;
+}
+.feat-caption .feat-eyebrow {
+  font-family: 'Space Grotesk', monospace;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--cyan, #d4a857);
+  margin-bottom: .35rem;
+}
+.feat-caption .feat-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.25;
+}
+
+/* Showcase grid — two-up layout helper */
+.feat-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 3rem 0 4rem;
+  padding: 0 5rem;
+}
+@media (max-width: 1100px) {
+  .feat-grid-2 { grid-template-columns: 1fr; padding: 0 2rem; }
+}
+.feat-grid-full {
+  margin: 3rem 5rem 4rem;
+}
+@media (max-width: 1100px) {
+  .feat-grid-full { margin: 3rem 2rem; }
+}
+
 /* Hero italic gold tagline (matches FlexLab signature) */
 #hero .h-tagline {
   font-size: clamp(1rem, 2vw, 1.35rem);
