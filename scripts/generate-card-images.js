@@ -12,9 +12,12 @@ if (!process.env.GEMINI_API_KEY) {
 
 const client = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const OUT_DIR = path.join(__dirname, '..', 'images');
-const MODEL = 'gemini-2.0-flash-preview-image-generation';
+// Primary: nano-banana-pro-preview (Pro plan)
+// Fallback: gemini-3.1-flash-image-preview
+const MODEL_PRIMARY  = 'nano-banana-pro-preview';
+const MODEL_FALLBACK = 'gemini-3.1-flash-image-preview';
 
-// Brand palette (described in prompts so Gemini matches the theme)
+// Brand palette (described in prompts so the model matches the theme)
 // Dark bg: #04040a  Violet: #7c3aed  Cyan: #06b6d4
 // Gold: #b8a47e    Rose: #f43f5e     Green: #10b981
 
@@ -115,29 +118,54 @@ Brand palette: dark background, amber #f59e0b candlelight, gold accents.`,
   },
 ];
 
+// Extract retry-after seconds from a 429 error message
+function parseRetryDelay(msg) {
+  const match = msg.match(/retry(?:Delay)?"?\s*[=:]\s*"?(\d+)/i)
+             || msg.match(/retry in (\d+)/i);
+  return match ? (parseInt(match[1], 10) + 2) : 35;
+}
+
+async function tryGeminiNative(card, model) {
+  const res = await client.models.generateContent({
+    model,
+    contents: [{ role: 'user', parts: [{ text: card.prompt }] }],
+    config: { responseModalities: ['IMAGE', 'TEXT'] },
+  });
+  const parts = res.candidates?.[0]?.content?.parts ?? [];
+  const img = parts.find(p => p.inlineData?.mimeType?.startsWith('image/'));
+  if (!img) {
+    const txt = parts.find(p => p.text)?.text ?? '(no image returned)';
+    throw new Error(txt.slice(0, 120));
+  }
+  return Buffer.from(img.inlineData.data, 'base64');
+}
+
 async function generateOne(card) {
+  // 1. Try nano-banana-pro-preview
   try {
-    const res = await client.models.generateContent({
-      model: MODEL,
-      contents: [{ role: 'user', parts: [{ text: card.prompt }] }],
-      config: { responseModalities: ['IMAGE', 'TEXT'] },
-    });
-
-    const parts = res.candidates?.[0]?.content?.parts ?? [];
-    const img = parts.find(p => p.inlineData?.mimeType?.startsWith('image/'));
-
-    if (!img) {
-      const txt = parts.find(p => p.text)?.text ?? '(no message)';
-      console.warn(`  ⚠  ${card.file}: no image returned — ${txt}`);
-      return false;
-    }
-
-    const buf = Buffer.from(img.inlineData.data, 'base64');
+    const buf = await tryGeminiNative(card, MODEL_PRIMARY);
     fs.writeFileSync(path.join(OUT_DIR, card.file), buf);
-    console.log(`  ✓  ${card.file} (${(buf.length / 1024).toFixed(0)} KB)`);
+    console.log(`  ✓  ${card.file} — nano-banana-pro (${(buf.length/1024).toFixed(0)} KB)`);
     return true;
   } catch (err) {
-    console.error(`  ✗  ${card.file}: ${err.message}`);
+    const msg = err.message || '';
+    const wait = parseRetryDelay(msg);
+    if (msg.includes('RESOURCE_EXHAUSTED') || msg.includes('quota')) {
+      console.log(`  ↻  ${card.file} — rate limited, waiting ${wait}s then trying fallback…`);
+      await new Promise(r => setTimeout(r, wait * 1000));
+    } else {
+      console.warn(`  ⚠  ${card.file} — primary: ${msg.slice(0, 100)}`);
+    }
+  }
+
+  // 2. Fallback to gemini-3.1-flash-image-preview
+  try {
+    const buf = await tryGeminiNative(card, MODEL_FALLBACK);
+    fs.writeFileSync(path.join(OUT_DIR, card.file), buf);
+    console.log(`  ✓  ${card.file} — gemini-3.1-flash-image (${(buf.length/1024).toFixed(0)} KB)`);
+    return true;
+  } catch (err) {
+    console.error(`  ✗  ${card.file}: both models failed — ${err.message.slice(0, 120)}`);
     return false;
   }
 }
@@ -152,8 +180,8 @@ async function main() {
   for (const card of CARDS) {
     const success = await generateOne(card);
     if (success) ok++;
-    // Small pause between requests
-    await new Promise(r => setTimeout(r, 800));
+    // Pause between requests to stay within per-minute limits
+    if (ok < CARDS.length - 1) await new Promise(r => setTimeout(r, 4000));
   }
 
   console.log(`\nDone — ${ok}/${CARDS.length} images saved to images/\n`);
