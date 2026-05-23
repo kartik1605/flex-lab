@@ -28,11 +28,11 @@
   --ff-b: 'Inter', sans-serif;
 }
 
-html { scroll-behavior:smooth; overflow-x:hidden; }
+html { scroll-behavior:smooth; overflow-x:clip; }
 
 body {
   background:var(--bg); color:var(--text);
-  font-family:var(--ff-b); overflow-x:hidden;
+  font-family:var(--ff-b); overflow-x:clip;
   cursor:none; -webkit-font-smoothing:antialiased;
   line-height:1.6;
 }

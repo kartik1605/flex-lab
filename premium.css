@@ -1369,10 +1369,12 @@ nav#nav.nav-condensed {
   position: relative;
 }
 
-/* Sticky left column */
+/* Sticky left column — centred in viewport so it floats alongside all 5 cards */
 .bs-sticky-col {
   position: sticky;
-  top: 8rem;
+  /* calc(50vh - ~220px) ≈ half-height of the sticky content block (~440px)
+     clamp keeps it from going above the nav bar or below mid-screen */
+  top: clamp(5rem, calc(50vh - 220px), 35vh);
   align-self: start;
   height: fit-content;
 }

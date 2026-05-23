@@ -1,0 +1,28 @@
+# Node dependencies — installed during build, must never be uploaded as assets
+node_modules/
+
+# Git internals
+.git/
+
+# Claude / AI assistant working files
+.claude/
+
+# Local dev scripts (not part of the website)
+scripts/
+
+# Node package files
+package.json
+package-lock.json
+bun.lockb
+*.lock
+
+# Wrangler config itself (not a static asset)
+wrangler.jsonc
+wrangler.toml
+
+# Logs and temp files
+*.log
+*.bak
+*.tmp
+.env
+.env.*
