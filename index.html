@@ -233,8 +233,50 @@
       text-shadow: 0 0 18px rgba(212, 175, 55, 0.4);
     }
     .card-logo em { font-style: normal; color: #d4af37 !important; -webkit-text-fill-color: #d4af37 !important; }
-    /* Hide chip and NFC label — reference is a minimal card */
-    .card-nfc, .card-chip { display: none !important; }
+    /* ── Real card inner elements ── */
+    .bc-card-chip {
+      position: absolute; top: 22px; left: 24px;
+      width: 36px; height: 28px; z-index: 3;
+    }
+    .bc-card-chip svg { width: 100%; height: 100%; display: block; }
+    .bc-card-nfc {
+      position: absolute; top: 20px; right: 24px;
+      width: 26px; height: 26px; z-index: 3;
+    }
+    .bc-card-nfc svg { width: 100%; height: 100%; display: block; }
+    .bc-card-dots {
+      position: absolute; bottom: 40px; left: 24px;
+      font-family: 'Courier New', monospace;
+      font-size: .72rem; letter-spacing: .18em;
+      color: rgba(212,175,55,.45); z-index: 3;
+    }
+    .bc-card-foot {
+      position: absolute; bottom: 16px; left: 24px; right: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 3;
+    }
+    .bc-card-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(212,175,55,.65);
+    }
+    .bc-card-badge {
+      font-size: .55rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(212,175,55,.38); border: 1px solid rgba(212,175,55,.2);
+      border-radius: 4px; padding: .12rem .45rem;
+    }
+    /* Subtle diagonal lines texture */
+    .card-3d .bc-card-lines {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      opacity: .045;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(212,175,55,1) 0px, rgba(212,175,55,1) 1px,
+        transparent 1px, transparent 18px
+      );
+    }
     /* Centered ambient golden glow under the card */
     .glow-dot {
       position: absolute; width: 560px; height: 360px; border-radius: 50%;
@@ -575,7 +617,37 @@
     <div class="blvck-card-vis scale-reveal">
       <div class="glow-dot"></div>
       <div class="card-3d">
+        <!-- Diagonal texture -->
+        <div class="bc-card-lines"></div>
+        <!-- Chip -->
+        <div class="bc-card-chip">
+          <svg viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x=".5" y=".5" width="35" height="27" rx="4.5" stroke="rgba(212,175,55,0.65)" stroke-width="1"/>
+            <line x1="0" y1="9.5" x2="36" y2="9.5" stroke="rgba(212,175,55,0.35)" stroke-width=".8"/>
+            <line x1="0" y1="18.5" x2="36" y2="18.5" stroke="rgba(212,175,55,0.35)" stroke-width=".8"/>
+            <line x1="12" y1="0" x2="12" y2="28" stroke="rgba(212,175,55,0.35)" stroke-width=".8"/>
+            <line x1="24" y1="0" x2="24" y2="28" stroke="rgba(212,175,55,0.35)" stroke-width=".8"/>
+            <rect x="13" y="10" width="10" height="8" rx="1" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.4)" stroke-width=".6"/>
+          </svg>
+        </div>
+        <!-- NFC waves -->
+        <div class="bc-card-nfc">
+          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 3.5C7.75 3.5 3.5 7.75 3.5 13S7.75 22.5 13 22.5 22.5 18.25 22.5 13 18.25 3.5 13 3.5z" stroke="rgba(212,175,55,0.25)" stroke-width="1"/>
+            <path d="M13 7C9.68 7 7 9.68 7 13s2.68 6 6 6 6-2.68 6-6-2.68-6-6-6z" stroke="rgba(212,175,55,0.4)" stroke-width="1"/>
+            <path d="M13 10.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" stroke="rgba(212,175,55,0.6)" stroke-width="1"/>
+            <circle cx="13" cy="13" r="1.2" fill="rgba(212,175,55,0.85)"/>
+          </svg>
+        </div>
+        <!-- Wordmark -->
         <div class="card-logo">BLVCKCARD</div>
+        <!-- Card number -->
+        <div class="bc-card-dots">●●●● &nbsp; ●●●● &nbsp; ●●●● &nbsp; ████</div>
+        <!-- Footer -->
+        <div class="bc-card-foot">
+          <span class="bc-card-name">FLex LAB</span>
+          <span class="bc-card-badge">NFC · QR</span>
+        </div>
       </div>
     </div>
   </div>
