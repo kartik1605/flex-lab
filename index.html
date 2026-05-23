@@ -164,119 +164,59 @@
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       font-size: .65rem; color: #d4af37; flex-shrink: 0;
     }
-    .blvck-card-vis { position: relative; display: flex; align-items: center; justify-content: center; min-height: 460px; }
-    /* ── Card — EXACT match to blvckcard.com reference ── */
+    /* perspective lives on the parent so rotateX/Y feel truly 3D */
+    .blvck-card-vis {
+      position: relative; display: flex; align-items: center; justify-content: center;
+      min-height: 460px;
+      perspective: 1000px; perspective-origin: 50% 50%;
+    }
+    /* ── Card ── */
     .card-3d {
-      --mx: 50%;
-      --my: 50%;
-      width: 460px; height: 290px;
-      border-radius: 12px;
+      --mx: 50%; --my: 50%;
+      width: 460px; height: 290px; border-radius: 12px;
       background: linear-gradient(to bottom left, #1a1a1a, #000);
-      border: 1px solid rgba(212, 175, 55, 0.5);
+      border: 1px solid rgba(212,175,55,.5);
       display: flex; align-items: center; justify-content: center;
       box-shadow:
-        0 0 50px rgba(212, 175, 55, 0.22),
-        0 0 130px rgba(212, 175, 55, 0.12),
-        0 0 240px rgba(212, 175, 55, 0.06);
+        0 0 50px rgba(212,175,55,.22),
+        0 0 130px rgba(212,175,55,.12),
+        0 0 240px rgba(212,175,55,.06);
       position: relative; overflow: hidden;
       animation: bc-card-float 6s ease-in-out infinite;
-      will-change: transform;
-      transform-style: preserve-3d;
-      transition: box-shadow .55s cubic-bezier(.23,1,.32,1),
-                  border-color .55s cubic-bezier(.23,1,.32,1);
+      will-change: transform; transform-style: preserve-3d;
     }
-    .card-3d:hover {
-      border-color: rgba(212, 175, 55, 0.85);
-      box-shadow:
-        0 0 70px  rgba(212, 175, 55, 0.38),
-        0 0 160px rgba(212, 175, 55, 0.20),
-        0 0 300px rgba(212, 175, 55, 0.10),
-        0 30px 60px rgba(0, 0, 0, 0.55);
-    }
+    .card-3d:hover { border-color: rgba(212,175,55,.85); }
+    /* float — NO perspective() inside; parent handles it */
     @keyframes bc-card-float {
-      0%, 100% { transform: perspective(1200px) rotateY(-2deg) rotateX(1deg) translateY(0); }
-      50%      { transform: perspective(1200px) rotateY(2deg)  rotateX(-1deg) translateY(-4px); }
+      0%,100% { transform: rotateY(-2deg) rotateX(1deg)  translateY(0); }
+      50%     { transform: rotateY(2deg)  rotateX(-1deg) translateY(-5px); }
     }
-    /* Gold cursor-following glow (interactive) */
+    /* Gold cursor-following glow */
     .card-3d::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle 320px at var(--mx) var(--my),
-        rgba(212, 175, 55, 0.28) 0%,
-        rgba(212, 175, 55, 0.12) 30%,
-        transparent 65%);
-      border-radius: inherit;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity .5s cubic-bezier(.23, 1, .32, 1);
-      z-index: 1;
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(circle 320px at var(--mx) var(--my),
+        rgba(212,175,55,.30) 0%, rgba(212,175,55,.12) 30%, transparent 65%);
+      border-radius:inherit; pointer-events:none;
+      opacity:0; transition:opacity .45s cubic-bezier(.23,1,.32,1); z-index:1;
     }
-    .card-3d:hover::before { opacity: 1; }
-    /* Faint top hairline highlight */
+    .card-3d:hover::before { opacity:1; }
+    /* Top hairline */
     .card-3d::after {
-      content: ''; position: absolute; top: 0; left: 12%; right: 12%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
-      pointer-events: none;
-      z-index: 2;
+      content:''; position:absolute; top:0; left:12%; right:12%; height:1px;
+      background:linear-gradient(90deg,transparent,rgba(212,175,55,.55),transparent);
+      pointer-events:none; z-index:2;
     }
-    /* Logo — Bank Gothic, tracking-widest, gold #d4af37 */
+    /* Logo */
     .card-logo {
-      font-family: 'Bank Gothic', 'Trade Gothic', 'Oxanium', 'Space Grotesk', sans-serif !important;
-      font-size: 1.25rem; /* text-xl */
-      font-weight: 700; /* font-bold */
-      letter-spacing: 0.1em; /* tracking-widest */
-      color: #d4af37 !important;
-      -webkit-text-fill-color: #d4af37 !important;
-      background: none !important;
-      text-align: center;
-      text-transform: uppercase;
-      position: relative; z-index: 3;
-      text-shadow: 0 0 18px rgba(212, 175, 55, 0.4);
+      font-family:'Space Grotesk',sans-serif !important;
+      font-size:1.25rem; font-weight:700; letter-spacing:.1em;
+      text-transform:uppercase; color:#d4af37 !important;
+      -webkit-text-fill-color:#d4af37 !important;
+      background:none !important; text-align:center;
+      text-shadow:0 0 20px rgba(212,175,55,.45);
+      position:relative; z-index:3;
     }
-    .card-logo em { font-style: normal; color: #d4af37 !important; -webkit-text-fill-color: #d4af37 !important; }
-    /* ── Real card inner elements ── */
-    .bc-card-chip {
-      position: absolute; top: 22px; left: 24px;
-      width: 36px; height: 28px; z-index: 3;
-    }
-    .bc-card-chip svg { width: 100%; height: 100%; display: block; }
-    .bc-card-nfc {
-      position: absolute; top: 20px; right: 24px;
-      width: 26px; height: 26px; z-index: 3;
-    }
-    .bc-card-nfc svg { width: 100%; height: 100%; display: block; }
-    .bc-card-dots {
-      position: absolute; bottom: 40px; left: 24px;
-      font-family: 'Courier New', monospace;
-      font-size: .72rem; letter-spacing: .18em;
-      color: rgba(212,175,55,.45); z-index: 3;
-    }
-    .bc-card-foot {
-      position: absolute; bottom: 16px; left: 24px; right: 24px;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 3;
-    }
-    .bc-card-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: .62rem; font-weight: 700;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: rgba(212,175,55,.65);
-    }
-    .bc-card-badge {
-      font-size: .55rem; font-weight: 600;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: rgba(212,175,55,.38); border: 1px solid rgba(212,175,55,.2);
-      border-radius: 4px; padding: .12rem .45rem;
-    }
-    /* Subtle diagonal lines texture */
-    .card-3d .bc-card-lines {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      opacity: .045;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        rgba(212,175,55,1) 0px, rgba(212,175,55,1) 1px,
-        transparent 1px, transparent 18px
-      );
-    }
+    .card-logo em { font-style:normal; color:#d4af37 !important; -webkit-text-fill-color:#d4af37 !important; }
     /* Centered ambient golden glow under the card */
     .glow-dot {
       position: absolute; width: 560px; height: 360px; border-radius: 50%;
@@ -617,37 +557,7 @@
     <div class="blvck-card-vis scale-reveal">
       <div class="glow-dot"></div>
       <div class="card-3d">
-        <!-- Diagonal texture -->
-        <div class="bc-card-lines"></div>
-        <!-- Chip -->
-        <div class="bc-card-chip">
-          <svg viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x=".5" y=".5" width="35" height="27" rx="4.5" stroke="rgba(212,175,55,0.65)" stroke-width="1"/>
-            <line x1="0" y1="9.5" x2="36" y2="9.5" stroke="rgba(212,175,55,0.35)" stroke-width=".8"/>
-            <line x1="0" y1="18.5" x2="36" y2="18.5" stroke="rgba(212,175,55,0.35)" stroke-width=".8"/>
-            <line x1="12" y1="0" x2="12" y2="28" stroke="rgba(212,175,55,0.35)" stroke-width=".8"/>
-            <line x1="24" y1="0" x2="24" y2="28" stroke="rgba(212,175,55,0.35)" stroke-width=".8"/>
-            <rect x="13" y="10" width="10" height="8" rx="1" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.4)" stroke-width=".6"/>
-          </svg>
-        </div>
-        <!-- NFC waves -->
-        <div class="bc-card-nfc">
-          <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13 3.5C7.75 3.5 3.5 7.75 3.5 13S7.75 22.5 13 22.5 22.5 18.25 22.5 13 18.25 3.5 13 3.5z" stroke="rgba(212,175,55,0.25)" stroke-width="1"/>
-            <path d="M13 7C9.68 7 7 9.68 7 13s2.68 6 6 6 6-2.68 6-6-2.68-6-6-6z" stroke="rgba(212,175,55,0.4)" stroke-width="1"/>
-            <path d="M13 10.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" stroke="rgba(212,175,55,0.6)" stroke-width="1"/>
-            <circle cx="13" cy="13" r="1.2" fill="rgba(212,175,55,0.85)"/>
-          </svg>
-        </div>
-        <!-- Wordmark -->
         <div class="card-logo">BLVCKCARD</div>
-        <!-- Card number -->
-        <div class="bc-card-dots">●●●● &nbsp; ●●●● &nbsp; ●●●● &nbsp; ████</div>
-        <!-- Footer -->
-        <div class="bc-card-foot">
-          <span class="bc-card-name">FLex LAB</span>
-          <span class="bc-card-badge">NFC · QR</span>
-        </div>
       </div>
     </div>
   </div>
@@ -788,87 +698,55 @@ document.querySelectorAll('.lab-card').forEach(function(card){
   });
 });
 
-// BLVCKCARD — 3D cursor tilt + gold glow (smooth lerped)
+// BLVCKCARD — fluid 3D tilt (perspective on parent, animation pauses on hover)
 (function(){
   var card = document.querySelector('#blvck-section .card-3d');
   if(!card) return;
-
-  // Glow cursor position (% of card w/h)
-  var tgx=50, tgy=50, cgx=50, cgy=50;
-  // 3D tilt angles (degrees)
-  var trx=0, try_=0, crx=0, cry=0;
-  var active = false, raf = null;
-
-  function lerp(a,b,t){ return a+(b-a)*t; }
-
+  var tgx=50,tgy=50,cgx=50,cgy=50;
+  var trx=0,try_=0,crx=0,cry=0;
+  var active=false,raf=null;
+  function lerp(a,b,t){return a+(b-a)*t;}
   function tick(){
-    // ── Glow follow ──
-    cgx = lerp(cgx, tgx, 0.12);
-    cgy = lerp(cgy, tgy, 0.12);
-    card.style.setProperty('--mx', cgx.toFixed(2)+'%');
-    card.style.setProperty('--my', cgy.toFixed(2)+'%');
-
-    // ── Tilt follow ──
-    crx = lerp(crx, trx, 0.10);
-    cry = lerp(cry, try_, 0.10);
-
+    cgx=lerp(cgx,tgx,.12); cgy=lerp(cgy,tgy,.12);
+    card.style.setProperty('--mx',cgx.toFixed(2)+'%');
+    card.style.setProperty('--my',cgy.toFixed(2)+'%');
+    crx=lerp(crx,trx,.09); cry=lerp(cry,try_,.09);
+    var t='rotateX('+crx.toFixed(3)+'deg) rotateY('+cry.toFixed(3)+'deg)';
     if(active){
-      // Tilt + lift + dynamic shadow offset
-      var sx = (cry * 1.8).toFixed(1);   // shadow shifts opposite to lean
-      var sy = (-crx * 1.8 + 22).toFixed(1);
-      card.style.transform =
-        'perspective(900px)'+
-        ' rotateX('+crx.toFixed(3)+'deg)'+
-        ' rotateY('+cry.toFixed(3)+'deg)'+
-        ' scale3d(1.06,1.06,1.06)'+
-        ' translateZ(12px)';
-      card.style.boxShadow =
-        '0 0 70px rgba(212,175,55,.38),'+
-        '0 0 160px rgba(212,175,55,.20),'+
+      var sx=(cry*1.6).toFixed(1), sy=(-crx*1.6+22).toFixed(1);
+      card.style.transform=t+' scale3d(1.05,1.05,1.05) translateZ(10px)';
+      card.style.boxShadow=
+        '0 0 70px rgba(212,175,55,.42),'+
+        '0 0 160px rgba(212,175,55,.22),'+
         sx+'px '+sy+'px 55px rgba(0,0,0,.65),'+
-        '0 0 0 1px rgba(212,175,55,.55)';
+        '0 0 0 1px rgba(212,175,55,.58)';
     } else {
-      card.style.transform =
-        'perspective(900px)'+
-        ' rotateX('+crx.toFixed(3)+'deg)'+
-        ' rotateY('+cry.toFixed(3)+'deg)';
-      card.style.boxShadow = '';
+      card.style.transform=t;
+      card.style.boxShadow='';
     }
-
-    // Stop loop once settled back to rest
-    var settled = !active
-      && Math.abs(crx)<0.06 && Math.abs(cry)<0.06
-      && Math.abs(cgx-tgx)<0.2 && Math.abs(cgy-tgy)<0.2;
+    var settled=!active&&Math.abs(crx)<.05&&Math.abs(cry)<.05&&Math.abs(cgx-tgx)<.2&&Math.abs(cgy-tgy)<.2;
     if(settled){
-      card.style.transform = '';
-      card.style.boxShadow = '';
-      raf = null;
-    } else {
-      raf = requestAnimationFrame(tick);
-    }
+      card.style.transform=''; card.style.boxShadow='';
+      card.style.animationPlayState='';
+      raf=null;
+    } else { raf=requestAnimationFrame(tick); }
   }
-
   function readPos(e){
-    var r = card.getBoundingClientRect();
-    tgx = ((e.clientX-r.left)/r.width)*100;
-    tgy = ((e.clientY-r.top)/r.height)*100;
-    // Normalise to -0.5…+0.5, apply max tilt
-    var mx = (e.clientX-r.left)/r.width  - 0.5;
-    var my = (e.clientY-r.top) /r.height - 0.5;
-    trx = -my * 24;   // cursor top → card leans toward viewer
-    try_ =  mx * 30;  // cursor right → card leans right
+    var r=card.getBoundingClientRect();
+    tgx=((e.clientX-r.left)/r.width)*100;
+    tgy=((e.clientY-r.top)/r.height)*100;
+    var mx=(e.clientX-r.left)/r.width-.5;
+    var my=(e.clientY-r.top)/r.height-.5;
+    trx=-my*22; try_=mx*28;
   }
-
-  card.addEventListener('mouseenter', function(e){
-    active = true;
-    readPos(e);
-    if(!raf) raf = requestAnimationFrame(tick);
+  card.addEventListener('mouseenter',function(e){
+    active=true; card.style.animationPlayState='paused';
+    readPos(e); if(!raf)raf=requestAnimationFrame(tick);
   });
-  card.addEventListener('mousemove', readPos);
-  card.addEventListener('mouseleave', function(){
-    active = false;
-    trx=0; try_=0;
-    if(!raf) raf = requestAnimationFrame(tick);
+  card.addEventListener('mousemove',readPos);
+  card.addEventListener('mouseleave',function(){
+    active=false; trx=0; try_=0; tgx=50; tgy=50;
+    if(!raf)raf=requestAnimationFrame(tick);
   });
 })();
 </script>
