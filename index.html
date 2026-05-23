@@ -170,13 +170,10 @@
       --mx: 50%;
       --my: 50%;
       width: 460px; height: 290px;
-      border-radius: 12px; /* rounded-xl */
-      /* bg-gradient-to-bl from-[#1a1a1a] to-black */
+      border-radius: 12px;
       background: linear-gradient(to bottom left, #1a1a1a, #000);
-      /* border-[#d4af37]/50 */
       border: 1px solid rgba(212, 175, 55, 0.5);
       display: flex; align-items: center; justify-content: center;
-      /* shadow-[0_0_50px_rgba(212,175,55,0.2)] + outer ambient layers */
       box-shadow:
         0 0 50px rgba(212, 175, 55, 0.22),
         0 0 130px rgba(212, 175, 55, 0.12),
@@ -184,14 +181,17 @@
       position: relative; overflow: hidden;
       animation: bc-card-float 6s ease-in-out infinite;
       will-change: transform;
-      transition: box-shadow .5s, border-color .5s;
+      transform-style: preserve-3d;
+      transition: box-shadow .55s cubic-bezier(.23,1,.32,1),
+                  border-color .55s cubic-bezier(.23,1,.32,1);
     }
     .card-3d:hover {
-      border-color: rgba(212, 175, 55, 0.8);
+      border-color: rgba(212, 175, 55, 0.85);
       box-shadow:
-        0 0 70px rgba(212, 175, 55, 0.32),
-        0 0 160px rgba(212, 175, 55, 0.18),
-        0 0 300px rgba(212, 175, 55, 0.08);
+        0 0 70px  rgba(212, 175, 55, 0.38),
+        0 0 160px rgba(212, 175, 55, 0.20),
+        0 0 300px rgba(212, 175, 55, 0.10),
+        0 30px 60px rgba(0, 0, 0, 0.55);
     }
     @keyframes bc-card-float {
       0%, 100% { transform: perspective(1200px) rotateY(-2deg) rotateX(1deg) translateY(0); }
@@ -716,33 +716,88 @@ document.querySelectorAll('.lab-card').forEach(function(card){
   });
 });
 
-// BLVCKCARD gold cursor glow — smooth lerped tracking
+// BLVCKCARD — 3D cursor tilt + gold glow (smooth lerped)
 (function(){
   var card = document.querySelector('#blvck-section .card-3d');
   if(!card) return;
-  var tx = 50, ty = 50, cx = 50, cy = 50, active = false, raf = null;
+
+  // Glow cursor position (% of card w/h)
+  var tgx=50, tgy=50, cgx=50, cgy=50;
+  // 3D tilt angles (degrees)
+  var trx=0, try_=0, crx=0, cry=0;
+  var active = false, raf = null;
+
+  function lerp(a,b,t){ return a+(b-a)*t; }
+
   function tick(){
-    cx += (tx - cx) * 0.18;
-    cy += (ty - cy) * 0.18;
-    card.style.setProperty('--mx', cx.toFixed(2) + '%');
-    card.style.setProperty('--my', cy.toFixed(2) + '%');
-    if(active || Math.abs(cx-tx) > 0.2 || Math.abs(cy-ty) > 0.2){
+    // ── Glow follow ──
+    cgx = lerp(cgx, tgx, 0.12);
+    cgy = lerp(cgy, tgy, 0.12);
+    card.style.setProperty('--mx', cgx.toFixed(2)+'%');
+    card.style.setProperty('--my', cgy.toFixed(2)+'%');
+
+    // ── Tilt follow ──
+    crx = lerp(crx, trx, 0.10);
+    cry = lerp(cry, try_, 0.10);
+
+    if(active){
+      // Tilt + lift + dynamic shadow offset
+      var sx = (cry * 1.8).toFixed(1);   // shadow shifts opposite to lean
+      var sy = (-crx * 1.8 + 22).toFixed(1);
+      card.style.transform =
+        'perspective(900px)'+
+        ' rotateX('+crx.toFixed(3)+'deg)'+
+        ' rotateY('+cry.toFixed(3)+'deg)'+
+        ' scale3d(1.06,1.06,1.06)'+
+        ' translateZ(12px)';
+      card.style.boxShadow =
+        '0 0 70px rgba(212,175,55,.38),'+
+        '0 0 160px rgba(212,175,55,.20),'+
+        sx+'px '+sy+'px 55px rgba(0,0,0,.65),'+
+        '0 0 0 1px rgba(212,175,55,.55)';
+    } else {
+      card.style.transform =
+        'perspective(900px)'+
+        ' rotateX('+crx.toFixed(3)+'deg)'+
+        ' rotateY('+cry.toFixed(3)+'deg)';
+      card.style.boxShadow = '';
+    }
+
+    // Stop loop once settled back to rest
+    var settled = !active
+      && Math.abs(crx)<0.06 && Math.abs(cry)<0.06
+      && Math.abs(cgx-tgx)<0.2 && Math.abs(cgy-tgy)<0.2;
+    if(settled){
+      card.style.transform = '';
+      card.style.boxShadow = '';
+      raf = null;
+    } else {
       raf = requestAnimationFrame(tick);
-    } else { raf = null; }
+    }
   }
-  card.addEventListener('mouseenter', function(e){
+
+  function readPos(e){
     var r = card.getBoundingClientRect();
-    tx = ((e.clientX - r.left) / r.width) * 100;
-    ty = ((e.clientY - r.top) / r.height) * 100;
+    tgx = ((e.clientX-r.left)/r.width)*100;
+    tgy = ((e.clientY-r.top)/r.height)*100;
+    // Normalise to -0.5…+0.5, apply max tilt
+    var mx = (e.clientX-r.left)/r.width  - 0.5;
+    var my = (e.clientY-r.top) /r.height - 0.5;
+    trx = -my * 24;   // cursor top → card leans toward viewer
+    try_ =  mx * 30;  // cursor right → card leans right
+  }
+
+  card.addEventListener('mouseenter', function(e){
     active = true;
+    readPos(e);
     if(!raf) raf = requestAnimationFrame(tick);
   });
-  card.addEventListener('mousemove', function(e){
-    var r = card.getBoundingClientRect();
-    tx = ((e.clientX - r.left) / r.width) * 100;
-    ty = ((e.clientY - r.top) / r.height) * 100;
+  card.addEventListener('mousemove', readPos);
+  card.addEventListener('mouseleave', function(){
+    active = false;
+    trx=0; try_=0;
+    if(!raf) raf = requestAnimationFrame(tick);
   });
-  card.addEventListener('mouseleave', function(){ active = false; });
 })();
 </script>
 </body>
