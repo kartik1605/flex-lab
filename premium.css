@@ -1354,13 +1354,14 @@ nav#nav.nav-condensed {
 ═══════════════════════════════════════════ */
 
 #benefits {
-  padding: 8rem 0 10rem;
+  padding: 8rem 0 2rem;   /* tiny bottom padding — section ends when last card ends */
   position: relative;
   overflow: visible;
 }
 .bs-container {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
+  align-items: start;     /* grid height = taller col (scroll col), not stretched */
   gap: 5rem;
   max-width: 1380px;
   margin: 0 auto;
@@ -2921,12 +2922,17 @@ footer.footer a:hover {
               0 0 18px rgba(212, 175, 55, 0.45) !important;
 }
 .bs-cta {
-  color: var(--gold, #d4af37) !important;
-  border-color: rgba(212, 175, 55, 0.35) !important;
+  /* Always gold pill — theme-independent, max contrast */
+  background: linear-gradient(135deg, #d4af37 0%, #f5d77b 50%, #c49020 100%) !important;
+  color: #06040d !important;   /* dark text on gold = always visible */
+  border: none !important;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.28) !important;
 }
 .bs-cta:hover {
-  background: rgba(212, 175, 55, 0.08) !important;
-  border-color: rgba(212, 175, 55, 0.6) !important;
+  background: linear-gradient(135deg, #c49020 0%, #d4af37 50%, #f5d77b 100%) !important;
+  color: #06040d !important;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(212, 175, 55, 0.42) !important;
 }
 .bs-progress-fill {
   background: linear-gradient(90deg, var(--violet, #6d28d9), var(--gold, #d4af37)) !important;
