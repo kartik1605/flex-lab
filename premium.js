@@ -969,6 +969,298 @@
   }
 
   /* ─────────────────────────────────────────
+     P1. PARTICLE NETWORK (hero canvas)
+     Floating dots + connecting lines, mouse-repelled
+  ───────────────────────────────────────── */
+  function initParticleHero() {
+    if (reduceMotion || isMobile) return;
+    const hero = qs('#hero');
+    if (!hero) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'hero-particles';
+    canvas.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.55;';
+    hero.insertBefore(canvas, hero.firstChild);
+
+    const ctx = canvas.getContext('2d');
+    let mouse = { x: -999, y: -999 };
+    const COUNT = 70;
+
+    function resize() {
+      canvas.width  = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    });
+    hero.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
+
+    const pts = Array.from({ length: COUNT }, () => ({
+      x: Math.random() * (canvas.width  || 1200),
+      y: Math.random() * (canvas.height || 800),
+      vx: (Math.random() - .5) * .38,
+      vy: (Math.random() - .5) * .38,
+      r:  Math.random() * 1.4 + .4,
+      o:  Math.random() * .3 + .12
+    }));
+
+    const LINK = 130, REPEL = 110;
+
+    (function frame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      pts.forEach(p => {
+        const dx = p.x - mouse.x, dy = p.y - mouse.y;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < REPEL && d > 0) {
+          const f = ((REPEL - d) / REPEL) * 0.055;
+          p.vx += (dx / d) * f;
+          p.vy += (dy / d) * f;
+        }
+        p.vx *= .993; p.vy *= .993;
+        p.x  += p.vx; p.y  += p.vy;
+        if (p.x < 0) p.x = canvas.width;  if (p.x > canvas.width)  p.x = 0;
+        if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(124,58,237,${p.o})`;
+        ctx.fill();
+      });
+
+      // Connections
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < LINK) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(124,58,237,${(1 - d / LINK) * .17})`;
+            ctx.lineWidth   = .55;
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(frame);
+    })();
+  }
+
+  /* ─────────────────────────────────────────
+     P2. TYPING CURSOR (hero badge)
+     Cycles through data-phrases with type/delete
+  ───────────────────────────────────────── */
+  function initTypingCursor() {
+    qsa('.typing-cursor[data-phrases]').forEach(el => {
+      let phrases;
+      try { phrases = JSON.parse(el.dataset.phrases); } catch { return; }
+      if (!phrases.length) return;
+
+      let pi = 0, ci = 0, del = false;
+      const cursor = document.createElement('span');
+      cursor.className = 'tw-cur';
+      el.parentNode.insertBefore(cursor, el.nextSibling);
+
+      function run() {
+        const cur = phrases[pi];
+        el.textContent = del ? cur.slice(0, ci - 1) : cur.slice(0, ci + 1);
+        del ? ci-- : ci++;
+        let wait = del ? 42 : 82;
+        if (!del && ci > cur.length) { del = true; wait = 2000; }
+        else if (del && ci === 0)    { del = false; pi = (pi + 1) % phrases.length; wait = 380; }
+        setTimeout(run, wait);
+      }
+      run();
+    });
+  }
+
+  /* ─────────────────────────────────────────
+     P3. CURSOR TRAIL (fading dot ribbon)
+  ───────────────────────────────────────── */
+  function initCursorTrail() {
+    if (isMobile || isTouch || reduceMotion) return;
+    const N = 10;
+    const dots = Array.from({ length: N }, (_, i) => {
+      const d = document.createElement('div');
+      d.className = 'c-trail';
+      d.style.setProperty('--ti', i);
+      document.body.appendChild(d);
+      return { el: d, x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    });
+
+    let tx = 0, ty = 0;
+    document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; }, { passive: true });
+
+    (function tick() {
+      let px = tx, py = ty;
+      dots.forEach((dot, i) => {
+        const ease = Math.max(.28 - i * .022, .04);
+        dot.x = lerp(dot.x, px, ease);
+        dot.y = lerp(dot.y, py, ease);
+        dot.el.style.transform = `translate(${dot.x - 3}px,${dot.y - 3}px)`;
+        px = dot.x; py = dot.y;
+      });
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  /* ─────────────────────────────────────────
+     P4. CARD SHIMMER SWEEP (inject + animate)
+     A moving light stripe sweeps across cards on hover
+  ───────────────────────────────────────── */
+  function initCardShimmer() {
+    qsa('.lab-card, .feat-card, .h-card, .tcard, .bc-finish, .bc-price-card').forEach(card => {
+      if (card.querySelector('.c-shimmer')) return;
+      const sh = document.createElement('div');
+      sh.className = 'c-shimmer';
+      card.style.overflow = 'hidden';
+      card.appendChild(sh);
+    });
+  }
+
+  /* ─────────────────────────────────────────
+     P5. GLITCH HOVER on lab numbers / labels
+  ───────────────────────────────────────── */
+  function initGlitchLabels() {
+    if (isMobile || isTouch) return;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%!?░▒▓█';
+    qsa('.lab-num, .s-label, .section-index, .bc-lbl, .bs-step-num, .pre-counter').forEach(el => {
+      const orig = el.textContent;
+      let timer = null;
+      el.addEventListener('mouseenter', () => {
+        let iter = 0;
+        clearInterval(timer);
+        timer = setInterval(() => {
+          el.textContent = orig.split('').map((c, i) => {
+            if (i < iter * .8) return orig[i];
+            if (c === ' ' || c === '/' || c === '·') return c;
+            return chars[Math.floor(Math.random() * chars.length)];
+          }).join('');
+          if (++iter > orig.length + 4) { clearInterval(timer); el.textContent = orig; }
+        }, 38);
+      });
+      el.addEventListener('mouseleave', () => { clearInterval(timer); el.textContent = orig; });
+    });
+  }
+
+  /* ─────────────────────────────────────────
+     P6. HOLOGRAPHIC HERO TITLE (hue-shift on scroll)
+  ───────────────────────────────────────── */
+  function initHoloTitle() {
+    if (reduceMotion) return;
+    const title = qs('.h-title');
+    if (!title) return;
+    let hue = 260;
+    window.addEventListener('scroll', () => {
+      hue = 260 + (window.scrollY / document.body.scrollHeight) * 60;
+      title.style.filter = `hue-rotate(${hue - 260}deg)`;
+    }, { passive: true });
+  }
+
+  /* ─────────────────────────────────────────
+     P7. REVEAL ON SCROLL (fast, no-GSAP)
+     Adds .rv-in to elements with .rv when they enter view
+  ───────────────────────────────────────── */
+  function initRevealObserver() {
+    if (reduceMotion) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('rv-in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    qsa('.rv').forEach(el => obs.observe(el));
+  }
+
+  /* ─────────────────────────────────────────
+     P8. AURORA ORBS — extra hero depth layers
+  ───────────────────────────────────────── */
+  function initAuroraOrbs() {
+    if (reduceMotion || isMobile) return;
+    const hero = qs('#hero');
+    if (!hero) return;
+    const existing = qs('.hero-liquid', hero);
+    if (existing) return; // liquid hero already running
+
+    const wrap = document.createElement('div');
+    wrap.className = 'aurora-wrap';
+    hero.insertBefore(wrap, hero.firstChild);
+
+    const configs = [
+      { c: 'rgba(124,58,237,.12)',  s: 600, tx: '15%',  ty: '20%', dur: '14s', delay: '0s'   },
+      { c: 'rgba(6,182,212,.09)',   s: 500, tx: '78%',  ty: '65%', dur: '18s', delay: '-4s'  },
+      { c: 'rgba(244,63,94,.07)',   s: 420, tx: '50%',  ty: '80%', dur: '22s', delay: '-9s'  },
+      { c: 'rgba(245,158,11,.06)',  s: 360, tx: '82%',  ty: '15%', dur: '16s', delay: '-6s'  },
+    ];
+    configs.forEach(cfg => {
+      const orb = document.createElement('div');
+      orb.className = 'aurora-orb';
+      orb.style.cssText = `
+        width:${cfg.s}px;height:${cfg.s}px;
+        left:${cfg.tx};top:${cfg.ty};
+        background:radial-gradient(circle,${cfg.c},transparent 68%);
+        animation:aurora-drift ${cfg.dur} ease-in-out infinite;
+        animation-delay:${cfg.delay};
+      `;
+      wrap.appendChild(orb);
+    });
+  }
+
+  /* ─────────────────────────────────────────
+     P9. SPLIT-CHAR COUNT TRAIL
+     Animated digit trail on stat counters
+  ───────────────────────────────────────── */
+  function initCounterGlow() {
+    qsa('[data-count]').forEach(el => {
+      el.addEventListener('transitionend', () => el.classList.add('count-done'));
+      el.classList.add('count-target');
+    });
+  }
+
+  /* ─────────────────────────────────────────
+     P10. SECTION BEAM — spotlight sweeps across
+     hero on mouseenter
+  ───────────────────────────────────────── */
+  function initSectionBeam() {
+    if (reduceMotion || isMobile || isTouch) return;
+    const hero = qs('#hero');
+    if (!hero) return;
+
+    const beam = document.createElement('div');
+    beam.id = 'hero-beam';
+    hero.appendChild(beam);
+
+    let bx = 50, by = 50, tx2 = 50, ty2 = 50, raf = null;
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      tx2 = ((e.clientX - r.left) / r.width)  * 100;
+      ty2 = ((e.clientY - r.top)  / r.height) * 100;
+      beam.style.opacity = '1';
+      if (!raf) raf = requestAnimationFrame(tick2);
+    });
+    hero.addEventListener('mouseleave', () => { beam.style.opacity = '0'; raf = null; });
+
+    function tick2() {
+      bx = lerp(bx, tx2, .08);
+      by = lerp(by, ty2, .08);
+      beam.style.background = `radial-gradient(circle 380px at ${bx.toFixed(1)}% ${by.toFixed(1)}%, rgba(124,58,237,.10) 0%, rgba(6,182,212,.06) 40%, transparent 70%)`;
+      if (Math.abs(bx - tx2) > .05 || Math.abs(by - ty2) > .05) {
+        raf = requestAnimationFrame(tick2);
+      } else {
+        raf = null;
+      }
+    }
+  }
+
+  /* ─────────────────────────────────────────
      13. CONSOLE BRAND STAMP
   ───────────────────────────────────────── */
   function consoleStamp() {
@@ -1011,6 +1303,16 @@
     initLiquidText();
     initThemePanel();
     consoleStamp();
+    // ── NEW PREMIUM LAYER ──
+    initParticleHero();
+    initTypingCursor();
+    initCursorTrail();
+    initCardShimmer();
+    initGlitchLabels();
+    initHoloTitle();
+    initRevealObserver();
+    initAuroraOrbs();
+    initSectionBeam();
     // Remove any big-statement nodes that may have been created
     document.querySelectorAll('.big-statement').forEach(el => el.remove());
   }

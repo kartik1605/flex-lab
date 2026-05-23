@@ -2399,3 +2399,164 @@ body {
 }
 
 /* Final media query (reduced motion still applies) */
+
+/* ═══════════════════════════════════════════════════════
+   PREMIUM ANIMATION LAYER v2 — Webflow-grade effects
+   Particle Network · Cursor Trail · Shimmer · Aurora
+   Typewriter · Glitch Labels · Holo Title · Beam
+═══════════════════════════════════════════════════════ */
+
+/* ── P3. CURSOR TRAIL ── */
+.c-trail {
+  position: fixed;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9993;
+  background: var(--violet, #7c3aed);
+  opacity: calc(0.65 - var(--ti) * 0.058);
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  will-change: transform;
+  transition: opacity .1s;
+}
+
+/* ── P2. TYPEWRITER CURSOR ── */
+.tw-cur {
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: var(--cyan, #06b6d4);
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: tw-blink 1s step-end infinite;
+  border-radius: 1px;
+}
+@keyframes tw-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── P4. CARD SHIMMER ── */
+.c-shimmer {
+  position: absolute;
+  top: 0; left: -120%;
+  width: 55%; height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255,255,255,.05) 50%,
+    transparent 65%
+  );
+  transform: skewX(-18deg);
+  transition: left .9s cubic-bezier(.23, 1, .32, 1);
+  pointer-events: none;
+  z-index: 10;
+  border-radius: inherit;
+}
+.lab-card:hover .c-shimmer,
+.feat-card:hover .c-shimmer,
+.h-card:hover .c-shimmer,
+.tcard:hover .c-shimmer,
+.bc-finish:hover .c-shimmer,
+.bc-price-card:hover .c-shimmer {
+  left: 130%;
+}
+
+/* ── P8. AURORA ORBS ── */
+.aurora-wrap {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden;
+  z-index: 0;
+}
+.aurora-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+@keyframes aurora-drift {
+  0%, 100% { transform: translate(-50%, -50%) scale(1)   rotate(0deg); }
+  33%       { transform: translate(-50%, -50%) scale(1.15) rotate(8deg); }
+  66%       { transform: translate(-50%, -50%) scale(.92) rotate(-5deg); }
+}
+
+/* ── P10. HERO BEAM ── */
+#hero-beam {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 1;
+  opacity: 0;
+  transition: opacity .6s cubic-bezier(.23, 1, .32, 1);
+  border-radius: inherit;
+}
+
+/* ── P7. REVEAL OBSERVER (.rv) ── */
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity .7s cubic-bezier(.22, 1, .36, 1),
+    transform .7s cubic-bezier(.22, 1, .36, 1);
+}
+.rv.d1 { transition-delay: .08s; }
+.rv.d2 { transition-delay: .16s; }
+.rv.d3 { transition-delay: .24s; }
+.rv.d4 { transition-delay: .32s; }
+.rv.d5 { transition-delay: .40s; }
+.rv-in { opacity: 1 !important; transform: translateY(0) !important; }
+
+/* ── P6. HOLOGRAPHIC HERO TITLE ── */
+.h-title {
+  transition: filter .8s ease;
+}
+
+/* ── P5. GLITCH LABELS — smooth cursor on interactive text ── */
+.lab-num, .s-label, .section-index, .bc-lbl {
+  cursor: default;
+  font-variant-numeric: tabular-nums;
+  transition: color .2s;
+}
+
+/* ── STAT COUNTER enhanced ── */
+.count-target {
+  display: inline-block;
+  transition: color .3s;
+}
+[data-count] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── HERO badge typing area ── */
+.typing-cursor {
+  display: inline;
+  font-weight: 700;
+  color: var(--cyan, #06b6d4);
+}
+
+/* ── ENHANCED CARD HOVER depth ── */
+.lab-card, .feat-card, .tcard, .h-card, .bc-finish, .bc-price-card {
+  transform-style: preserve-3d;
+}
+
+/* ── HERO PARTICLE CANVAS ── */
+#hero-particles {
+  will-change: auto;
+}
+
+/* ── SECTION ENTRANCE (blvckcard.html uses .rv too) ── */
+@media (prefers-reduced-motion: reduce) {
+  .rv, .rv-in,
+  .c-trail, .aurora-orb, .aurora-wrap,
+  #hero-particles, #hero-beam {
+    display: none !important;
+  }
+  .c-shimmer { display: none !important; }
+}
+
+/* ── MOBILE CLEAN-UP ── */
+@media (max-width: 700px) {
+  .c-trail     { display: none !important; }
+  #hero-beam   { display: none !important; }
+  .aurora-orb  { display: none !important; }
+  #hero-particles { display: none !important; }
+}
