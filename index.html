@@ -20,9 +20,9 @@
       position:relative; overflow:hidden;
     }
     #cvs { position:absolute;inset:0;width:100%;height:100%;pointer-events:none; }
-    .o1{width:700px;height:700px;top:-250px;left:-150px;background:radial-gradient(circle,rgba(124,58,237,.18),transparent 65%);animation:drift 12s ease-in-out infinite;}
-    .o2{width:550px;height:550px;bottom:-150px;right:-100px;background:radial-gradient(circle,rgba(6,182,212,.13),transparent 65%);animation:drift 9s ease-in-out infinite reverse;}
-    .o3{width:380px;height:380px;top:45%;right:5%;background:radial-gradient(circle,rgba(244,63,94,.08),transparent 65%);animation:drift 14s ease-in-out infinite 3s;}
+    .o1{width:700px;height:700px;top:-250px;left:-150px;background:radial-gradient(circle,rgba(109,40,217,.22),transparent 65%);animation:drift 12s ease-in-out infinite;}
+    .o2{width:550px;height:550px;bottom:-150px;right:-100px;background:radial-gradient(circle,rgba(212,175,55,.10),transparent 65%);animation:drift 9s ease-in-out infinite reverse;}
+    .o3{width:380px;height:380px;top:45%;right:5%;background:radial-gradient(circle,rgba(148,163,184,.05),transparent 65%);animation:drift 14s ease-in-out infinite 3s;}
 
     .h-badge {
       display:inline-flex;align-items:center;gap:.5rem;
@@ -239,7 +239,7 @@
       border-radius:22px;padding:2.25rem;transition:all .35s;
       position:relative;overflow:hidden;
     }
-    .tcard::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,rgba(124,58,237,.06),rgba(6,182,212,.03));transition:opacity .4s;}
+    .tcard::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,rgba(109,40,217,.07),rgba(212,175,55,.04));transition:opacity .4s;}
     .tcard:hover::before{opacity:1;}
     .tcard:hover{border-color:rgba(124,58,237,.25);transform:translateY(-5px);}
     .stars{color:#f59e0b;font-size:.85rem;letter-spacing:.05em;margin-bottom:1.1rem;}
@@ -365,7 +365,7 @@
   </div>
   <div class="scroll-hint">
     <span>Scroll</span>
-    <div class="scroll-mouse"></div>
+    <i></i>
   </div>
 </section>
 
@@ -402,53 +402,53 @@
 <!-- Labs Grid -->
 <section id="labs" class="mood-section mood-multi">
   <div class="giant-mark giant-mark-tr scroll-shift" data-speed="40">FIVE LABS</div>
-  <div class="section-index"><span class="si-num">02</span><span class="si-sep">/</span><span class="si-total">05</span> · The Showcase</div>
-  <h2 class="s-title text-reveal">Everything Your Brand<br>Needs Under <span class="grad">One Roof</span></h2>
-  <p class="s-sub">Each lab is a focused team of specialists. Together, they deliver a seamless brand experience — from your logo to your launch event.</p>
-  <div class="tag-strip" style="margin-bottom:2.5rem;">
+  <div class="section-index rv"><span class="si-num">02</span><span class="si-sep">/</span><span class="si-total">05</span> · The Showcase</div>
+  <h2 class="s-title text-reveal rv d1">Everything Your Brand<br>Needs Under <span class="grad">One Roof</span></h2>
+  <p class="s-sub rv d2">Each lab is a focused team of specialists. Together, they deliver a seamless brand experience — from your logo to your launch event.</p>
+  <div class="tag-strip rv d3" style="margin-bottom:2.5rem;">
     <span>Strategy</span><span>Design</span><span>Execution</span><span>Distribution</span>
   </div>
 
   <div class="labs-grid">
-    <div class="lab-card" style="--a1:#7c3aed;--a2:#a855f7;" data-big-statement="BRAND" data-cursor-text="Open" onclick="location.href='branding.html'">
+    <div class="lab-card rv d1" style="--a1:#6d28d9;--a2:#a78bfa;" data-cursor-text="Open" onclick="location.href='branding.html'">
       <span class="lab-num">01</span>
-      <div class="lab-icon" style="background:rgba(124,58,237,.15)">🎨</div>
-      <h3 class="glitch">Branding Lab</h3>
+      <div class="lab-icon" style="background:rgba(109,40,217,.14)">🎨</div>
+      <h3>Branding Lab</h3>
       <p>We build brands that speak before you do — logos, visual identity, and experiential installations that carry your name.</p>
       <span class="lab-link">Explore Lab →</span>
     </div>
-    <div class="lab-card" style="--a1:#06b6d4;--a2:#0891b2;" data-big-statement="EVENTS" data-cursor-text="Open" onclick="location.href='events.html'">
+    <div class="lab-card rv d2" style="--a1:#94a3b8;--a2:#64748b;" data-cursor-text="Open" onclick="location.href='events.html'">
       <span class="lab-num">02</span>
-      <div class="lab-icon" style="background:rgba(6,182,212,.15)">🎪</div>
-      <h3 class="glitch">Events Lab</h3>
+      <div class="lab-icon" style="background:rgba(148,163,184,.12)">🎪</div>
+      <h3>Events Lab</h3>
       <p>From intimate ceremonies to large-scale corporate gatherings — we handle every detail of your event with precision.</p>
       <span class="lab-link">Explore Lab →</span>
     </div>
-    <div class="lab-card" style="--a1:#f43f5e;--a2:#e11d48;" data-big-statement="GIFT" data-cursor-text="Open" onclick="location.href='gifting.html'">
+    <div class="lab-card rv d3" style="--a1:#d4af37;--a2:#b8960c;" data-cursor-text="Open" onclick="location.href='gifting.html'">
       <span class="lab-num">03</span>
-      <div class="lab-icon" style="background:rgba(244,63,94,.15)">🎁</div>
-      <h3 class="glitch">Gift Lab</h3>
+      <div class="lab-icon" style="background:rgba(212,175,55,.13)">🎁</div>
+      <h3>Gift Lab</h3>
       <p>Corporate hampers to luxury wedding favours — we help you give thoughtfully at any scale, with premium packaging.</p>
       <span class="lab-link">Explore Lab →</span>
     </div>
-    <div class="lab-card" style="--a1:#f59e0b;--a2:#d97706;" data-big-statement="SOCIAL" data-cursor-text="Open" onclick="location.href='social.html'">
+    <div class="lab-card rv d4" style="--a1:#d4a857;--a2:#c49020;" data-cursor-text="Open" onclick="location.href='social.html'">
       <span class="lab-num">04</span>
-      <div class="lab-icon" style="background:rgba(245,158,11,.15)">📱</div>
-      <h3 class="glitch">Social Lab</h3>
+      <div class="lab-icon" style="background:rgba(212,168,87,.12)">📱</div>
+      <h3>Social Lab</h3>
       <p>Strategy, content, and campaigns that actually convert — we build and manage social media presence that grows your brand.</p>
       <span class="lab-link">Explore Lab →</span>
     </div>
-    <div class="lab-card" style="--a1:#10b981;--a2:#059669;" data-big-statement="DIGITAL" data-cursor-text="Open" onclick="location.href='digital.html'">
+    <div class="lab-card rv d5" style="--a1:#8b5cf6;--a2:#7c3aed;" data-cursor-text="Open" onclick="location.href='digital.html'">
       <span class="lab-num">05</span>
-      <div class="lab-icon" style="background:rgba(16,185,129,.15)">🌐</div>
-      <h3 class="glitch">Digital Lab</h3>
+      <div class="lab-icon" style="background:rgba(139,92,246,.14)">🌐</div>
+      <h3>Digital Lab</h3>
       <p>Websites and digital presence that make you found and remembered — from design to SEO to AI engine ranking.</p>
       <span class="lab-link">Explore Lab →</span>
     </div>
-    <div class="lab-card" style="--a1:#b8a47e;--a2:#8b7355;" data-big-statement="PRINT" data-cursor-text="Open" onclick="location.href='print.html'">
+    <div class="lab-card rv" style="--a1:#d4af37;--a2:#9c7e54;" data-cursor-text="Open" onclick="location.href='print.html'">
       <span class="lab-num">06</span>
-      <div class="lab-icon" style="background:rgba(184,164,126,.15)">🖨️</div>
-      <h3 class="glitch">Print Lab</h3>
+      <div class="lab-icon" style="background:rgba(212,175,55,.12)">🖨️</div>
+      <h3>Print Lab</h3>
       <p>Wedding stationery, stickers, hang tags, brochures, custom packaging, posters — every print solution under one roof.</p>
       <span class="lab-link">Explore Lab →</span>
     </div>
@@ -534,12 +534,15 @@
   </div>
 </section>
 
+<!-- Section divider -->
+<hr class="section-divider">
+
 <!-- BLVCKCARD Spotlight -->
 <section id="blvck-section" style="padding:8rem 0 9rem;" class="clip-reveal">
   <div class="bc-side-glow-l"></div>
   <div class="bc-side-glow-r"></div>
   <div id="blvck">
-    <div style="position:relative;z-index:2;">
+    <div style="position:relative;z-index:2;" class="rv">
       <div class="blvck-badge">✦ Featured Partnership</div>
       <h2>One Card. <em>Infinite</em><br>Connections.</h2>
       <p>One tap. Instant connection. BLVCKCARD is a premium NFC-enabled business card that lets modern professionals share everything — contact, portfolio, social media — in a single touch.</p>
@@ -564,28 +567,31 @@
   </div>
 </section>
 
+<!-- Section divider -->
+<hr class="section-divider">
+
 <!-- Process -->
-<section class="mood-section mood-cool" style="padding:0 5rem 9rem;">
-  <div class="s-label">How We Work</div>
-  <h2 class="s-title text-reveal">Simple Process.<br><span class="grad">Exceptional</span> Results.</h2>
-  <p class="s-sub">One point of contact, full accountability, and zero chaos — from brief to delivery.</p>
+<section class="mood-section mood-cool" style="padding:5rem 5rem 9rem;">
+  <div class="s-label rv">How We Work</div>
+  <h2 class="s-title text-reveal rv d1">Simple Process.<br><span class="grad">Exceptional</span> Results.</h2>
+  <p class="s-sub rv d2">One point of contact, full accountability, and zero chaos — from brief to delivery.</p>
   <div class="process-row" style="position:relative;">
-    <div class="p-step">
+    <div class="p-step rv d1">
       <div class="p-num scramble">01</div>
       <h3>Brief</h3>
       <p>Tell us your goals, timeline, and vision. We listen more than we talk.</p>
     </div>
-    <div class="p-step">
+    <div class="p-step rv d2">
       <div class="p-num scramble">02</div>
       <h3>Strategy</h3>
       <p>We put together a tailored plan across the relevant labs with clear milestones.</p>
     </div>
-    <div class="p-step">
+    <div class="p-step rv d3">
       <div class="p-num scramble">03</div>
       <h3>Create</h3>
       <p>Our teams design, plan, and build — sharing updates at every key stage.</p>
     </div>
-    <div class="p-step">
+    <div class="p-step rv d4">
       <div class="p-num scramble">04</div>
       <h3>Deliver</h3>
       <p>On time, on brief, and zero compromise on quality. Every single time.</p>
@@ -593,23 +599,26 @@
   </div>
 </section>
 
+<!-- Section divider -->
+<hr class="section-divider">
+
 <!-- Testimonials -->
 <section id="testimonials" class="mood-section mood-rose">
   <div class="container" style="padding:0;">
     <div class="s-label">Client Love</div>
-    <h2 class="s-title text-reveal">What Our <span class="grad">Clients</span> Say</h2>
+    <h2 class="s-title text-reveal rv">What Our <span class="grad">Clients</span> Say</h2>
     <div class="testi-grid">
-      <div class="tcard">
+      <div class="tcard rv d1">
         <div class="stars">★★★★★</div>
         <p class="tquote">"FLex LAB handled our entire product launch — from branding to the event itself. One team, zero stress. The attention to detail was extraordinary."</p>
         <div class="tauthor"><div class="avt">RK</div><div class="ainfo"><h4>Rahul Kapoor</h4><p>CEO, TechStartup India</p></div></div>
       </div>
-      <div class="tcard">
+      <div class="tcard rv d2">
         <div class="stars">★★★★★</div>
         <p class="tquote">"The BLVCKCARD transformed how I network. Everyone asks about it. FLex LAB understands premium quality better than anyone."</p>
         <div class="tauthor"><div class="avt">PS</div><div class="ainfo"><h4>Priya Sharma</h4><p>Founder, Bloom Studio</p></div></div>
       </div>
-      <div class="tcard">
+      <div class="tcard rv d3">
         <div class="stars">★★★★★</div>
         <p class="tquote">"Their Gift Lab created our corporate Diwali hampers — the presentation and curation was world-class. Every recipient was blown away."</p>
         <div class="tauthor"><div class="avt">AV</div><div class="ainfo"><h4>Arjun Verma</h4><p>Marketing Head, NovaBrands</p></div></div>
@@ -619,13 +628,13 @@
 </section>
 
 <!-- CTA -->
-<div class="cta-band">
-  <div class="s-label" style="justify-content:center;">Get Started</div>
-  <h2 class="text-reveal-chars">Ready to FLex Your Brand?</h2>
-  <p>Every client gets a dedicated strategy. We don't do cookie-cutter — we flex to fit you.</p>
-  <div class="cta-btns">
+<div class="cta-band rv">
+  <div class="s-label rv" style="justify-content:center;margin-bottom:1.5rem;">✦ Get Started</div>
+  <h2 class="rv d1">Ready to FLex<br><em style="font-style:italic;background:linear-gradient(135deg,#d4af37,#f5d77b 50%,#d4af37);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">Your Brand?</em></h2>
+  <p class="rv d2">Every client gets a dedicated strategy. We don't do cookie-cutter — we flex to fit you. One team. Zero compromise.</p>
+  <div class="cta-btns rv d3">
     <a href="contact.html" class="btn-p magnetic">Start Your Project</a>
-    <a href="print.html" class="btn-g magnetic">View Pricing →</a>
+    <a href="contact.html" class="btn-gold magnetic">Book a Free Brief →</a>
   </div>
 </div>
 
@@ -682,8 +691,8 @@
   </div>
 </footer>
 <div class="f-bottom">
-  <p>© 2024 FLex LAB. All rights reserved.</p>
-  <p>Made with ♥ in India</p>
+  <p>© 2025 FLex LAB. All rights reserved.</p>
+  <p>Made with <span style="color:var(--gold,#d4af37);">♥</span> in India</p>
 </div>
 
 <script src="main.js"></script>

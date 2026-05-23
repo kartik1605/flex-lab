@@ -79,7 +79,7 @@
   font-size: clamp(4rem,12vw,9rem);
   font-weight: 900; letter-spacing:-.06em;
   line-height:1;
-  background: linear-gradient(135deg,rgba(124,58,237,.4),rgba(6,182,212,.4));
+  background: linear-gradient(135deg,rgba(109,40,217,.5),rgba(212,175,55,.45));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   background-clip:text;
   min-width: 3ch; text-align:center;
@@ -91,7 +91,7 @@
 }
 .pre-fill {
   height:100%; width:0;
-  background: linear-gradient(90deg,#7c3aed,#06b6d4);
+  background: linear-gradient(90deg,#6d28d9,#d4af37);
   border-radius:2px;
   transition: width .03s linear;
   box-shadow: 0 0 10px rgba(124,58,237,.5);
@@ -118,14 +118,14 @@
    ENHANCED CURSOR
 ═══════════════════════════════════════════ */
 #cur {
-  width:7px; height:7px; background:var(--cyan,#06b6d4);
+  width:7px; height:7px; background:var(--gold,#d4af37);
   border-radius:50%; position:fixed; pointer-events:none; z-index:9999;
   transform:translate(-50%,-50%); mix-blend-mode:screen;
   transition: width .15s, height .15s, background .2s;
 }
 #cur-ring {
   width:25px; height:25px;
-  border:1.5px solid rgba(6,182,212,.35); border-radius:50%;
+  border:1.5px solid rgba(212,175,55,.30); border-radius:50%;
   position:fixed; pointer-events:none; z-index:9998;
   transform:translate(-50%,-50%); mix-blend-mode:screen;
   transition: width .25s cubic-bezier(.23,1,.32,1),
@@ -135,20 +135,20 @@
 }
 #cur-label {
   position:fixed; z-index:9997; pointer-events:none;
-  font-size:.72rem; font-weight:700; color:var(--cyan,#06b6d4);
+  font-size:.72rem; font-weight:700; color:var(--gold,#d4af37);
   opacity:0; transform:scale(0.5);
   transition: opacity .25s, transform .25s;
   letter-spacing:.06em; text-transform:uppercase;
   transform-origin:center;
 }
-/* Hover states — all 30% smaller */
-#cur.cur-hover   { width:11px; height:11px; }
-#cur-ring.ring-hover { width:36px; height:36px; border-color:rgba(124,58,237,.4); }
-#cur-ring.ring-btn  { width:42px; height:42px; border-color:rgba(6,182,212,.5); background:rgba(124,58,237,.06); }
+/* Hover states */
+#cur.cur-hover   { width:11px; height:11px; background:var(--gold,#d4af37); }
+#cur-ring.ring-hover { width:36px; height:36px; border-color:rgba(109,40,217,.45); }
+#cur-ring.ring-btn  { width:42px; height:42px; border-color:rgba(212,175,55,.5); background:rgba(109,40,217,.06); }
 #cur-ring.ring-text {
   width:56px; height:56px;
-  background:rgba(6,182,212,.08);
-  border-color:rgba(6,182,212,.5);
+  background:rgba(212,175,55,.06);
+  border-color:rgba(212,175,55,.45);
 }
 body.cbig #cur      { width:11px; height:11px; }
 body.cbig #cur-ring { width:36px; height:36px; }
@@ -197,7 +197,7 @@ body.cbig #cur-ring { width:36px; height:36px; }
   font-family:'Space Grotesk',sans-serif; font-size:3rem;
   font-weight:900; letter-spacing:-.06em; line-height:1;
   margin-bottom:1rem;
-  background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(6,182,212,.3));
+  background:linear-gradient(135deg,rgba(109,40,217,.35),rgba(212,175,55,.30));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
 }
 .h-card h3 {
@@ -240,8 +240,8 @@ body.cbig #cur-ring { width:36px; height:36px; }
 .hero-grad-bg {
   position:absolute; inset:0; pointer-events:none;
   background:
-    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(124,58,237,.12), transparent),
-    radial-gradient(ellipse 60% 80% at 80% 60%, rgba(6,182,212,.08), transparent);
+    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(109,40,217,.14), transparent),
+    radial-gradient(ellipse 60% 80% at 80% 60%, rgba(212,175,55,.07), transparent);
   animation: bg-shift 8s ease-in-out infinite;
 }
 @keyframes bg-shift {

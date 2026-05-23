@@ -107,7 +107,7 @@
       <a href="blvckcard.html" data-tooltip="BLVCKCARD" aria-label="BLVCKCARD">⬛</a>
       <a href="print.html"     data-tooltip="Print Lab" aria-label="Print Lab">⎙</a>
       <span class="dock-sep"></span>
-      <a href="contact.html"   data-tooltip="Contact"  aria-label="Contact" style="background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(6,182,212,.2));color:#fff;">✉</a>
+      <a href="contact.html"   data-tooltip="Contact"  aria-label="Contact" style="background:linear-gradient(135deg,rgba(109,40,217,.35),rgba(212,175,55,.22));color:#fff;">✉</a>
       <button id="dock-top" data-tooltip="Top" aria-label="Scroll to top">↑</button>
     `;
     document.body.appendChild(dock);
@@ -195,7 +195,7 @@
         burstConfetti(e.clientX, e.clientY);
         clickRipple(e.clientX, e.clientY);
       } else if (e.target.closest('.btn-g, .nav-btn')) {
-        clickRipple(e.clientX, e.clientY, 'rgba(6,182,212,0.5)');
+        clickRipple(e.clientX, e.clientY, 'rgba(212,175,55,0.5)');
       }
     });
   }
@@ -726,16 +726,16 @@
   const THEMES = {
     flexlab: {
       name: 'FlexLab',
-      desc: 'Brand · Signature',
-      swatch: 'linear-gradient(135deg,#0e0f1a 0%,#7c3aed 50%,#d4a857 100%)',
+      desc: 'Deep Purple · Gold',
+      swatch: 'linear-gradient(135deg,#06040d 0%,#6d28d9 50%,#d4af37 100%)',
       vars: {
-        '--violet': '#7c3aed',  // royal violet (brand)
-        '--cyan':   '#d4a857',  // warm champagne gold (brand)
+        '--violet': '#6d28d9',  // deep royal violet (brand)
+        '--cyan':   '#d4af37',  // classic gold accent
         '--rose':   '#a78bfa',  // soft lavender
-        '--th-blob-1': '#7c3aed',
-        '--th-blob-2': '#d4a857',
+        '--th-blob-1': '#6d28d9',
+        '--th-blob-2': '#d4af37',
         '--th-blob-3': '#a78bfa',
-        '--th-blob-4': '#8b5cf6'
+        '--th-blob-4': '#9333ea'
       }
     },
     carnival: {
@@ -1029,7 +1029,11 @@
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(124,58,237,${p.o})`;
+        // Alternate particle color between violet and gold based on index
+        const useGold = (p.o > 0.22);
+        ctx.fillStyle = useGold
+          ? `rgba(212,175,55,${p.o * 0.85})`
+          : `rgba(109,40,217,${p.o})`;
         ctx.fill();
       });
 
@@ -1040,7 +1044,7 @@
           const d  = Math.sqrt(dx * dx + dy * dy);
           if (d < LINK) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(124,58,237,${(1 - d / LINK) * .17})`;
+            ctx.strokeStyle = `rgba(109,40,217,${(1 - d / LINK) * .16})`;
             ctx.lineWidth   = .55;
             ctx.moveTo(pts[i].x, pts[i].y);
             ctx.lineTo(pts[j].x, pts[j].y);
@@ -1251,7 +1255,7 @@
     function tick2() {
       bx = lerp(bx, tx2, .08);
       by = lerp(by, ty2, .08);
-      beam.style.background = `radial-gradient(circle 380px at ${bx.toFixed(1)}% ${by.toFixed(1)}%, rgba(124,58,237,.10) 0%, rgba(6,182,212,.06) 40%, transparent 70%)`;
+      beam.style.background = `radial-gradient(circle 380px at ${bx.toFixed(1)}% ${by.toFixed(1)}%, rgba(109,40,217,.10) 0%, rgba(212,175,55,.05) 40%, transparent 70%)`;
       if (Math.abs(bx - tx2) > .05 || Math.abs(by - ty2) > .05) {
         raf = requestAnimationFrame(tick2);
       } else {
@@ -1266,8 +1270,8 @@
   function consoleStamp() {
     if (window.__flexlabStamped) return;
     window.__flexlabStamped = true;
-    const styles1 = 'background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;padding:18px 28px;font:900 22px/1 "Space Grotesk",sans-serif;border-radius:8px;';
-    const styles2 = 'color:#06b6d4;font:600 12px/1.6 "Inter",sans-serif;padding:8px 0;';
+    const styles1 = 'background:linear-gradient(135deg,#6d28d9,#d4af37);color:#fff;padding:18px 28px;font:900 22px/1 "Space Grotesk",sans-serif;border-radius:8px;';
+    const styles2 = 'color:#d4af37;font:600 12px/1.6 "Inter",sans-serif;padding:8px 0;';
     console.log('%cFLex LAB', styles1);
     console.log('%cIndia\'s Premium Creative Agency\nEvents · Branding · Gifting · Social · Digital\n\nLike what you see? Let\'s build something together.\n→ hello@flexlab.co.in', styles2);
   }
@@ -1290,10 +1294,10 @@
     // initLabStackFocus(); // disabled — was dimming other cards on hover
     // initSectionCurtain(); // disabled — was blanking sections when observer missed
     initNavScroll();
-    // initBigStatement(); // disabled — was overlaying giant text on card hover
-    initSectionTint();
-    initScrollSkew();
-    initImagePeek();
+    // initBigStatement(); // disabled — overlaying giant text
+    // initSectionTint(); // removed — no data-tint elements, was distracting
+    // initScrollSkew(); // removed — no data-skew elements in use
+    // initImagePeek(); // removed — no data-peek elements, clean up
     initSmoothScroll();
     initGiantMarks();
     initMarqueeBand();
@@ -1303,18 +1307,18 @@
     initLiquidText();
     initThemePanel();
     consoleStamp();
-    // ── NEW PREMIUM LAYER ──
+    // ── PREMIUM ANIMATION LAYER ──
     initParticleHero();
     initTypingCursor();
-    initCursorTrail();
+    // initCursorTrail(); // removed — conflicts with custom cursor dot
     initCardShimmer();
     initGlitchLabels();
     initHoloTitle();
     initRevealObserver();
-    initAuroraOrbs();
+    // initAuroraOrbs(); // removed — duplicates liquid blobs
     initSectionBeam();
-    // Remove any big-statement nodes that may have been created
-    document.querySelectorAll('.big-statement').forEach(el => el.remove());
+    // Remove any leftover big-statement / peek nodes
+    document.querySelectorAll('.big-statement, .peek-img').forEach(el => el.remove());
   }
 
   if (document.readyState === 'loading') {

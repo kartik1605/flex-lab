@@ -6,18 +6,23 @@
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  --bg:      #04040a;
-  --bg2:     #090912;
-  --bg3:     #0f0f1c;
-  --violet:  #7c3aed;
-  --violet2: #6d28d9;
-  --cyan:    #06b6d4;
+  --bg:      #06040d;   /* deep midnight black */
+  --bg2:     #0b0818;   /* layer 2 — deep purple tint */
+  --bg3:     #110e1e;   /* layer 3 */
+  --violet:  #6d28d9;   /* deep royal violet */
+  --violet2: #7c3aed;   /* mid violet */
+  --violet-light: #8b5cf6; /* soft violet */
+  --cyan:    #d4af37;   /* gold accent (legacy name kept for compat) */
+  --gold:    #d4af37;   /* explicit gold */
+  --gold-light: #f5d77b; /* champagne highlight */
+  --silver:  #94a3b8;   /* silver */
+  --silver-light: #cbd5e1; /* light silver */
   --rose:    #f43f5e;
   --amber:   #f59e0b;
   --green:   #10b981;
   --text:    #f1f5f9;
-  --muted:   #64748b;
-  --border:  rgba(255,255,255,0.07);
+  --muted:   #6b7280;
+  --border:  rgba(255,255,255,0.08);
   --glass:   rgba(255,255,255,0.03);
   --ff-d: 'Space Grotesk', sans-serif;
   --ff-b: 'Inter', sans-serif;
@@ -55,13 +60,13 @@ body::after {
   transition:width .15s, height .15s;
 }
 #cur-ring {
-  width:36px; height:36px; border:1.5px solid rgba(6,182,212,.3);
+  width:36px; height:36px; border:1.5px solid rgba(212,175,55,.28);
   border-radius:50%; position:fixed; pointer-events:none; z-index:9998;
   transform:translate(-50%,-50%); mix-blend-mode:screen;
   transition:width .2s, height .2s, border-color .2s;
 }
 body.cbig #cur      { width:18px; height:18px; }
-body.cbig #cur-ring { width:54px; height:54px; border-color:rgba(124,58,237,.4); }
+body.cbig #cur-ring { width:54px; height:54px; border-color:rgba(109,40,217,.45); }
 
 /* ── Navigation ── */
 #nav {
@@ -314,7 +319,7 @@ body.cbig #cur-ring { width:54px; height:54px; border-color:rgba(124,58,237,.4);
 }
 .orb-hero-2 {
   width:400px; height:400px; bottom:-100px; left:-80px;
-  background:radial-gradient(circle,rgba(6,182,212,.1),transparent 65%);
+  background:radial-gradient(circle,rgba(212,175,55,.08),transparent 65%);
   animation:drift 13s ease-in-out infinite reverse;
 }
 @keyframes drift {
@@ -428,12 +433,12 @@ body.cbig #cur-ring { width:54px; height:54px; border-color:rgba(124,58,237,.4);
 .p-num {
   font-family:var(--ff-d); font-size:3rem; font-weight:900; line-height:1;
   margin-bottom:1.1rem;
-  background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(6,182,212,.3));
+  background:linear-gradient(135deg,rgba(109,40,217,.35),rgba(212,175,55,.30));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
   transition:all .3s;
 }
 .p-step:hover .p-num {
-  background:linear-gradient(135deg,var(--violet),var(--cyan));
+  background:linear-gradient(135deg,var(--violet),var(--gold));
   -webkit-background-clip:text; background-clip:text;
 }
 .p-step h3 { font-family:var(--ff-d); font-size:1rem; font-weight:700; margin-bottom:.6rem; }

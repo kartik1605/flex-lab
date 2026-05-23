@@ -162,20 +162,36 @@ nav#nav .cd-mini-outline { transition: color .35s, -webkit-text-stroke-color .35
    (deep navy with purple undertone — matches flexlab.co.in)
 ═══════════════════════════════════════════ */
 :root {
-  --bg:  #0a0b14;  /* deep navy (brand base) */
-  --bg2: #0e0f1a;  /* layer 2 */
-  --bg3: #14162a;  /* layer 3 - slight purple */
-  --border: rgba(255, 255, 255, 0.05);
-  --muted: #6e7280;
-  --bg-cream: #f4ede0;     /* warm cream alternating section */
+  /* ── Deep Purple / Black / Gold / Silver palette ── */
+  --bg:  #06040d;        /* midnight black — brand base */
+  --bg2: #0b0818;        /* deep purple-black layer 2 */
+  --bg3: #110e1e;        /* rich purple layer 3 */
+  --border: rgba(255, 255, 255, 0.07);
+  --muted: #6b7280;
+  /* Accent palette — loaded here so CSS works before JS theme panel runs */
+  --violet: #6d28d9;     /* deep royal violet */
+  --violet2: #7c3aed;    /* mid violet */
+  --cyan:   #d4af37;     /* gold (legacy name kept for compat) */
+  --gold:   #d4af37;     /* explicit gold alias */
+  --gold-light: #f5d77b; /* champagne highlight */
+  --rose:   #a78bfa;     /* soft lavender accent */
+  --silver: #94a3b8;     /* silver */
+  --silver-light: #cbd5e1;
+  /* Liquid blob theme colors */
+  --th-blob-1: #6d28d9;  /* deep violet */
+  --th-blob-2: #d4af37;  /* gold */
+  --th-blob-3: #a78bfa;  /* lavender */
+  --th-blob-4: #9333ea;  /* mid purple */
+  /* Section backgrounds */
+  --bg-cream: #f4ede0;
   --bg-cream-2: #ece5d5;
   --text-dark: #0e0f1a;
 }
 body {
   background: var(--bg);
 }
-.stat-bar, .marquee-wrap, #testimonials, #blvck { background: var(--bg2); }
-body::before { opacity: 0.05 !important; }
+.stat-bar, .marquee-wrap, #testimonials { background: var(--bg2); }
+body::before { opacity: 0.04 !important; }
 
 /* ═══════════════════════════════════════════
    BRAND TAGLINE — italic warm gold (FlexLab signature)
@@ -539,8 +555,8 @@ em.gold {
   height: 252px;
   border-radius: 50%;
   background: radial-gradient(circle,
-    rgba(124,58,237,0.10) 0%,
-    rgba(6,182,212,0.05) 22%,
+    rgba(109,40,217,0.09) 0%,
+    rgba(212,175,55,0.04) 22%,
     transparent 42%);
   pointer-events: none;
   z-index: 1;
@@ -602,7 +618,7 @@ body.spotlight-hidden #cursor-spotlight { opacity: 0; }
 }
 .sc-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--violet, #7c3aed), var(--cyan, #06b6d4));
+  background: linear-gradient(90deg, var(--violet, #6d28d9), var(--gold, #d4af37));
   width: 0%;
   transition: width .35s cubic-bezier(.23,1,.32,1);
 }
@@ -2559,4 +2575,379 @@ body {
   #hero-beam   { display: none !important; }
   .aurora-orb  { display: none !important; }
   #hero-particles { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM REDESIGN — Dark Purple / Black / Gold / Silver Theme
+   Deep editorial look inspired by luxury Webflow showcase sites
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Scrollbar — gold accent ── */
+::-webkit-scrollbar-thumb { background: var(--violet, #6d28d9) !important; }
+
+/* ── Section label (s-label) — gold uppercase ── */
+.s-label {
+  color: var(--gold, #d4af37) !important;
+  letter-spacing: .16em;
+}
+.s-label::before {
+  background: var(--gold, #d4af37) !important;
+}
+
+/* ── Section title grad spans — violet→gold ── */
+.grad {
+  background: linear-gradient(135deg, var(--violet, #6d28d9), var(--gold, #d4af37)) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+/* ── Lab card accent top line & glow — harmonised palette ── */
+/* Purple cards stay as is; others get gold/silver treatment */
+.lab-card:hover {
+  background: rgba(10, 8, 20, 0.99) !important;
+}
+
+/* ── Lab link color — gold ── */
+.lab-link {
+  color: var(--gold, #d4af37) !important;
+}
+
+/* ── Stat bar ── */
+.stat-item h3 {
+  background: linear-gradient(135deg, #fff 0%, var(--gold-light, #f5d77b) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Process steps — richer look ── */
+.p-step {
+  position: relative;
+  padding: 2.5rem 2rem 2rem;
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color .35s, background .35s;
+}
+.p-step:hover {
+  border-color: rgba(212, 175, 55, 0.32);
+  background: rgba(212, 175, 55, 0.03);
+}
+.p-num {
+  background: linear-gradient(135deg, var(--violet, #6d28d9), var(--gold, #d4af37)) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* ── Testimonial cards — premium glass ── */
+.tcard {
+  background: rgba(255, 255, 255, 0.025) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.tcard:hover {
+  border-color: rgba(212, 175, 55, 0.3) !important;
+  background: rgba(212, 175, 55, 0.04) !important;
+  transform: translateY(-6px) !important;
+}
+.tcard:hover::before {
+  background: linear-gradient(135deg,
+    rgba(109, 40, 217, 0.06),
+    rgba(212, 175, 55, 0.04)) !important;
+  opacity: 1 !important;
+}
+.stars {
+  color: var(--gold, #d4af37) !important;
+  font-size: 1rem !important;
+  letter-spacing: .1em !important;
+}
+
+/* Avatar — gold gradient ── */
+.avt {
+  background: linear-gradient(135deg,
+    var(--violet, #6d28d9) 0%,
+    var(--gold, #d4af37) 100%) !important;
+  color: #fff !important;
+}
+
+/* ── CTA Band — full premium treatment ── */
+.cta-band {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 9rem 5rem 10rem;
+  background: var(--bg2) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+/* Dramatic radial gold glow behind the CTA */
+.cta-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%,
+      rgba(109, 40, 217, 0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 0%,
+      rgba(212, 175, 55, 0.12) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+/* Thin gold top & bottom hairlines */
+.cta-band::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+.cta-band > * { position: relative; z-index: 2; }
+.cta-band h2 {
+  font-family: var(--ff-d);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fff 30%, var(--gold-light, #f5d77b) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cta-band p {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 520px;
+  margin: 0 auto 3rem;
+  line-height: 1.75;
+}
+.cta-btns {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Section divider hairline ── */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0.22) 20%,
+    rgba(109, 40, 217, 0.28) 50%,
+    rgba(212, 175, 55, 0.22) 80%,
+    transparent 100%);
+  margin: 0;
+  border: none;
+}
+
+/* ── Footer ── */
+footer.footer {
+  background: var(--bg) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 6rem 5rem 4rem;
+}
+footer.footer h5 {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: .75rem !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 1.25rem !important;
+  font-family: var(--ff-d) !important;
+}
+footer.footer a {
+  color: var(--muted) !important;
+  transition: color .25s !important;
+}
+footer.footer a:hover {
+  color: var(--gold, #d4af37) !important;
+}
+.f-brand p {
+  color: var(--muted);
+  font-size: .85rem;
+  line-height: 1.75;
+  max-width: 280px;
+  margin-bottom: 1.5rem;
+}
+/* Social icons */
+.soc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted) !important;
+  transition: border-color .25s, color .25s, background .25s !important;
+}
+.soc:hover {
+  border-color: rgba(212, 175, 55, 0.4) !important;
+  color: var(--gold, #d4af37) !important;
+  background: rgba(212, 175, 55, 0.06) !important;
+}
+.f-bottom {
+  background: var(--bg) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.5rem 5rem;
+  font-size: .75rem;
+  color: var(--muted);
+}
+
+/* ── Marquee dot — gold ── */
+.m-dot {
+  background: var(--gold, #d4af37) !important;
+  opacity: .7;
+}
+
+/* ── Nav link hover — gold ── */
+.nav-links a:hover,
+.nav-links a:focus {
+  color: var(--gold, #d4af37) !important;
+}
+
+/* ── Scroll progress bar — gold→violet ── */
+#sp-fill {
+  background: linear-gradient(90deg, var(--gold, #d4af37), var(--violet, #6d28d9)) !important;
+}
+
+/* ── Hero badge border — gold ── */
+.h-badge {
+  border-color: rgba(212, 175, 55, 0.35) !important;
+  background: rgba(212, 175, 55, 0.06) !important;
+  color: var(--gold-light, #f5d77b) !important;
+}
+.h-badge::before {
+  background: var(--gold, #d4af37) !important;
+  animation: blink 2s infinite;
+}
+
+/* ── Hero title gradient — white→gold shimmer ── */
+.h-title {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    rgba(255,255,255,0.95) 40%,
+    var(--gold-light, #f5d77b) 70%,
+    #ffffff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: filter .8s ease;
+}
+
+/* ── Section index num — gold ── */
+.si-num {
+  background: linear-gradient(135deg, var(--violet, #6d28d9), var(--gold, #d4af37)) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* ── Floating dock — glass dark ── */
+#floating-dock {
+  background: rgba(6, 4, 13, 0.75) !important;
+  border-color: rgba(212, 175, 55, 0.12) !important;
+}
+#floating-dock a:hover,
+#floating-dock button:hover {
+  background: rgba(212, 175, 55, 0.1) !important;
+  color: var(--gold, #d4af37) !important;
+}
+#floating-dock .active {
+  background: rgba(109, 40, 217, 0.25) !important;
+  color: var(--gold-light, #f5d77b) !important;
+}
+
+/* ── Theme trigger button — minimal silver ── */
+#theme-trigger {
+  opacity: .45 !important;
+  background: rgba(6, 4, 13, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  transform: scale(0.85) !important;
+}
+#theme-trigger:hover {
+  opacity: .85 !important;
+  transform: scale(0.9) !important;
+}
+
+/* ── Preloader counter — gold ── */
+.pre-counter {
+  color: var(--gold, #d4af37) !important;
+}
+
+/* ── Scroll hint line — gold gradient ── */
+.scroll-hint i {
+  background: linear-gradient(to bottom, var(--gold, #d4af37), transparent) !important;
+}
+
+/* ── Benefits section sticky title ── */
+.bs-title em {
+  background: linear-gradient(135deg, var(--violet, #6d28d9), var(--gold, #d4af37)) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* ── Benefits card — gold accent ── */
+.benefit-card .bc-eyebrow {
+  color: var(--gold, #d4af37) !important;
+}
+.benefit-card .bc-eyebrow::before {
+  background: var(--gold, #d4af37) !important;
+}
+.benefit-card.active {
+  border-color: rgba(212, 175, 55, 0.3) !important;
+}
+.benefit-card.active .bc-num {
+  background: linear-gradient(135deg, var(--violet, #6d28d9), var(--gold, #d4af37)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+.benefit-card.active .bc-marker {
+  background: var(--gold, #d4af37) !important;
+  border-color: var(--gold, #d4af37) !important;
+  box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.12),
+              0 0 18px rgba(212, 175, 55, 0.45) !important;
+}
+.bs-cta {
+  color: var(--gold, #d4af37) !important;
+  border-color: rgba(212, 175, 55, 0.35) !important;
+}
+.bs-cta:hover {
+  background: rgba(212, 175, 55, 0.08) !important;
+  border-color: rgba(212, 175, 55, 0.6) !important;
+}
+.bs-progress-fill {
+  background: linear-gradient(90deg, var(--violet, #6d28d9), var(--gold, #d4af37)) !important;
+}
+
+/* ── BLVCK section — keep its own gold theme, ensure it works ── */
+#blvck-section {
+  background: #000 !important;
+}
+
+/* ── Typing cursor — gold tint ── */
+.typing-cursor {
+  color: var(--gold, #d4af37) !important;
+}
+
+/* ── SECTION ENTRANCE mobile ── */
+@media (max-width: 900px) {
+  .cta-band { padding: 6rem 2rem 7rem; }
+  footer.footer { padding: 4rem 2rem 3rem; }
+  .f-bottom { padding: 1.25rem 2rem; }
+}
+@media (max-width: 700px) {
+  .p-step { padding: 1.75rem 1.5rem 1.5rem; margin-bottom: .75rem; }
 }
