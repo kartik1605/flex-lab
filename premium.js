@@ -631,35 +631,13 @@
   }
 
   /* ─────────────────────────────────────────
-     12cc. LIQUID GLASS TEXT (hero title — neon glow halo)
-     — Smooth cursor-driven halo behind outlined text
+     12cc. HERO SECTION HOVER — whole-section light bloom
+     — CSS handles the light and text glow via #hero:hover
+     — JS only manages the subtle parallax on the hero badge/sub text
   ───────────────────────────────────────── */
   function initLiquidText() {
-    if (reduceMotion || isTouch || isMobile) return;
-    const hero = qs('#hero');
-    if (!hero) return;
-    const title = qs('.liquid-glass-text', hero);
-    if (!title) return;
-
-    // Halo always tracks cursor — no ambient drift (was causing snap-back glitch)
-    let tx = 50, ty = 50;
-    let cx = 50, cy = 50;
-
-    hero.addEventListener('mousemove', e => {
-      const rect = title.getBoundingClientRect();
-      tx = clamp(((e.clientX - rect.left) / rect.width) * 100, -10, 110);
-      ty = clamp(((e.clientY - rect.top)  / rect.height) * 100, -10, 110);
-    });
-    // On mouseleave, freeze target where it is — no jump, no drift
-
-    (function tick() {
-      // Smooth trailing follow
-      cx = lerp(cx, tx, 0.08);
-      cy = lerp(cy, ty, 0.08);
-      title.style.setProperty('--mx', cx.toFixed(2) + '%');
-      title.style.setProperty('--my', cy.toFixed(2) + '%');
-      requestAnimationFrame(tick);
-    })();
+    // No JS needed — the whole effect is driven by CSS #hero:hover.
+    // The liquid blob layer (initLiquidHero) still runs separately.
   }
 
   /* ─────────────────────────────────────────
