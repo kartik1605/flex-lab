@@ -108,31 +108,23 @@
       50%    { transform:scale(1.03); opacity:.28 }
     }
 
-    /* ══ THE CARD — identical to index.html + larger ══ */
+    /* ══ THE CARD ══ */
     .card-3d {
       --mx: 50%; --my: 50%;
-      width: 480px; height: 302px; border-radius: 14px;
-      background: linear-gradient(to bottom left, #1a1a1a, #000);
-      border: 1px solid rgba(212,175,55,.5);
+      width: 480px; height: 302px; border-radius: 18px;
+      background: #080808;
+      border: 1.5px solid rgba(212,175,55,.62);
       display: flex; align-items: center; justify-content: center;
       box-shadow:
-        0 0  55px rgba(212,175,55,.24),
-        0 0 140px rgba(212,175,55,.13),
-        0 0 260px rgba(212,175,55,.07);
+        0 0 0 1px rgba(212,175,55,.08),
+        0 0 40px rgba(212,175,55,.28),
+        0 0 110px rgba(212,175,55,.14),
+        0 0 220px rgba(212,175,55,.07);
       position: relative; overflow: hidden; z-index: 2;
       animation: bc-card-float 6s ease-in-out infinite;
       will-change: transform; transform-style: preserve-3d;
-      transition: box-shadow .55s cubic-bezier(.23,1,.32,1),
-                  border-color .55s cubic-bezier(.23,1,.32,1);
     }
-    .card-3d:hover {
-      border-color: rgba(212,175,55,.88);
-      box-shadow:
-        0 0  72px rgba(212,175,55,.40),
-        0 0 170px rgba(212,175,55,.22),
-        0 0 320px rgba(212,175,55,.11),
-        0 32px 65px rgba(0,0,0,.60);
-    }
+    .card-3d:hover { border-color: rgba(212,175,55,.92); }
     @keyframes bc-card-float {
       0%,100%{ transform: rotateY(-3deg) rotateX(2deg)  translateY(0); }
       50%    { transform: rotateY(3deg)  rotateX(-2deg) translateY(-10px); }
@@ -140,26 +132,26 @@
     /* Gold cursor glow inside card */
     .card-3d::before {
       content:''; position:absolute; inset:0;
-      background: radial-gradient(circle 340px at var(--mx) var(--my),
-        rgba(212,175,55,.32) 0%, rgba(212,175,55,.13) 30%, transparent 65%);
+      background: radial-gradient(circle 280px at var(--mx) var(--my),
+        rgba(212,175,55,.22) 0%, rgba(212,175,55,.08) 40%, transparent 70%);
       border-radius:inherit; pointer-events:none; opacity:0;
-      transition:opacity .5s cubic-bezier(.23,1,.32,1); z-index:1;
+      transition:opacity .45s cubic-bezier(.23,1,.32,1); z-index:1;
     }
     .card-3d:hover::before { opacity:1; }
     /* Top hairline reflection */
     .card-3d::after {
-      content:''; position:absolute; top:0; left:12%; right:12%; height:1px;
-      background:linear-gradient(90deg,transparent,rgba(212,175,55,.6),transparent);
+      content:''; position:absolute; top:0; left:10%; right:10%; height:1px;
+      background:linear-gradient(90deg,transparent,rgba(212,175,55,.5),transparent);
       pointer-events:none; z-index:2;
     }
     /* Card text logo */
     .card-logo {
       font-family: 'Space Grotesk', sans-serif !important;
-      font-size: 1.3rem; font-weight: 800; letter-spacing: .12em;
-      text-transform: uppercase; color: #d4af37 !important;
-      -webkit-text-fill-color: #d4af37 !important;
+      font-size: 1.05rem; font-weight: 700; letter-spacing: 0.34em;
+      text-transform: uppercase; color: #c9a02a !important;
+      -webkit-text-fill-color: #c9a02a !important;
       background: none !important; text-align: center;
-      text-shadow: 0 0 22px rgba(212,175,55,.5);
+      text-shadow: 0 0 16px rgba(180,138,30,.55);
       position: relative; z-index: 3;
     }
     /* Ambient glow under card */
