@@ -631,13 +631,45 @@
   }
 
   /* ─────────────────────────────────────────
-     12cc. HERO SECTION HOVER — whole-section light bloom
-     — CSS handles the light and text glow via #hero:hover
-     — JS only manages the subtle parallax on the hero badge/sub text
+     12cc. HERO TEXT CURSOR BLOOM
+     — Tracks cursor position over the text element and updates
+       --mx / --my so the colour bloom follows the cursor exactly.
+       Effect activates only when cursor is over the text itself.
   ───────────────────────────────────────── */
   function initLiquidText() {
-    // No JS needed — the whole effect is driven by CSS #hero:hover.
-    // The liquid blob layer (initLiquidHero) still runs separately.
+    if (reduceMotion) return;
+    const hero  = qs('#hero');
+    if (!hero) return;
+    const title = qs('.liquid-glass-text', hero);
+    if (!title) return;
+
+    let tx = 50, ty = 50;
+    let cx = 50, cy = 50;
+    let hovering = false;
+
+    title.addEventListener('mouseenter', e => {
+      hovering = true;
+      const rect = title.getBoundingClientRect();
+      tx = clamp(((e.clientX - rect.left) / rect.width)  * 100, -5, 105);
+      ty = clamp(((e.clientY - rect.top)  / rect.height) * 100, -5, 105);
+    });
+
+    title.addEventListener('mousemove', e => {
+      const rect = title.getBoundingClientRect();
+      tx = clamp(((e.clientX - rect.left) / rect.width)  * 100, -5, 105);
+      ty = clamp(((e.clientY - rect.top)  / rect.height) * 100, -5, 105);
+    });
+
+    title.addEventListener('mouseleave', () => { hovering = false; });
+
+    // Smooth lerp so the bloom glides rather than snapping
+    (function tick() {
+      cx = lerp(cx, tx, hovering ? 0.10 : 0.04);
+      cy = lerp(cy, ty, hovering ? 0.10 : 0.04);
+      title.style.setProperty('--mx', cx.toFixed(2) + '%');
+      title.style.setProperty('--my', cy.toFixed(2) + '%');
+      requestAnimationFrame(tick);
+    })();
   }
 
   /* ─────────────────────────────────────────

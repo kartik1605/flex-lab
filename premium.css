@@ -1303,84 +1303,86 @@ nav#nav.nav-condensed {
 
 /* ═══════════════════════════════════════════
    ╔══════════════════════════════════════════╗
-   ║  HERO TEXT — WHOLE-SECTION LIGHT BLOOM  ║
-   ║  Mouse over section → ambient light     ║
-   ║  floods hero, text transitions smoothly ║
+   ║  HERO TEXT — CURSOR-OVER-TEXT REVEAL    ║
+   ║  Hover the text → light blooms from     ║
+   ║  cursor, strokes glow. Leave → fades.   ║
    ╚══════════════════════════════════════════╝
 ═══════════════════════════════════════════ */
 
 /*
-  Base: clean outlined text. No glow on the text itself.
-  The "light" lives at the section level — when the
-  cursor enters the hero, the whole area illuminates
-  and the text transitions into that light beautifully.
+  Base state: clean outlined text, dimmed stroke — quiet & minimal.
+  When the cursor lands ON the text: a radial light bloom erupts from
+  the cursor position behind the letters, the strokes brighten to white,
+  and a multi-colour neon halo wraps each character.
+  Cursor leaves → everything fades back smoothly.
 */
 .liquid-glass-text {
+  --mx: 50%;
+  --my: 50%;
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.72);
-  text-stroke: 1.5px rgba(255, 255, 255, 0.72);
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.55);
+  text-stroke: 1.5px rgba(255, 255, 255, 0.55);
   position: relative;
   isolation: isolate;
   filter: none;
   transition:
-    -webkit-text-stroke-color 1.1s cubic-bezier(.23, 1, .32, 1),
-    filter 1.1s cubic-bezier(.23, 1, .32, 1);
+    -webkit-text-stroke-color 0.75s cubic-bezier(.23, 1, .32, 1),
+    filter 0.75s cubic-bezier(.23, 1, .32, 1);
   will-change: filter;
+  cursor: default;
 }
 
-/* No per-text hover — section hover controls everything */
-.liquid-glass-text:hover { filter: none; }
-
-/* ── Step 1: Section-wide light bloom floods in on hover ── */
-#hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  /* Multi-layer light: violet core → cyan mid → rose outer edge */
-  background:
-    radial-gradient(ellipse 90% 70% at 50% 44%,
-      rgba(124, 58, 237, 0.28) 0%,
-      rgba(6, 182, 212, 0.16) 30%,
-      rgba(244, 63, 94, 0.09) 55%,
-      transparent 76%),
-    radial-gradient(ellipse 60% 40% at 22% 28%,
-      rgba(124, 58, 237, 0.12) 0%,
-      transparent 65%),
-    radial-gradient(ellipse 55% 35% at 80% 72%,
-      rgba(6, 182, 212, 0.10) 0%,
-      transparent 65%);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1;
-  transition: opacity 1.2s cubic-bezier(.23, 1, .32, 1);
-}
-#hero:hover::before { opacity: 1; }
-
-/* ── Step 2: Text strokes brighten + multi-colour neon bloom ── */
-#hero:hover .liquid-glass-text {
+/* ── On TEXT hover: stroke brightens + neon bloom ── */
+.liquid-glass-text:hover {
   -webkit-text-stroke-color: rgba(255, 255, 255, 1);
   filter:
-    drop-shadow(0 0 6px rgba(255, 255, 255, 0.90))
-    drop-shadow(0 0 22px rgba(124, 58, 237, 0.78))
-    drop-shadow(0 0 50px rgba(6, 182, 212, 0.52))
-    drop-shadow(0 0 90px rgba(244, 63, 94, 0.28));
+    drop-shadow(0 0 6px  rgba(255, 255, 255, 0.92))
+    drop-shadow(0 0 22px rgba(124, 58, 237, 0.80))
+    drop-shadow(0 0 52px rgba(6,  182, 212, 0.55))
+    drop-shadow(0 0 88px rgba(244, 63,  94, 0.30));
 }
 
-/* ── Step 3: Background orbs intensify as section "wakes up" ── */
-.orb {
-  transition:
-    filter 1.2s cubic-bezier(.23, 1, .32, 1),
-    opacity 1.2s cubic-bezier(.23, 1, .32, 1);
+/* ── ::before — large cursor-following colour bloom behind text ── */
+.liquid-glass-text::before {
+  content: '';
+  position: absolute;
+  inset: -55px -40px;
+  background:
+    radial-gradient(ellipse 68% 75% at var(--mx) var(--my),
+      rgba(124, 58, 237, 0.50) 0%,
+      rgba(6,  182, 212, 0.28) 32%,
+      rgba(244, 63,  94, 0.14) 56%,
+      transparent 76%);
+  opacity: 0;
+  filter: blur(26px) saturate(1.4);
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 28px;
+  transition: opacity 0.75s cubic-bezier(.23, 1, .32, 1);
+  will-change: opacity;
 }
-#hero:hover .o1 { filter: brightness(1.65) saturate(1.55); }
-#hero:hover .o2 { filter: brightness(1.50) saturate(1.40); }
-#hero:hover .o3 { filter: brightness(1.35) saturate(1.25); }
+.liquid-glass-text:hover::before { opacity: 0.90; }
 
-/* ── Clean up old cursor-following pseudo-elements on text ── */
-.liquid-glass-text::before,
-.liquid-glass-text::after { display: none; }
+/* ── ::after — tight bright hotspot right at the cursor ── */
+.liquid-glass-text::after {
+  content: '';
+  position: absolute;
+  inset: -18px;
+  background:
+    radial-gradient(circle 110px at var(--mx) var(--my),
+      rgba(255, 255, 255, 0.18)                0%,
+      rgba(124, 58, 237, 0.22)                 28%,
+      transparent                              65%);
+  opacity: 0;
+  filter: blur(12px);
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 0.65s cubic-bezier(.23, 1, .32, 1);
+  will-change: opacity;
+}
+.liquid-glass-text:hover::after { opacity: 1; }
 
-/* Keep transparent fill on letter-split spans (GSAP/animation.js) */
+/* Keep transparent fill on letter-split spans */
 .liquid-glass-text .hl,
 .liquid-glass-text .hla,
 .liquid-glass-text span {
@@ -1388,12 +1390,13 @@ nav#nav.nav-condensed {
   -webkit-text-fill-color: transparent;
 }
 
-/* Touch / reduced motion: soft static glow so it still looks good */
+/* Touch / reduced motion: always-on soft glow */
 @media (hover: none), (prefers-reduced-motion: reduce) {
   .liquid-glass-text {
-    filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.55));
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.80);
+    filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.50));
   }
-  #hero::before { opacity: 0.40; }
+  .liquid-glass-text::before { opacity: 0.30; }
 }
 
 /* ═══════════════════════════════════════════
