@@ -276,9 +276,23 @@
   <div class="pre-curtain pre-curtain-bot"></div>
   <div class="pre-inner">
     <div class="pre-logo">
-      <div class="pre-logo-img" aria-label="FLEX LAB">
-        <img src="images/logo/lens-lockup-trans.png" alt="FLEX LAB"/>
-      </div>
+      <svg class="lens-sting" viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg" aria-label="FLEX LAB">
+        <defs>
+          <clipPath id="flexClip" class="ls-flex-clip"><rect x="126" y="30" width="0" height="50"/></clipPath>
+          <clipPath id="labClip"  class="ls-lab-clip"><rect x="126" y="84" width="0" height="50"/></clipPath>
+        </defs>
+        <g class="ls-all">
+          <g class="ls-icon">
+            <rect x="20" y="35" width="80" height="80" rx="20" fill="#7C3AED"/>
+            <path class="ls-chev" d="M44 57 L70 77 L44 97" fill="none" stroke="#0A0710" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle class="ls-dot" cx="80" cy="77" r="6" fill="#F5B83D"/>
+          </g>
+          <g class="ls-word">
+            <text x="126" y="73"  font-family="'Archivo','Space Grotesk',sans-serif" font-weight="900" font-size="46" fill="#F3EEF8" letter-spacing="3"  clip-path="url(#flexClip)">FLEX</text>
+            <text x="126" y="121" font-family="'Archivo','Space Grotesk',sans-serif" font-weight="900" font-size="46" fill="#9F67FF" letter-spacing="22" clip-path="url(#labClip)">LAB</text>
+          </g>
+        </g>
+      </svg>
     </div>
     <div class="pre-counter" id="pre-num">0</div>
     <div class="pre-bar"><div class="pre-fill" id="pre-fill"></div></div>

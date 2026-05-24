@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLEX LAB — Logo Sting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#0A0710;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Archivo',sans-serif;overflow:hidden;}
+  .stage{width:800px;height:450px;position:relative;display:flex;align-items:center;justify-content:center;}
+
+  /* the icon group: starts big & centered, then moves to left-of-text */
+  .icon{
+    transform-box:fill-box;transform-origin:center;
+    /* center pop -> hold -> travel to left */
+    animation:
+      iconPop .7s cubic-bezier(.2,1.4,.4,1) both,
+      iconMove 1s cubic-bezier(.65,0,.35,1) forwards 1.5s;
+  }
+  @keyframes iconPop{
+    0%{opacity:0;transform:translateX(150px) scale(.2) rotate(-20deg);}
+    100%{opacity:1;transform:translateX(150px) scale(1.55) rotate(0);}
+  }
+  @keyframes iconMove{
+    0%{transform:translateX(150px) scale(1.55);}
+    100%{transform:translateX(0px) scale(1);}
+  }
+
+  .chev{stroke-dasharray:120;stroke-dashoffset:120;animation:draw .5s ease forwards .55s;}
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  .dot{transform-box:fill-box;transform-origin:center;opacity:0;
+       animation:pop .45s cubic-bezier(.2,1.6,.4,1) forwards 1s, glow 2.2s ease-in-out infinite 2.6s;}
+  @keyframes pop{0%{opacity:0;transform:scale(0)}100%{opacity:1;transform:scale(1)}}
+  @keyframes glow{0%,100%{filter:drop-shadow(0 0 0 rgba(245,184,61,0))}50%{filter:drop-shadow(0 0 8px rgba(245,184,61,.95))}}
+
+  /* the wordmark reveals as the icon arrives */
+  .word{opacity:0;animation:wordIn .7s cubic-bezier(.2,.8,.2,1) forwards 2.1s;}
+  @keyframes wordIn{0%{opacity:0;transform:translateX(-18px)}100%{opacity:1;transform:translateX(0)}}
+
+  /* clip-reveal masks for each line for a wipe feel */
+  .flex-clip rect{animation:wipe .6s ease forwards 2.15s;}
+  .lab-clip rect{animation:wipe .6s ease forwards 2.35s;}
+  @keyframes wipe{from{width:0}to{width:260}}
+
+  .all{animation:settle 5s ease-in-out infinite 3.2s;transform-box:fill-box;transform-origin:center;}
+  @keyframes settle{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+  .replay{position:fixed;bottom:20px;right:20px;background:#7C3AED;color:#fff;border:none;
+          padding:9px 16px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Archivo';}
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg class="all" width="560" height="170" viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="flexClip" class="flex-clip"><rect x="126" y="30" width="0" height="50"/></clipPath>
+        <clipPath id="labClip" class="lab-clip"><rect x="126" y="84" width="0" height="50"/></clipPath>
+      </defs>
+
+      <!-- ICON -->
+      <g class="icon">
+        <rect x="20" y="35" width="80" height="80" rx="20" fill="#7C3AED"/>
+        <path class="chev" d="M44 57 L70 77 L44 97" fill="none" stroke="#0A0710" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="dot" cx="80" cy="77" r="6" fill="#F5B83D"/>
+      </g>
+
+      <!-- WORDMARK -->
+      <g class="word">
+        <text x="126" y="73" font-weight="900" font-size="46" fill="#F3EEF8" letter-spacing="3" clip-path="url(#flexClip)">FLEX</text>
+        <text x="126" y="121" font-weight="900" font-size="46" fill="#9F67FF" letter-spacing="22" clip-path="url(#labClip)">LAB</text>
+      </g>
+    </svg>
+  </div>
+  <button class="replay" onclick="(function(){var n=document.querySelector('.stage');var c=n.cloneNode(true);n.parentNode.replaceChild(c,n);})()">↻ Replay</button>
+</body>
+</html>

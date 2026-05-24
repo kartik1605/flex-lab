@@ -163,7 +163,7 @@ function qsa(sel,scope=document){ return [...scope.querySelectorAll(sel)]; }
   const preInner = qs('.pre-inner');
 
   let progress = 0;
-  const duration = 2400; // ms — gives FLEX/LAB logo animation time to complete
+  const duration = 4500; // ms — lets the SVG lens-sting animation play through fully
   const start = performance.now();
 
   function step(now){

@@ -121,36 +121,98 @@
 .footer .logo-img img,
 .f-brand .logo-img img { height: 56px; }
 
-/* Preloader logo — large with reveal animation */
-.pre-logo-img {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: scale(0.85);
-  animation: pre-logo-pop 1.2s cubic-bezier(.22, 1, .36, 1) 0.15s forwards;
-}
-.pre-logo-img img {
-  height: clamp(110px, 18vw, 200px);
-  width: auto;
+/* ═══════════════════════════════════════════
+   PRELOADER — Lens Logo Sting (inline SVG animation)
+═══════════════════════════════════════════ */
+.lens-sting {
+  width: clamp(320px, 56vw, 560px);
+  height: auto;
   display: block;
   filter:
-    drop-shadow(0 8px 30px rgba(124, 58, 237, 0.4))
-    drop-shadow(0 0 60px rgba(212, 168, 87, 0.2));
-}
-@keyframes pre-logo-pop {
-  0%   { opacity: 0; transform: scale(0.85) translateY(20px); }
-  60%  { opacity: 1; transform: scale(1.02) translateY(-4px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
+    drop-shadow(0 12px 40px rgba(124, 58, 237, 0.35))
+    drop-shadow(0 0 80px rgba(245, 184, 61, 0.18));
 }
 
-/* Subtle floating animation after the pop-in */
-.pre-logo-img img {
-  animation: logo-float 6s ease-in-out 1.5s infinite;
+/* Icon: pops in from the right, then travels to the left */
+.lens-sting .ls-icon {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation:
+    ls-iconPop  0.7s cubic-bezier(.2, 1.4, .4, 1) both,
+    ls-iconMove 1.0s cubic-bezier(.65, 0, .35, 1) forwards 1.5s;
 }
-@keyframes logo-float {
+@keyframes ls-iconPop {
+  0%   { opacity: 0; transform: translateX(150px) scale(.2)  rotate(-20deg); }
+  100% { opacity: 1; transform: translateX(150px) scale(1.55) rotate(0); }
+}
+@keyframes ls-iconMove {
+  0%   { transform: translateX(150px) scale(1.55); }
+  100% { transform: translateX(0)     scale(1); }
+}
+
+/* Chevron stroke: draws on itself */
+.lens-sting .ls-chev {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: ls-draw 0.5s ease forwards 0.55s;
+}
+@keyframes ls-draw { to { stroke-dashoffset: 0; } }
+
+/* Gold dot: pops + glows */
+.lens-sting .ls-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation:
+    ls-pop  0.45s cubic-bezier(.2, 1.6, .4, 1) forwards 1.0s,
+    ls-glow 2.2s ease-in-out infinite 2.6s;
+}
+@keyframes ls-pop {
+  0%   { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes ls-glow {
+  0%, 100% { filter: drop-shadow(0 0 0   rgba(245, 184, 61, 0)); }
+  50%      { filter: drop-shadow(0 0 8px rgba(245, 184, 61, .95)); }
+}
+
+/* Wordmark: appears as the icon arrives */
+.lens-sting .ls-word {
+  opacity: 0;
+  animation: ls-wordIn 0.7s cubic-bezier(.2, .8, .2, 1) forwards 2.1s;
+}
+@keyframes ls-wordIn {
+  0%   { opacity: 0; transform: translateX(-18px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Clip-reveal wipes for each line */
+.lens-sting .ls-flex-clip rect { animation: ls-wipe 0.6s ease forwards 2.15s; }
+.lens-sting .ls-lab-clip  rect { animation: ls-wipe 0.6s ease forwards 2.35s; }
+@keyframes ls-wipe { from { width: 0; } to { width: 260; } }
+
+/* Final breathing settle */
+.lens-sting .ls-all {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ls-settle 5s ease-in-out infinite 3.2s;
+}
+@keyframes ls-settle {
   0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
+  50%      { transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lens-sting *,
+  .lens-sting .ls-icon,
+  .lens-sting .ls-word,
+  .lens-sting .ls-flex-clip rect,
+  .lens-sting .ls-lab-clip  rect { animation: none !important; }
+  .lens-sting .ls-icon { transform: translateX(0) scale(1); }
+  .lens-sting .ls-word { opacity: 1; }
+  .lens-sting .ls-flex-clip rect,
+  .lens-sting .ls-lab-clip rect { width: 260px; }
+  .lens-sting .ls-dot { opacity: 1; transform: scale(1); }
 }
 
 /* Responsive */
