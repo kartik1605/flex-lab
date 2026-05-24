@@ -95,7 +95,71 @@
   to { opacity: 1; }
 }
 
-/* === Compact nav version (no animation, instant render) === */
+/* === IMAGE-BASED LOGO (replaces text-based cd-mini) === */
+.logo-img {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  transition: filter .4s, transform .4s cubic-bezier(.23, 1, .32, 1);
+}
+.logo-img img {
+  height: 42px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  transition: filter .4s;
+}
+.logo-img:hover img {
+  filter: drop-shadow(0 4px 16px color-mix(in srgb, var(--violet, #7c3aed) 60%, transparent))
+          drop-shadow(0 0 24px color-mix(in srgb, var(--cyan, #d4a857) 30%, transparent))
+          brightness(1.1);
+}
+.logo-img:hover { transform: translateY(-1px); }
+
+/* Footer logo — slightly larger */
+.footer .logo-img img,
+.f-brand .logo-img img { height: 56px; }
+
+/* Preloader logo — large with reveal animation */
+.pre-logo-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.85);
+  animation: pre-logo-pop 1.2s cubic-bezier(.22, 1, .36, 1) 0.15s forwards;
+}
+.pre-logo-img img {
+  height: clamp(110px, 18vw, 200px);
+  width: auto;
+  display: block;
+  filter:
+    drop-shadow(0 8px 30px rgba(124, 58, 237, 0.4))
+    drop-shadow(0 0 60px rgba(212, 168, 87, 0.2));
+}
+@keyframes pre-logo-pop {
+  0%   { opacity: 0; transform: scale(0.85) translateY(20px); }
+  60%  { opacity: 1; transform: scale(1.02) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Subtle floating animation after the pop-in */
+.pre-logo-img img {
+  animation: logo-float 6s ease-in-out 1.5s infinite;
+}
+@keyframes logo-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .logo-img img { height: 36px; }
+  .footer .logo-img img, .f-brand .logo-img img { height: 46px; }
+}
+
+/* === LEGACY text-based logo (kept for fallback) === */
 .cd-mini {
   font-family: 'Clash Display', 'Space Grotesk', sans-serif;
   font-weight: 800;
