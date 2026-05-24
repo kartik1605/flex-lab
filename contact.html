@@ -248,7 +248,7 @@
         <span class="lab-chip" onclick="selectLab(this,'Social Lab')">📱 Social Media</span>
         <span class="lab-chip" onclick="selectLab(this,'Digital Lab')">🌐 Digital</span>
         <span class="lab-chip" onclick="selectLab(this,'BLVCKCARD')">💳 BLVCKCARD</span>
-        <span class="lab-chip" onclick="selectLab(this,'Printing')">🖨️ Printing</span>
+        <span class="lab-chip" onclick="selectLab(this,'Print Lab')">🖨️ Print</span>
       </div>
     </div>
 
@@ -300,7 +300,7 @@
           <option value="social">Social Lab — Social Media Management</option>
           <option value="digital">Digital Lab — Website & SEO</option>
           <option value="blvckcard">BLVCKCARD — NFC Business Card</option>
-          <option value="printing">Printing — Visiting Cards</option>
+          <option value="print">Print Lab — Stationery, Stickers, Packaging &amp; More</option>
           <option value="multiple">Multiple Services</option>
         </select>
       </div>
@@ -369,7 +369,7 @@
 
 <footer class="footer">
   <div class="f-brand">
-    <div class="logo logo-img"><img src="images/logo/lens-lockup-trans.png" alt="FLEX LAB" width="280" height="98"/></div><p>India's premium creative agency — events, branding, gifting, social, and digital presence under one roof.</p><div class="socials"><a href="#" class="soc">in</a><a href="#" class="soc">ig</a><a href="#" class="soc">fb</a><a href="#" class="soc">yt</a></div></div>
+    <div class="logo logo-img"><img src="images/logo/lens-lockup-trans.png" alt="FLEX LAB" width="280" height="98"/></div><p>India's premium creative agency — events, branding, gifting, social, digital, and print under one roof.</p><div class="socials"><a href="#" class="soc">in</a><a href="#" class="soc">ig</a><a href="#" class="soc">fb</a><a href="#" class="soc">yt</a></div></div>
   <div class="f-col"><h5>Our Labs</h5><ul><li><a href="branding.html">Branding Lab</a></li><li><a href="events.html">Events Lab</a></li><li><a href="gifting.html">Gift Lab</a></li><li><a href="social.html">Social Lab</a></li><li><a href="digital.html">Digital Lab</a></li><li><a href="print.html">Print Lab</a></li></ul></div>
   <div class="f-col"><h5>Products</h5><ul><li><a href="blvckcard.html">BLVCKCARD</a></li><li><a href="print.html">Wedding Stationery</a></li><li><a href="print.html">Custom Packaging</a></li></ul></div>
   <div class="f-col"><h5>Company</h5><ul><li><a href="#">About Us</a></li><li><a href="#">Our Work</a></li><li><a href="contact.html">Contact</a></li></ul></div>
@@ -387,7 +387,7 @@
     chip.classList.add('sel');
     const map = {
       'Branding Lab':'branding','Events Lab':'events','Gift Lab':'gifting',
-      'Social Lab':'social','Digital Lab':'digital','BLVCKCARD':'blvckcard','Printing':'printing'
+      'Social Lab':'social','Digital Lab':'digital','BLVCKCARD':'blvckcard','Print Lab':'print'
     };
     const sel = document.getElementById('service');
     if(sel && map[value]) sel.value = map[value];
