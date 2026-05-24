@@ -1,0 +1,45 @@
+# Cloudflare Workers + Assets — files NOT to upload as static assets
+# (used by wrangler deploy with assets.directory = ".")
+
+# Git internals
+.git/
+.gitignore
+.gitattributes
+
+# Cloudflare/Wrangler internals
+.wrangler/
+wrangler.jsonc
+wrangler.toml
+.wranglerignore
+.assetsignore
+
+# Node dependencies
+node_modules/
+package.json
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Claude / AI assistant working files
+.claude/
+
+# Editor / OS junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+
+# Project docs (optional — keep README if you want it published)
+# README.md
