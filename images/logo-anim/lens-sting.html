@@ -35,14 +35,12 @@
   @keyframes pop{0%{opacity:0;transform:scale(0)}100%{opacity:1;transform:scale(1)}}
   @keyframes glow{0%,100%{filter:drop-shadow(0 0 0 rgba(245,184,61,0))}50%{filter:drop-shadow(0 0 8px rgba(245,184,61,.95))}}
 
-  /* the wordmark reveals as the icon arrives */
-  .word{opacity:0;animation:wordIn .7s cubic-bezier(.2,.8,.2,1) forwards 2.1s;}
-  @keyframes wordIn{0%{opacity:0;transform:translateX(-18px)}100%{opacity:1;transform:translateX(0)}}
-
-  /* clip-reveal masks for each line for a wipe feel */
-  .flex-clip rect{animation:wipe .6s ease forwards 2.15s;}
-  .lab-clip rect{animation:wipe .6s ease forwards 2.35s;}
-  @keyframes wipe{from{width:0}to{width:260}}
+  /* the wordmark lines reveal as the icon arrives */
+  .flex-l{opacity:0;transform-box:fill-box;transform-origin:left center;
+          animation:lineIn .6s cubic-bezier(.2,.8,.2,1) forwards 2.15s;}
+  .lab-l{opacity:0;transform-box:fill-box;transform-origin:left center;
+         animation:lineIn .6s cubic-bezier(.2,.8,.2,1) forwards 2.35s;}
+  @keyframes lineIn{0%{opacity:0;transform:translateX(-16px)}100%{opacity:1;transform:translateX(0)}}
 
   .all{animation:settle 5s ease-in-out infinite 3.2s;transform-box:fill-box;transform-origin:center;}
   @keyframes settle{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
@@ -54,11 +52,6 @@
 <body>
   <div class="stage">
     <svg class="all" width="560" height="170" viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <clipPath id="flexClip" class="flex-clip"><rect x="126" y="30" width="0" height="50"/></clipPath>
-        <clipPath id="labClip" class="lab-clip"><rect x="126" y="84" width="0" height="50"/></clipPath>
-      </defs>
-
       <!-- ICON -->
       <g class="icon">
         <rect x="20" y="35" width="80" height="80" rx="20" fill="#7C3AED"/>
@@ -67,10 +60,8 @@
       </g>
 
       <!-- WORDMARK -->
-      <g class="word">
-        <text x="126" y="73" font-weight="900" font-size="46" fill="#F3EEF8" letter-spacing="3" clip-path="url(#flexClip)">FLEX</text>
-        <text x="126" y="121" font-weight="900" font-size="46" fill="#9F67FF" letter-spacing="22" clip-path="url(#labClip)">LAB</text>
-      </g>
+      <text class="flex-l" x="126" y="73" font-weight="900" font-size="46" fill="#F3EEF8" letter-spacing="3">FLEX</text>
+      <text class="lab-l" x="126" y="121" font-weight="900" font-size="46" fill="#9F67FF" letter-spacing="22">LAB</text>
     </svg>
   </div>
   <button class="replay" onclick="(function(){var n=document.querySelector('.stage');var c=n.cloneNode(true);n.parentNode.replaceChild(c,n);})()">↻ Replay</button>
