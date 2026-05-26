@@ -854,29 +854,99 @@ function splitText(el, type='lines'){
 })();
 
 /* ─────────────────────────────────────────
-   MARQUEE — dynamic speed + direction flip
+   MARQUEE — pure JS smooth scroll
+   (replaces CSS animation to eliminate retime/direction-flip glitch)
 ───────────────────────────────────────── */
 (function initMarqueeEnhanced(){
-  qsa('.m-track').forEach(track=>{
-    let speed=1, dir=1, lastY=0;
-    let vSpeed=1, tSpeed=1;
+  const rows = qsa('.m-track');
+  if (!rows.length) return;
 
-    window.addEventListener('scroll',()=>{
-      const d = window.scrollY - lastY;
-      lastY = window.scrollY;
-      dir = d>0 ? 1:-1;
-      tSpeed = Math.min(3, 1 + Math.abs(d)*0.04);
-    },{passive:true});
-
-    (function tick(){
-      vSpeed = lerp(vSpeed, tSpeed, 0.08);
-      tSpeed = lerp(tSpeed, 1, 0.04);
-      // Adjust animation speed via CSS custom property
-      track.style.animationDuration = (22/vSpeed)+'s';
-      track.style.animationDirection = dir>0 ? 'normal':'reverse';
-      requestAnimationFrame(tick);
-    })();
+  const states = rows.map(r => {
+    // Cancel any inherited CSS animation — JS drives everything
+    r.style.animation = 'none';
+    r.style.willChange = 'transform';
+    r.style.transform = 'translate3d(0,0,0)';
+    return {
+      el: r,
+      originals: [...r.children],
+      offset: 0,
+      speed: 70,        // base px/sec (left-bound)
+      unitWidth: 0
+    };
   });
+
+  // Auto-clone children so total width >= 2.2x viewport — guarantees no gap at loop
+  function rebuild() {
+    const targetWidth = window.innerWidth * 2.2;
+    states.forEach(s => {
+      // Strip prior clones
+      while (s.el.children.length > s.originals.length) {
+        s.el.removeChild(s.el.lastElementChild);
+      }
+      // Measure one full unit width (sum of originals + gaps)
+      let unitWidth = 0;
+      s.originals.forEach(c => { unitWidth += c.offsetWidth; });
+      const gapVal = parseFloat(getComputedStyle(s.el).gap || '0') || 0;
+      if (s.originals.length > 1) unitWidth += gapVal * s.originals.length;
+      s.unitWidth = unitWidth || 1;
+
+      // Append clones until total span is wide enough
+      let totalWidth = unitWidth;
+      let safety = 14;
+      while (totalWidth < targetWidth && safety-- > 0) {
+        s.originals.forEach(c => {
+          const clone = c.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          s.el.appendChild(clone);
+        });
+        totalWidth += unitWidth;
+      }
+      s.offset = 0;
+      s.el.style.transform = 'translate3d(0,0,0)';
+    });
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(rebuild);
+  else setTimeout(rebuild, 120);
+  rebuild();
+
+  let resizeT;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(rebuild, 200);
+  }, { passive: true });
+
+  // Scroll velocity boost — ADDITIVE px/sec, smooth decay, never retimes anything
+  let scrollBoost = 0;
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const dy = window.scrollY - lastY;
+    lastY = window.scrollY;
+    // |dy| boosts speed regardless of scroll direction (no flips)
+    scrollBoost = Math.min(200, scrollBoost + Math.abs(dy) * 0.5);
+  }, { passive: true });
+
+  // Pause on hover (JS replaces the CSS :hover rule we just disabled)
+  const paused = new WeakSet();
+  states.forEach(s => {
+    s.el.addEventListener('mouseenter', () => paused.add(s.el));
+    s.el.addEventListener('mouseleave', () => paused.delete(s.el));
+  });
+
+  let lastT = performance.now();
+  (function tick(now) {
+    const dt = Math.min((now - lastT) / 1000, 0.05);
+    lastT = now;
+    scrollBoost = lerp(scrollBoost, 0, 0.06);
+
+    states.forEach(s => {
+      if (!s.unitWidth || paused.has(s.el)) return;
+      const v = (s.speed + scrollBoost) * dt;
+      s.offset -= v;
+      if (s.offset <= -s.unitWidth) s.offset += s.unitWidth;
+      s.el.style.transform = `translate3d(${s.offset}px, 0, 0)`;
+    });
+    requestAnimationFrame(tick);
+  })(lastT);
 })();
 
 /* ─────────────────────────────────────────
