@@ -127,3 +127,95 @@ document.querySelectorAll('.svc-card,.card-glow').forEach(card=>{
     for(let i=0;i<n;i++) dots[Math.floor(Math.random()*100)].classList.add('lit');
   },650);
 })();
+
+/* ── Premium Interactive Details Dropdown logic ── */
+function toggleDetails(btn, event) {
+  event.stopPropagation(); // Prevent parent clicks
+  const container = btn.closest('.interactive-details');
+  const panel = container.querySelector('.details-panel');
+  
+  if (panel.classList.contains('open')) {
+    panel.classList.remove('open');
+    btn.innerHTML = 'Explore Options ▾';
+  } else {
+    panel.classList.add('open');
+    btn.innerHTML = 'Close Options ▴';
+    const select = container.querySelector('.option-dropdown');
+    if (select) updateMailto(select);
+  }
+}
+
+function updateMailto(select) {
+  const container = select.closest('.interactive-details');
+  const categoryName = container.dataset.category;
+  const subCategory = select.value;
+  const email = "flexlab.co.in@gmail.com";
+  
+  const inquiryBtn = container.querySelector('.btn-inquiry');
+  const apptBtn = container.querySelector('.btn-appointment');
+  
+  const inquirySubject = encodeURIComponent(`[FLex LAB] Print/Production Inquiry - ${categoryName} (${subCategory})`);
+  const inquiryBody = encodeURIComponent(
+`Hi FLex LAB Team,
+
+I would like to inquire about print/production services for: ${subCategory} (under ${categoryName}).
+
+[CRITICAL]: I have attached the design files/assets I would like to get produced/printed to this email.
+
+Project details:
+- Quantity required: [Enter quantity here]
+- Preferred size/finishes: [Enter preferred details here]
+- Delivery deadline: [Enter date here]
+- Special requirements: [Enter any special instructions here]
+
+Please get back to me with a price estimate and turnaround time.
+
+Best regards,
+[My Name]
+[My Company]
+[My Phone Number]`
+  );
+  
+  const apptSubject = encodeURIComponent(`[FLex LAB] Design Appointment Request - ${categoryName} (${subCategory})`);
+  const apptBody = encodeURIComponent(
+`Hi FLex LAB Team,
+
+I would like to schedule a design consultation to create custom designs for: ${subCategory} (under ${categoryName}).
+
+Project Brief:
+- Design style preferred: [Enter brand vibe, color choices, or design inspiration here]
+- Intended audience/use: [Enter details here]
+- Timeline/Deadline: [Enter target date here]
+
+Preferred Appointment Times:
+- Option 1: [Date & Time]
+- Option 2: [Date & Time]
+
+Please let me know if this works or suggest an alternative time for our call.
+
+Best regards,
+[My Name]
+[My Company]
+[My Phone Number]`
+  );
+  
+  if (inquiryBtn) inquiryBtn.href = `mailto:${email}?subject=${inquirySubject}&body=${inquiryBody}`;
+  if (apptBtn) apptBtn.href = `mailto:${email}?subject=${apptSubject}&body=${apptBody}`;
+}
+
+// Auto-initialize all mailto links on window load or script execution
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.interactive-details .option-dropdown').forEach(select => {
+    updateMailto(select);
+  });
+});
+// Fallback in case DOMContentLoaded already fired
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+  document.querySelectorAll('.interactive-details .option-dropdown').forEach(select => {
+    updateMailto(select);
+  });
+}
+
+window.toggleDetails = toggleDetails;
+window.updateMailto  = updateMailto;
+
