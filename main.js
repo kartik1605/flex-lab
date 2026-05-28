@@ -152,6 +152,12 @@ function toggleDetails(btn, event) {
   const overlay = document.createElement('div');
   overlay.className = 'details-modal-overlay';
   
+  // Determine button texts based on the Lab
+  const pathName = location.pathname.split('/').pop() || 'index.html';
+  const isPrintOrGift = pathName.includes('print') || pathName.includes('gifting');
+  const inquiryText = isPrintOrGift ? '📂 Inquiry / Send File' : '📂 Project Inquiry';
+  const appointmentText = isPrintOrGift ? '📅 Book Design Call' : '📅 Book Consultation Call';
+  
   overlay.innerHTML = `
     <div class="details-modal-card">
       <button class="modal-close-btn" aria-label="Close modal">×</button>
@@ -170,8 +176,8 @@ function toggleDetails(btn, event) {
         </div>
       </div>
       <div class="modal-actions">
-        <a href="#" class="btn-modal-inquiry" target="_blank">📂 Inquiry / Send File</a>
-        <a href="#" class="btn-modal-appointment" target="_blank">📅 Book Design Call</a>
+        <a href="#" class="btn-modal-inquiry" target="_blank">${inquiryText}</a>
+        <a href="#" class="btn-modal-appointment" target="_blank">${appointmentText}</a>
       </div>
     </div>
   `;
