@@ -88,6 +88,127 @@
     .res-item:hover{border-color:rgba(245,158,11,.2);transform:translateY(-3px);}
     .res-num{font-family:var(--ff-d);font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,var(--amber),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .res-label{color:var(--muted);font-size:.75rem;margin-top:.35rem;}
+    /* Detailed Comparison Table */
+    .compare-section-title {
+      text-align: center;
+      margin-top: 6rem;
+      margin-bottom: 2.5rem;
+    }
+    .compare-section-title h3 {
+      font-family: var(--ff-d);
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      background: rgba(9, 9, 18, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      margin-top: 3.5rem;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: .83rem;
+      color: var(--muted);
+      min-width: 800px;
+    }
+    .compare-table th, .compare-table td {
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      transition: all 0.3s;
+    }
+    .compare-table th {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text);
+      font-weight: 600;
+    }
+    .compare-table thead tr th:first-child {
+      font-family: var(--ff-d);
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .th-pkg {
+      font-family: var(--ff-d);
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: .2rem;
+    }
+    .th-price {
+      font-family: var(--ff-d);
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .th-price span {
+      font-size: .7rem;
+      font-weight: 500;
+      color: var(--muted);
+      display: inline-block;
+      margin-left: .3rem;
+    }
+    .compare-table td.f-name {
+      color: var(--text);
+      font-weight: 600;
+      font-size: .85rem;
+    }
+    .compare-table tbody tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text);
+    }
+    .compare-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    /* Featured Column Highlights */
+    .featured-th {
+      position: relative;
+      background: rgba(245, 158, 11, 0.03) !important;
+      border-left: 1px solid rgba(245, 158, 11, 0.25);
+      border-right: 1px solid rgba(245, 158, 11, 0.25);
+    }
+    .featured-td {
+      background: rgba(245, 158, 11, 0.02);
+      border-left: 1px solid rgba(245, 158, 11, 0.15);
+      border-right: 1px solid rgba(245, 158, 11, 0.15);
+      color: var(--text);
+    }
+    .compare-table tbody tr:hover td.featured-td {
+      background: rgba(245, 158, 11, 0.05) !important;
+    }
+    .featured-th .pkg-badge {
+      position: absolute;
+      top: -0.75rem;
+      right: auto;
+      left: 1.75rem;
+      background: var(--amber);
+      color: #000;
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .25rem .75rem;
+      border-radius: 100px;
+    }
+    .compare-table .btn-sm {
+      padding: .45rem 1.1rem;
+      font-size: .72rem;
+      display: inline-flex;
+    }
+    .compare-table .sub-text {
+      font-size: .75rem;
+      color: var(--muted);
+      font-weight: 400;
+      display: block;
+      margin-top: .15rem;
+    }
     @media(max-width:1100px){.svc-2col,.pkg-grid{grid-template-columns:1fr;}.results-grid{grid-template-columns:repeat(2,1fr);}}
   </style>
 </head>
@@ -409,6 +530,105 @@
         <a href="contact.html" class="btn-g" style="width:100%;justify-content:center;">Get Started</a>
       </div>
     </div>
+
+    <!-- Detailed Plan Comparison Section -->
+    <div class="compare-section-title rv d3">
+      <div class="s-label">Comparison Matrix</div>
+      <h3>Detailed Plan <span class="grad">Comparison</span></h3>
+      <p class="s-sub" style="margin-top:0.5rem;max-width:600px;margin-left:auto;margin-right:auto;">A comprehensive breakdown of our social media management packages side-by-side to help you select the perfect tier.</p>
+    </div>
+
+    <div class="table-wrapper rv d4">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Core Features</th>
+            <th>
+              <div class="th-pkg">Starter</div>
+              <div class="th-price">₹12,000<span>/mo + GST</span></div>
+            </th>
+            <th class="featured-th">
+              <div class="pkg-badge">Most Popular</div>
+              <div class="th-pkg">Growth</div>
+              <div class="th-price">₹22,000<span>/mo + GST</span></div>
+            </th>
+            <th>
+              <div class="th-pkg">Premium</div>
+              <div class="th-price">₹40,000<span>/mo + GST</span></div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="f-name">Platforms Managed</td>
+            <td>2 Platforms</td>
+            <td class="featured-td">3 Platforms</td>
+            <td>All 5 Platforms</td>
+          </tr>
+          <tr>
+            <td class="f-name">Content Output</td>
+            <td>12 Posts (4 Reels + 8 Carousels)</td>
+            <td class="featured-td">21 Posts (10 Reels + 11 Carousels)</td>
+            <td>40 Posts + Unlimited Stories</td>
+          </tr>
+          <tr>
+            <td class="f-name">Customizability</td>
+            <td>Fixed Template</td>
+            <td class="featured-td"><strong>Fully Customizable</strong> as per client needs</td>
+            <td><strong>Fully Customizable</strong> as per client needs</td>
+          </tr>
+          <tr>
+            <td class="f-name">Video Productions</td>
+            <td>— <span class="sub-text">(Charged Extra)</span></td>
+            <td class="featured-td"><strong>2 Included</strong> / month</td>
+            <td><strong>5 Included</strong> / month</td>
+          </tr>
+          <tr>
+            <td class="f-name">Travel &amp; Transport</td>
+            <td>Client covered</td>
+            <td class="featured-td">Client covered</td>
+            <td>Client covered</td>
+          </tr>
+          <tr>
+            <td class="f-name">Client Data / Inputs</td>
+            <td>Provided by client</td>
+            <td class="featured-td">Provided by client</td>
+            <td>Provided by client</td>
+          </tr>
+          <tr>
+            <td class="f-name">Extra Productions</td>
+            <td>Charged per requirement</td>
+            <td class="featured-td">Charged per requirement</td>
+            <td>Charged per requirement</td>
+          </tr>
+          <tr>
+            <td class="f-name">Paid Campaigns</td>
+            <td>— <span class="sub-text">(Not Included)</span></td>
+            <td class="featured-td">Managed by us <span class="sub-text">(ad budget by client)</span></td>
+            <td>Managed by us <span class="sub-text">(ad budget by client)</span></td>
+          </tr>
+          <tr>
+            <td class="f-name">Community Management</td>
+            <td>Comment Moderation</td>
+            <td class="featured-td">Full Community Management</td>
+            <td>24/7 Moderation + VIP Support</td>
+          </tr>
+          <tr>
+            <td class="f-name">Analytics &amp; Strategy</td>
+            <td>Monthly Report</td>
+            <td class="featured-td">Weekly Insights</td>
+            <td>Weekly Calls + Dedicated Manager</td>
+          </tr>
+          <tr class="action-row">
+            <td></td>
+            <td><a href="contact.html" class="btn-g btn-sm">Get Started</a></td>
+            <td class="featured-td"><a href="contact.html" class="btn-p btn-sm">Get Started</a></td>
+            <td><a href="contact.html" class="btn-g btn-sm">Get Started</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </section>
 
