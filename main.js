@@ -136,9 +136,26 @@ function toggleDetails(btn, event) {
   
   if (panel.classList.contains('open')) {
     panel.classList.remove('open');
+    btn.classList.remove('active');
     btn.innerHTML = 'Explore Options ▾';
   } else {
+    // Close other panels on the page
+    document.querySelectorAll('.interactive-details').forEach(otherContainer => {
+      if (otherContainer !== container) {
+        const otherPanel = otherContainer.querySelector('.details-panel');
+        const otherBtn = otherContainer.querySelector('.details-toggle');
+        if (otherPanel && otherPanel.classList.contains('open')) {
+          otherPanel.classList.remove('open');
+          if (otherBtn) {
+            otherBtn.classList.remove('active');
+            otherBtn.innerHTML = 'Explore Options ▾';
+          }
+        }
+      }
+    });
+
     panel.classList.add('open');
+    btn.classList.add('active');
     btn.innerHTML = 'Close Options ▴';
     const select = container.querySelector('.option-dropdown');
     if (select) updateMailto(select);
