@@ -491,18 +491,243 @@ body.cbig #cur-ring { width:54px; height:54px; border-color:rgba(109,40,217,.45)
   .cta-btns { flex-direction:column; }
 }
 
-/* Align grid items to start so expanding one card doesn't stretch others in the same row */
-.gift-grid, .svc-big, .event-types, .svc-2col, .dig-grid, .pr-grid {
-  align-items: start !important;
+/* ── Premium Details Overlay Modal ── */
+.details-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2500; /* Ensure it is above everything including custom cursor */
+  background: rgba(4, 3, 10, 0.75);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.2, 1, 0.2, 1);
 }
 
-/* ── Premium Interactive Details Dropdown ── */
+.details-modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.details-modal-card {
+  position: relative;
+  background: rgba(11, 8, 24, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  max-width: 620px;
+  width: 90%;
+  padding: 3.5rem 3rem;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8), 0 0 60px rgba(124, 58, 237, 0.15);
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.45s cubic-bezier(0.2, 1, 0.2, 1);
+  overflow: hidden;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.details-modal-overlay.active .details-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+/* Modal Content Styling */
+.modal-header {
+  margin-bottom: 1.8rem;
+  position: relative;
+  z-index: 2;
+}
+
+.modal-category-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--cyan);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.modal-category-label::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--cyan);
+}
+
+.modal-title {
+  font-family: var(--ff-d);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 0.8rem;
+}
+
+.modal-description {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+/* Option Chips (Selector) */
+.modal-options-wrapper {
+  margin-bottom: 2.2rem;
+  position: relative;
+  z-index: 2;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.modal-section-title {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.8rem;
+}
+
+.modal-chips-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.modal-chip {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+.modal-chip:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.modal-chip.active {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(6, 182, 212, 0.1));
+  border-color: var(--violet2);
+  color: var(--text);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.25);
+  text-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  position: relative;
+  z-index: 2;
+}
+
+.btn-modal-inquiry, .btn-modal-appointment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.5rem;
+  border-radius: 12px;
+  font-family: var(--ff-d);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-modal-inquiry {
+  background: linear-gradient(135deg, var(--violet2) 0%, var(--cyan) 100%);
+  background-size: 150% 150%;
+  color: #fff !important;
+  border: none;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.25);
+}
+
+.btn-modal-inquiry:hover {
+  background-position: 100% 0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.45);
+}
+
+.btn-modal-appointment {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-modal-appointment:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255,255,255,0.05);
+}
+
+/* Close Button */
+.modal-close-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 3;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text);
+  transform: rotate(90deg);
+}
+
+/* Modal Accent Glowing Orb */
+.modal-orb {
+  position: absolute;
+  top: -150px;
+  right: -150px;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15), transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Clean Toggle Button inside Cards ── */
 .interactive-details {
-  margin-top: 1.5rem;
-  border-top: 1px solid var(--border);
-  padding-top: 1.2rem;
+  margin-top: 1.4rem;
   position: relative;
   z-index: 10;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .details-toggle {
@@ -521,14 +746,13 @@ body.cbig #cur-ring { width:54px; height:54px; border-color:rgba(109,40,217,.45)
   border-radius: 100px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .details-toggle:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 15px rgba(255,255,255,0.05);
+  border-color: rgba(255, 255, 255, 0.18);
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255,255,255,0.05);
 }
 
 .details-toggle::before {
@@ -538,145 +762,17 @@ body.cbig #cur-ring { width:54px; height:54px; border-color:rgba(109,40,217,.45)
   transition: transform 0.3s;
 }
 
-.details-toggle.active::before {
-  transform: rotate(45deg);
-}
-
+/* Hide the old static panels since we now show the gorgeous Modal */
 .details-panel {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transform: scale(0.97) translateY(-5px);
-  transform-origin: top center;
-  transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
-              opacity 0.3s ease, 
-              transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.details-panel.open {
-  max-height: 500px; /* high enough to cover contents */
-  opacity: 1;
-  transform: scale(1) translateY(0);
-  margin-top: 1.5rem;
-}
-
-.option-select-label {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-  margin-bottom: 0.5rem;
-}
-
-.option-dropdown-wrapper {
-  position: relative;
-  margin-bottom: 1.4rem;
-  border-radius: 12px;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  transition: background 0.3s;
-}
-
-.option-dropdown-wrapper:hover, .option-dropdown-wrapper:focus-within {
-  background: linear-gradient(135deg, var(--violet2), var(--cyan));
-}
-
-.option-dropdown {
-  width: 100%;
-  background: #090712; /* Dark luxury base background */
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 11px;
-  color: var(--text);
-  font-family: var(--ff-b);
-  font-size: 0.82rem;
-  font-weight: 500;
-  padding: 0.8rem 2.2rem 0.8rem 1.1rem; /* Extra right padding for arrow */
-  outline: none;
-  cursor: pointer;
-  appearance: none; /* remove default arrow */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  transition: background 0.3s, color 0.3s;
-}
-
-.option-dropdown option {
-  background: #090712;
-  color: var(--text);
-  padding: 10px;
-}
-
-.option-dropdown-wrapper::after {
-  content: '▾';
-  position: absolute;
-  right: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  font-size: 0.9rem;
-  pointer-events: none;
-  transition: color 0.3s;
-}
-
-.option-dropdown-wrapper:hover::after {
-  color: var(--text);
-}
-
-.details-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-}
-
-.btn-inquiry, .btn-appointment {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.8rem 1.2rem;
-  border-radius: 10px;
-  font-family: var(--ff-d);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.btn-inquiry {
-  background: linear-gradient(135deg, var(--violet2) 0%, var(--cyan) 100%);
-  background-size: 150% 150%;
-  color: #fff !important;
-  border: none;
-  box-shadow: 0 4px 15px rgba(109, 40, 217, 0.2);
-}
-
-.btn-inquiry:hover {
-  background-position: 100% 0;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(124, 58, 237, 0.4);
-}
-
-.btn-appointment {
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--text) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.btn-appointment:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: #fff !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255,255,255,0.05);
+  display: none !important;
 }
 
 @media(max-width: 700px) {
-  .details-actions {
+  .modal-actions {
     grid-template-columns: 1fr;
+  }
+  .details-modal-card {
+    padding: 2.5rem 1.8rem;
   }
 }
 

@@ -128,54 +128,113 @@ document.querySelectorAll('.svc-card,.card-glow').forEach(card=>{
   },650);
 })();
 
-/* ── Premium Interactive Details Dropdown logic ── */
+/* ── Premium Details Overlay Modal logic ── */
 function toggleDetails(btn, event) {
   event.stopPropagation(); // Prevent parent clicks
-  const container = btn.closest('.interactive-details');
-  const panel = container.querySelector('.details-panel');
   
-  if (panel.classList.contains('open')) {
-    panel.classList.remove('open');
-    btn.classList.remove('active');
-    btn.innerHTML = 'Explore Options ▾';
-  } else {
-    // Close other panels on the page
-    document.querySelectorAll('.interactive-details').forEach(otherContainer => {
-      if (otherContainer !== container) {
-        const otherPanel = otherContainer.querySelector('.details-panel');
-        const otherBtn = otherContainer.querySelector('.details-toggle');
-        if (otherPanel && otherPanel.classList.contains('open')) {
-          otherPanel.classList.remove('open');
-          if (otherBtn) {
-            otherBtn.classList.remove('active');
-            otherBtn.innerHTML = 'Explore Options ▾';
-          }
-        }
-      }
+  const container = btn.closest('.interactive-details');
+  const categoryName = container.dataset.category || 'Service Focus';
+  
+  // Find card info
+  const parentCard = btn.closest('.svc-card, .etype, .gift-card, .svc2, .dig-card, .pr-card');
+  const cardTitle = parentCard ? parentCard.querySelector('h3').textContent : 'FLEX LAB Solution';
+  const cardDesc = parentCard ? parentCard.querySelector('p').textContent : 'Premium custom services.';
+  
+  // Find options
+  const select = container.querySelector('.option-dropdown');
+  const options = select ? Array.from(select.querySelectorAll('option')).map(opt => opt.value) : [];
+  if (options.length === 0) return;
+  
+  // Remove existing modal if any
+  document.querySelectorAll('.details-modal-overlay').forEach(el => el.remove());
+  
+  // Create overlay modal
+  const overlay = document.createElement('div');
+  overlay.className = 'details-modal-overlay';
+  
+  overlay.innerHTML = `
+    <div class="details-modal-card">
+      <button class="modal-close-btn" aria-label="Close modal">×</button>
+      <div class="modal-orb"></div>
+      <div class="modal-header">
+        <div class="modal-category-label">${categoryName}</div>
+        <h2 class="modal-title">${cardTitle}</h2>
+        <p class="modal-description">${cardDesc}</p>
+      </div>
+      <div class="modal-options-wrapper">
+        <span class="modal-section-title">Select Service Focus</span>
+        <div class="modal-chips-grid">
+          ${options.map((opt, i) => `
+            <button class="modal-chip ${i === 0 ? 'active' : ''}" data-value="${opt}">${opt}</button>
+          `).join('')}
+        </div>
+      </div>
+      <div class="modal-actions">
+        <a href="#" class="btn-modal-inquiry" target="_blank">📂 Inquiry / Send File</a>
+        <a href="#" class="btn-modal-appointment" target="_blank">📅 Book Design Call</a>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(overlay);
+  
+  const card = overlay.querySelector('.details-modal-card');
+  const closeBtn = overlay.querySelector('.modal-close-btn');
+  
+  // Update mailto for default option immediately
+  updateModalMailto(card, categoryName, options[0]);
+  
+  // Event listeners for chips
+  overlay.querySelectorAll('.modal-chip').forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      overlay.querySelectorAll('.modal-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      updateModalMailto(card, categoryName, chip.dataset.value);
     });
-
-    panel.classList.add('open');
-    btn.classList.add('active');
-    btn.innerHTML = 'Close Options ▴';
-    const select = container.querySelector('.option-dropdown');
-    if (select) updateMailto(select);
+  });
+  
+  // Trigger animations
+  setTimeout(() => {
+    overlay.classList.add('active');
+  }, 10);
+  
+  // Close handler
+  function closeThisModal() {
+    overlay.classList.remove('active');
+    setTimeout(() => {
+      overlay.remove();
+    }, 400);
   }
+  
+  closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeThisModal();
+  });
+  
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      closeThisModal();
+    }
+  });
+  
+  // Cursor scaling hover bindings
+  overlay.querySelectorAll('a, button, .modal-chip').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cbig'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cbig'));
+  });
 }
 
-function updateMailto(select) {
-  const container = select.closest('.interactive-details');
-  const categoryName = container.dataset.category;
-  const subCategory = select.value;
+function updateModalMailto(modalCard, category, optionValue) {
   const email = "flexlab.co.in@gmail.com";
+  const inquiryBtn = modalCard.querySelector('.btn-modal-inquiry');
+  const apptBtn = modalCard.querySelector('.btn-modal-appointment');
   
-  const inquiryBtn = container.querySelector('.btn-inquiry');
-  const apptBtn = container.querySelector('.btn-appointment');
-  
-  const inquirySubject = encodeURIComponent(`[FLex LAB] Print/Production Inquiry - ${categoryName} (${subCategory})`);
+  const inquirySubject = encodeURIComponent(`[FLex LAB] Print/Production Inquiry - ${category} (${optionValue})`);
   const inquiryBody = encodeURIComponent(
 `Hi FLex LAB Team,
 
-I would like to inquire about print/production services for: ${subCategory} (under ${categoryName}).
+I would like to inquire about print/production services for: ${optionValue} (under ${category}).
 
 [CRITICAL]: I have attached the design files/assets I would like to get produced/printed to this email.
 
@@ -193,11 +252,11 @@ Best regards,
 [My Phone Number]`
   );
   
-  const apptSubject = encodeURIComponent(`[FLex LAB] Design Appointment Request - ${categoryName} (${subCategory})`);
+  const apptSubject = encodeURIComponent(`[FLex LAB] Design Appointment Request - ${category} (${optionValue})`);
   const apptBody = encodeURIComponent(
 `Hi FLex LAB Team,
 
-I would like to schedule a design consultation to create custom designs for: ${subCategory} (under ${categoryName}).
+I would like to schedule a design consultation to create custom designs for: ${optionValue} (under ${category}).
 
 Project Brief:
 - Design style preferred: [Enter brand vibe, color choices, or design inspiration here]
@@ -220,19 +279,5 @@ Best regards,
   if (apptBtn) apptBtn.href = `mailto:${email}?subject=${apptSubject}&body=${apptBody}`;
 }
 
-// Auto-initialize all mailto links on window load or script execution
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.interactive-details .option-dropdown').forEach(select => {
-    updateMailto(select);
-  });
-});
-// Fallback in case DOMContentLoaded already fired
-if (document.readyState === 'interactive' || document.readyState === 'complete') {
-  document.querySelectorAll('.interactive-details .option-dropdown').forEach(select => {
-    updateMailto(select);
-  });
-}
-
 window.toggleDetails = toggleDetails;
-window.updateMailto  = updateMailto;
 
