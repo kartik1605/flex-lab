@@ -18,14 +18,22 @@
     /* Platforms */
     .platform-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2.5rem;}
     .plat{
-      display:flex;align-items:center;gap:.75rem;
+      display:flex;align-items:center;gap:.6rem;
       background:var(--bg2);border:1px solid var(--border);
       border-radius:100px;padding:.55rem 1.2rem;
       font-size:.82rem;font-weight:600;color:var(--muted);
       transition:all .3s;cursor:default;
     }
-    .plat:hover{color:var(--text);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.05);}
-    .plat-icon{font-size:1.1rem;}
+    .plat:hover{
+      color:var(--text);
+      border-color:rgba(200, 184, 245, 0.35);
+      background:rgba(200, 184, 245, 0.05);
+      box-shadow:0 0 15px rgba(200, 184, 245, 0.1);
+    }
+    .plat svg { width:18px; height:18px; display:block; flex-shrink:0; }
+    .plat svg .di-stroke { stroke:#c8b8f5; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; fill:none; transition:stroke .3s; }
+    .plat svg .di-dot { fill:#d4af37; transition:fill .3s; }
+    .plat:hover svg .di-stroke { stroke:#fff; }
     /* Services 2-col */
     .svc-2col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:3.5rem;}
     .svc2{
@@ -125,11 +133,49 @@
       <a href="#services" class="btn-g">See Services ↓</a>
     </div>
     <div class="platform-row rv d4">
-      <div class="plat"><span class="plat-icon">📸</span>Instagram</div>
-      <div class="plat"><span class="plat-icon">💼</span>LinkedIn</div>
-      <div class="plat"><span class="plat-icon">▶️</span>YouTube</div>
-      <div class="plat"><span class="plat-icon">🎵</span>Facebook</div>
-      <div class="plat"><span class="plat-icon">𝕏</span>X / Twitter</div>
+      <div class="plat">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect class="di-stroke" x="3" y="3" width="18" height="18" rx="5"/>
+          <circle class="di-stroke" cx="12" cy="12" r="4.5"/>
+          <circle class="di-dot" cx="17.5" cy="6.5" r="1.5"/>
+        </svg>
+        Instagram
+      </div>
+      <div class="plat">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect class="di-stroke" x="3" y="3" width="18" height="18" rx="4.5"/>
+          <line class="di-stroke" x1="8" y1="10" x2="8" y2="16"/>
+          <circle class="di-dot" cx="8" cy="7" r="1.5"/>
+          <path class="di-stroke" d="M12 16V10M12 11.5C12 10.1 13.1 9 14.5 9S17 10.1 17 11.5V16"/>
+        </svg>
+        LinkedIn
+      </div>
+      <div class="plat">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect class="di-stroke" x="2" y="4" width="20" height="16" rx="5"/>
+          <path class="di-stroke" d="M10 9L15 12L10 15V9Z"/>
+          <circle class="di-dot" cx="18" cy="7.5" r="1.5"/>
+        </svg>
+        YouTube
+      </div>
+      <div class="plat">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect class="di-stroke" x="3" y="3" width="18" height="18" rx="4.5"/>
+          <path class="di-stroke" d="M14 17V12.5H15.5L16 10H14V8.5C14 7.8 14.2 7.3 15.2 7.3H16.5V5.1C16.3 5.1 15.5 5 14.6 5C12.7 5 11.4 6.2 11.4 8.3V10H9.5V12.5H11.4V17H14Z"/>
+          <circle class="di-dot" cx="6.5" cy="6.5" r="1.5"/>
+        </svg>
+        Facebook
+      </div>
+      <div class="plat">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect class="di-stroke" x="3" y="3" width="18" height="18" rx="4.5"/>
+          <path class="di-stroke" d="M7 6L17 18"/>
+          <path class="di-stroke" d="M17 6L13.2 11.2"/>
+          <path class="di-stroke" d="M10.8 12.8L7 18"/>
+          <circle class="di-dot" cx="17.5" cy="6.5" r="1.5"/>
+        </svg>
+        X / Twitter
+      </div>
     </div>
   </div>
 </section>
