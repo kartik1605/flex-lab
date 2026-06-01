@@ -1284,6 +1284,156 @@
   }
 
   /* ─────────────────────────────────────────
+     15. PREMIUM INTERACTIVE SLIDER
+  ───────────────────────────────────────── */
+  function initPremiumSliders() {
+    const containers = qsa('.premium-slider-container');
+    if (!containers.length) return;
+
+    containers.forEach(container => {
+      const slides = qsa('.premium-slide', container);
+      if (!slides.length) return;
+
+      const prevBtn = qs('.prev-btn', container);
+      const nextBtn = qs('.next-btn', container);
+      const currIdxEl = qs('.curr-idx', container);
+      const totalCountEl = qs('.total-count', container);
+      const progressFill = qs('.slider-progress-fill', container);
+
+      let currentIdx = 0;
+      let timer = null;
+      const duration = 6000;
+      let isAnimating = false;
+
+      if (totalCountEl) {
+        totalCountEl.textContent = String(slides.length).padStart(2, '0');
+      }
+
+      function showSlide(index) {
+        if (isAnimating || index === currentIdx) return;
+        isAnimating = true;
+
+        const prevSlide = slides[currentIdx];
+        const nextSlide = slides[index];
+
+        if (currIdxEl) {
+          currIdxEl.textContent = String(index + 1).padStart(2, '0');
+        }
+
+        if (window.gsap) {
+          const nextImg = qs('.feat-img', nextSlide);
+          const prevImg = qs('.feat-img', prevSlide);
+
+          gsap.set(nextSlide, { display: 'block', zIndex: 2, autoAlpha: 0 });
+          if (nextImg) gsap.set(nextImg, { scale: 1.08 });
+
+          gsap.to(prevSlide, { 
+            autoAlpha: 0, 
+            duration: 0.6, 
+            ease: 'power2.inOut',
+            onComplete: () => {
+              gsap.set(prevSlide, { display: 'none', zIndex: 1 });
+            }
+          });
+
+          gsap.to(nextSlide, { 
+            autoAlpha: 1, 
+            duration: 0.6, 
+            ease: 'power2.inOut',
+            onComplete: () => {
+              isAnimating = false;
+            }
+          });
+
+          if (nextImg) {
+            gsap.to(nextImg, { 
+              scale: 1, 
+              duration: 6, 
+              ease: 'power1.out' 
+            });
+          }
+        } else {
+          prevSlide.classList.remove('active');
+          nextSlide.classList.add('active');
+          isAnimating = false;
+        }
+
+        currentIdx = index;
+        resetProgress();
+      }
+
+      function nextSlide() {
+        let nextIdx = (currentIdx + 1) % slides.length;
+        showSlide(nextIdx);
+      }
+
+      function prevSlideFunc() {
+        let prevIdx = (currentIdx - 1 + slides.length) % slides.length;
+        showSlide(prevIdx);
+      }
+
+      function resetProgress() {
+        if (timer) clearInterval(timer);
+        if (progressFill && window.gsap) {
+          gsap.killTweensOf(progressFill);
+          gsap.set(progressFill, { width: '0%' });
+          gsap.to(progressFill, { 
+            width: '100%', 
+            duration: duration / 1000, 
+            ease: 'none' 
+          });
+        }
+        timer = setInterval(nextSlide, duration);
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          nextSlide();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          prevSlideFunc();
+        });
+      }
+
+      let startX = 0;
+      container.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+      }, { passive: true });
+
+      container.addEventListener('touchend', e => {
+        const diffX = e.changedTouches[0].clientX - startX;
+        if (Math.abs(diffX) > 50) {
+          if (diffX > 0) prevSlideFunc();
+          else nextSlide();
+        }
+      }, { passive: true });
+
+      slides.forEach((slide, idx) => {
+        if (idx === 0) {
+          slide.classList.add('active');
+          if (window.gsap) {
+            gsap.set(slide, { display: 'block', autoAlpha: 1, zIndex: 2 });
+            const firstImg = qs('.feat-img', slide);
+            if (firstImg) gsap.set(firstImg, { scale: 1 });
+          }
+        } else {
+          slide.classList.remove('active');
+          if (window.gsap) {
+            gsap.set(slide, { display: 'none', autoAlpha: 0, zIndex: 1 });
+          }
+        }
+      });
+
+      resetProgress();
+    });
+  }
+
+  /* ─────────────────────────────────────────
      INIT ALL
   ───────────────────────────────────────── */
   function init() {
@@ -1306,8 +1456,10 @@
     initLiquidHero();
     initLiquidText();
     initThemePanel();
+    initPremiumSliders();
     consoleStamp();
     // ── PREMIUM ANIMATION LAYER ──
+
     initParticleHero();
     initTypingCursor();
     // initCursorTrail(); // removed — conflicts with custom cursor dot

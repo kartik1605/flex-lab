@@ -105,16 +105,78 @@
   <div class="stat-item rv d3"><h3 data-count="14" data-suffix="d">0</h3><p>Avg Delivery Time</p></div>
 </div>
 
-<!-- Feature Hero Image -->
+<!-- Feature Hero Image Slider -->
 <div class="feat-grid-full rv">
-  <figure class="feat-img-wrap">
-    <img class="feat-img" src="images/generated/digital-laptop-hero.webp" alt="MacBook displaying a violet and gold website mockup on a dark walnut desk with brass desk lamp, microphone and leather notebook" loading="lazy" width="1280" height="720"/>
-    <figcaption class="feat-caption">
-      <div class="feat-eyebrow">Inside the Digital Lab</div>
-      <div class="feat-title">Sites that load fast, convert hard, and look like luxury — every pixel earned.</div>
-    </figcaption>
-  </figure>
+  <div class="premium-slider-container">
+    <div class="premium-slides">
+      <!-- Slide 1 -->
+      <div class="premium-slide active">
+        <figure class="feat-img-wrap">
+          <img class="feat-img" src="images/generated/digital-laptop-hero.webp" alt="MacBook displaying a violet and gold website mockup on a dark walnut desk with brass desk lamp, microphone and leather notebook" loading="lazy" width="920" height="440"/>
+          <figcaption class="feat-caption">
+            <div class="feat-eyebrow">Inside the Digital Lab</div>
+            <div class="feat-title">Sites that load fast, convert hard, and look like luxury — every pixel earned.</div>
+          </figcaption>
+        </figure>
+      </div>
+      <!-- Slide 2 -->
+      <div class="premium-slide">
+        <figure class="feat-img-wrap">
+          <img class="feat-img" src="images/generated/digital-slide-2.png" alt="Sleek dual-monitor desk setup displaying a dark violet SaaS analytics web dashboard" loading="lazy" width="920" height="440"/>
+          <figcaption class="feat-caption">
+            <div class="feat-eyebrow">Interactive Dashboards</div>
+            <div class="feat-title">High-performance SaaS web applications designed with gorgeous dark UI systems.</div>
+          </figcaption>
+        </figure>
+      </div>
+      <!-- Slide 3 -->
+      <div class="premium-slide">
+        <figure class="feat-img-wrap">
+          <img class="feat-img" src="images/generated/digital-slide-3.png" alt="Hands drawing mobile app wireframes on a tablet with Apple Pencil and sticky notes" loading="lazy" width="920" height="440"/>
+          <figcaption class="feat-caption">
+            <div class="feat-eyebrow">UI/UX Craftsmanship</div>
+            <div class="feat-title">Detailed wireframing and user experience architecture tailored to your goals.</div>
+          </figcaption>
+        </figure>
+      </div>
+      <!-- Slide 4 -->
+      <div class="premium-slide">
+        <figure class="feat-img-wrap">
+          <img class="feat-img" src="images/generated/digital-slide-4.png" alt="Custom mechanical keyboard with violet and gold keycaps resting on dark mat with precision mouse" loading="lazy" width="920" height="440"/>
+          <figcaption class="feat-caption">
+            <div class="feat-eyebrow">Aesthetic Technology</div>
+            <div class="feat-title">Every line of code and asset designed for maximum aesthetic impact.</div>
+          </figcaption>
+        </figure>
+      </div>
+      <!-- Slide 5 -->
+      <div class="premium-slide">
+        <figure class="feat-img-wrap">
+          <img class="feat-img" src="images/generated/digital-slide-5.png" alt="Responsive e-commerce brand website mockups showcasing laptop, tablet, and phone displays" loading="lazy" width="920" height="440"/>
+          <figcaption class="feat-caption">
+            <div class="feat-eyebrow">Responsive Excellence</div>
+            <div class="feat-title">Fully optimized mobile-first layouts that rank well and drive traffic automatically.</div>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    
+    <!-- Navigation and Progress Controls -->
+    <div class="slider-controls">
+      <button class="slide-nav-btn prev-btn" aria-label="Previous Slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="slider-progress-wrap">
+        <span class="slider-counter"><span class="curr-idx">01</span> <span class="sep">/</span> <span class="total-count">05</span></span>
+        <div class="slider-progress-bar"><div class="slider-progress-fill"></div></div>
+      </div>
+      <button class="slide-nav-btn next-btn" aria-label="Next Slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
 </div>
+
 
 <!-- Services -->
 <section id="services" style="padding:9rem 5rem;">
