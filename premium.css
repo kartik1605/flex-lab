@@ -3115,3 +3115,190 @@ footer.footer a:hover {
 @media (max-width: 700px) {
   .p-step { padding: 1.75rem 1.5rem 1.5rem; margin-bottom: .75rem; }
 }
+
+/* ═══════════════════════════════════════════
+   ╔══════════════════════════════════════════╗
+   ║  MOBILE COMPACTION LAYER                ║
+   ║  (compress vertical rhythm on phones    ║
+   ║   so clients don't scroll forever)      ║
+   ╚══════════════════════════════════════════╝
+═══════════════════════════════════════════ */
+
+/* ── Tablet/Phone (≤900px): cut inline section padding in half ── */
+@media (max-width: 900px) {
+  /* Inline-styled sections — override 9rem/8rem/7rem/6rem/5rem verticals */
+  section[style*="padding:9rem 5rem"],
+  section[style*="padding: 9rem 5rem"] { padding: 3.5rem 1.25rem !important; }
+  section[style*="padding:8rem 5rem"],
+  section[style*="padding: 8rem 5rem"] { padding: 3rem 1.25rem !important; }
+  section[style*="padding:7rem 5rem"],
+  section[style*="padding: 7rem 5rem"] { padding: 2.75rem 1.25rem !important; }
+  section[style*="padding:6rem 5rem"],
+  section[style*="padding: 6rem 5rem"] { padding: 2.5rem 1.25rem !important; }
+  section[style*="padding:5rem 5rem"],
+  section[style*="padding: 5rem 5rem"] { padding: 2.5rem 1.25rem !important; }
+  section[style*="padding:8rem 5rem 6rem"] { padding: 3rem 1.25rem 2rem !important; }
+  section[style*="padding:5rem 5rem 9rem"] { padding: 2.5rem 1.25rem 3.5rem !important; }
+
+  /* Tighter section titles on mobile */
+  .s-title { font-size: clamp(1.55rem, 6vw, 2.1rem) !important; line-height: 1.15 !important; margin-bottom: .65rem !important; }
+  .s-sub { font-size: .92rem !important; line-height: 1.5 !important; margin-bottom: 1.75rem !important; }
+  .s-label { font-size: .65rem !important; margin-bottom: .85rem !important; }
+
+  /* Page hero — compact */
+  .page-hero { padding: 5.5rem 1.25rem 2.25rem !important; }
+  .page-hero h1 { font-size: clamp(2rem, 8vw, 2.8rem) !important; line-height: 1.1 !important; margin-bottom: .8rem !important; }
+  .page-hero p { font-size: .95rem !important; line-height: 1.5 !important; }
+  .page-hero-inner { max-width: 100% !important; }
+
+  /* Home hero */
+  #hero { min-height: auto !important; padding: 5rem 1.25rem 3rem !important; }
+  #hero .h-title, #hero h1 { font-size: clamp(2.2rem, 9vw, 3.2rem) !important; line-height: 1.05 !important; }
+  #hero .h-tagline { font-size: 1rem !important; }
+  #hero .h-sub { font-size: .92rem !important; margin-bottom: 1.25rem !important; }
+
+  /* Stat bar — denser */
+  .stat-bar { padding: 1.75rem 1rem !important; gap: .75rem !important; }
+  .stat-item { padding: .5rem .25rem !important; }
+  .stat-item h3 { font-size: 1.6rem !important; margin-bottom: .15rem !important; }
+  .stat-item p { font-size: .68rem !important; letter-spacing: .04em !important; }
+
+  /* Lab cards — compact */
+  .labs-grid { gap: .85rem !important; padding: 0 .25rem !important; }
+  .labs-grid .lab-card { padding: 1.5rem 1.25rem !important; min-height: auto !important; }
+  .lab-icon { width: 44px !important; height: 44px !important; margin-bottom: .85rem !important; }
+  .lab-icon svg { width: 24px !important; height: 24px !important; }
+
+  /* Service cards (svc-big) */
+  .svc-big { gap: .85rem !important; }
+  .svc-card { padding: 1.5rem 1.25rem !important; }
+  .svc-card h3 { font-size: 1.1rem !important; margin: .5rem 0 .4rem !important; }
+  .svc-card p { font-size: .88rem !important; line-height: 1.5 !important; }
+  .svc-num { font-size: 2.2rem !important; }
+  .svc-icon { width: 36px !important; height: 36px !important; font-size: 1.05rem !important; }
+  .svc-tags { gap: .35rem !important; margin-top: .65rem !important; }
+  .svc-tags .tag { font-size: .65rem !important; padding: .25rem .55rem !important; }
+
+  /* Process steps */
+  .p-step { padding: 1.25rem 1.1rem !important; margin-bottom: .5rem !important; }
+  .p-step h3 { font-size: 1.05rem !important; margin-bottom: .3rem !important; }
+  .p-step p { font-size: .85rem !important; line-height: 1.45 !important; }
+  .p-num { font-size: 2.4rem !important; }
+
+  /* Process row container padding */
+  #process, .process-section { padding: 3rem 1.25rem !important; }
+
+  /* Event types, gift products, product cards */
+  .event-types, .gift-products, .product-cards { gap: .85rem !important; }
+  .etype, .gift-card, .pcard, .pr-card { padding: 1.4rem 1.2rem !important; }
+  .etype h3, .gift-card h3, .pcard h3, .pr-card h3 { font-size: 1.05rem !important; margin: .5rem 0 .35rem !important; }
+  .etype p, .gift-card p, .pcard p, .pr-card p { font-size: .85rem !important; line-height: 1.45 !important; }
+  .etype-img, .pr-thumb img { max-height: 140px !important; object-fit: cover !important; }
+  .etype-tags, .pr-tags { gap: .3rem !important; margin-top: .55rem !important; }
+
+  /* Feature image margins compressed */
+  .feat-grid-full { margin: 1.5rem 1rem !important; }
+  .feat-img-wrap { border-radius: 14px !important; }
+  .feat-caption { bottom: .85rem !important; left: 1rem !important; right: 1rem !important; }
+  .feat-caption .feat-eyebrow { font-size: .58rem !important; margin-bottom: .2rem !important; }
+  .feat-caption .feat-title { font-size: .85rem !important; line-height: 1.25 !important; }
+
+  /* Showcase mosaic compact */
+  #showcase { padding: 3.5rem 1.25rem 2.5rem !important; }
+  .showcase-grid { gap: .75rem !important; padding: 0 !important; }
+
+  /* Why-FLex / sticky benefits */
+  #benefits { padding: 3rem 0 3.5rem !important; }
+  .bs-container { gap: 1.5rem !important; padding: 0 1.25rem !important; }
+  .bs-title { font-size: clamp(1.7rem, 7vw, 2.4rem) !important; line-height: 1.1 !important; }
+  .bs-sub { font-size: .9rem !important; margin-top: .65rem !important; }
+  .benefit-card { padding: 1.4rem 1.2rem !important; }
+  .bc-num { font-size: 2.4rem !important; }
+  .benefit-card h3 { font-size: 1.05rem !important; margin: .35rem 0 !important; }
+  .benefit-card p { font-size: .85rem !important; line-height: 1.45 !important; }
+
+  /* Marquee — smaller text */
+  .marquee-wrap { padding: 1.25rem 0 !important; }
+  .marquee-track .m-item, .marquee .m-item { font-size: 1.5rem !important; }
+
+  /* BLVCKCARD spotlight */
+  #blvck-section { padding: 4rem 1.25rem !important; }
+  .blvck-headline, #blvck-section h2 { font-size: clamp(1.8rem, 8vw, 2.6rem) !important; line-height: 1.1 !important; }
+
+  /* CTA band */
+  .cta-band { padding: 3rem 1.25rem !important; }
+  .cta-band h2 { font-size: clamp(1.8rem, 7vw, 2.6rem) !important; margin-bottom: .8rem !important; }
+  .cta-band p { font-size: .9rem !important; margin-bottom: 1.5rem !important; }
+
+  /* Testimonials */
+  #testimonials { padding: 3rem 1.25rem !important; }
+  .tcard { padding: 1.4rem 1.2rem !important; }
+  .tcard p { font-size: .9rem !important; line-height: 1.5 !important; }
+
+  /* Footer */
+  footer.footer { padding: 2.75rem 1.25rem 1.5rem !important; gap: 1.75rem !important; }
+  .f-bottom { padding: 1rem 1.25rem !important; font-size: .72rem !important; }
+  footer.footer h4 { font-size: .85rem !important; margin-bottom: .65rem !important; }
+  footer.footer a, footer.footer p { font-size: .82rem !important; line-height: 1.55 !important; }
+
+  /* Section dividers — smaller */
+  .section-divider { padding: 1.25rem 1.25rem !important; }
+  .section-index { font-size: .65rem !important; gap: .35rem !important; }
+
+  /* Section padding for any plain section */
+  section { scroll-margin-top: 60px; }
+
+  /* Compact buttons */
+  .btn-p, .btn-g { padding: .8rem 1.4rem !important; font-size: .85rem !important; }
+
+  /* Reduce body line gap on mobile */
+  body { line-height: 1.5; }
+}
+
+/* ── Phone (≤640px): final squeeze ── */
+@media (max-width: 640px) {
+  section[style*="padding:9rem 5rem"],
+  section[style*="padding: 9rem 5rem"] { padding: 2.75rem 1rem !important; }
+  section[style*="padding:8rem 5rem"],
+  section[style*="padding: 8rem 5rem"] { padding: 2.5rem 1rem !important; }
+  section[style*="padding:7rem 5rem"],
+  section[style*="padding: 7rem 5rem"] { padding: 2.25rem 1rem !important; }
+
+  /* Single-col labs already collapses elsewhere — keep gap tight */
+  .labs-grid .lab-card { padding: 1.25rem 1.1rem !important; }
+  .lab-card h3, .l-title { font-size: 1.1rem !important; margin: .5rem 0 .35rem !important; }
+  .lab-card p, .l-desc { font-size: .85rem !important; line-height: 1.45 !important; }
+
+  /* Service tags more compact */
+  .interactive-details .details-toggle { font-size: .78rem !important; padding: .55rem .9rem !important; }
+  .details-panel { padding: .85rem !important; }
+  .option-dropdown { font-size: .85rem !important; padding: .6rem .8rem !important; }
+  .btn-inquiry, .btn-appointment { font-size: .8rem !important; padding: .6rem .85rem !important; }
+
+  /* Hero buttons stack with smaller gap */
+  .page-hero-inner > div[style*="flex"] { gap: .55rem !important; }
+
+  /* Stats — keep 2x2 but shrink */
+  .stat-bar { grid-template-columns: 1fr 1fr !important; padding: 1.25rem .75rem !important; gap: .5rem !important; }
+  .stat-item h3 { font-size: 1.35rem !important; }
+  .stat-item p { font-size: .62rem !important; }
+
+  /* Page hero further squeeze */
+  .page-hero { padding: 4.75rem 1rem 1.75rem !important; }
+  .page-hero h1 { font-size: clamp(1.7rem, 9vw, 2.2rem) !important; }
+
+  /* Contact page form */
+  .contact-grid, #contact-form { gap: 1rem !important; }
+  .contact-grid input, .contact-grid textarea, .contact-grid select { padding: .75rem .85rem !important; font-size: .9rem !important; }
+
+  /* BLVCKCARD card padding */
+  .blvck-card { transform: scale(.95) !important; }
+}
+
+/* ── Tiny phones (≤380px): extra-tight ── */
+@media (max-width: 380px) {
+  .stat-item h3 { font-size: 1.15rem !important; }
+  .page-hero h1 { font-size: 1.6rem !important; }
+  .s-title { font-size: 1.4rem !important; }
+  #hero .h-title, #hero h1 { font-size: 2rem !important; }
+}
