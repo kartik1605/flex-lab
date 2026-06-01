@@ -3491,3 +3491,273 @@ footer.footer a:hover {
   .s-title { font-size: 1.4rem !important; }
   #hero .h-title, #hero h1 { font-size: 2rem !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ╔══════════════════════════════════════════════════════════╗
+   ║  MOBILE RESTRUCTURE LAYER (≤900px) — anti-scroll-fatigue ║
+   ║  · 2-col lab cards (was 6 stacked)                       ║
+   ║  · 2-col service grids (was 6-9 stacked)                 ║
+   ║  · Horizontal-scroll snap showcases & stats              ║
+   ║  · Hide hero feature images on lab pages                 ║
+   ║  · Compress process to dense 2-col                       ║
+   ║  · Strip non-essential filler text on cards              ║
+   ╚══════════════════════════════════════════════════════════╝
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+
+  /* ── 1. LABS GRID: 6 cards stacked → compact 2-col mini-cards ── */
+  .labs-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: .6rem !important;
+    padding: 0 .25rem !important;
+  }
+  .labs-grid .lab-card {
+    padding: 1.1rem .85rem 1rem !important;
+    min-height: auto !important;
+    border-radius: 16px !important;
+  }
+  .labs-grid .lab-card h3 { font-size: .95rem !important; margin: .55rem 0 .15rem !important; line-height: 1.15 !important; }
+  /* Hide the long description on mobile — keep icon + name + arrow */
+  .labs-grid .lab-card p { display: none !important; }
+  .labs-grid .lab-card .lab-num { font-size: .55rem !important; top: .65rem !important; right: .8rem !important; }
+  .labs-grid .lab-card .lab-icon { width: 38px !important; height: 38px !important; margin-bottom: .55rem !important; border-radius: 11px !important; }
+  .labs-grid .lab-card .lab-icon svg { width: 22px !important; height: 22px !important; }
+  .labs-grid .lab-card .lab-link { font-size: .72rem !important; margin-top: .3rem !important; }
+
+  /* ── 2. SHOWCASE GRID: 4 stacked images → horizontal scroll-snap reel ── */
+  #showcase .showcase-grid {
+    display: flex !important;
+    grid-template-columns: none !important;
+    grid-template-rows: none !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding: 1rem !important;
+    gap: .75rem !important;
+    padding: 0 1rem .5rem !important;
+    margin: 0 -1.25rem !important;
+    scrollbar-width: none !important;
+  }
+  #showcase .showcase-grid::-webkit-scrollbar { display: none !important; }
+  #showcase .showcase-grid .feat-img-wrap {
+    flex: 0 0 78% !important;
+    scroll-snap-align: start !important;
+    grid-row: auto !important;
+    grid-column: auto !important;
+  }
+  #showcase .showcase-grid .feat-img-wrap .feat-img { aspect-ratio: 4/3 !important; }
+  /* Hint that it scrolls */
+  #showcase::after {
+    content: '← swipe →';
+    display: block;
+    text-align: center;
+    font-family: 'Space Grotesk', monospace;
+    font-size: .58rem;
+    letter-spacing: .25em;
+    color: rgba(212, 175, 55, .55);
+    margin-top: 1rem;
+    text-transform: uppercase;
+  }
+
+  /* ── 3. SERVICE GRIDS (svc-big, dig-grid): 2-col compact ── */
+  .svc-big,
+  .dig-grid,
+  .gift-grid,
+  .event-types,
+  .product-cards,
+  .pr-list {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: .65rem !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
+  .svc-card,
+  .dig-card,
+  .gift-card,
+  .etype,
+  .pcard,
+  .pr-card {
+    padding: 1.1rem .9rem !important;
+    border-radius: 14px !important;
+    min-height: auto !important;
+    border: 1px solid var(--border) !important;
+    background: var(--bg2) !important;
+  }
+  .svc-card h3,
+  .dig-card h3,
+  .gift-card h3,
+  .etype h3,
+  .pcard h3,
+  .pr-card h3 { font-size: .92rem !important; margin: .35rem 0 .25rem !important; line-height: 1.2 !important; }
+  /* Strip filler text on grids — keep title + tags only */
+  .svc-card p,
+  .dig-card p,
+  .gift-card p,
+  .etype p,
+  .pcard p,
+  .pr-card p { font-size: .75rem !important; line-height: 1.4 !important; }
+  .svc-card p:not(.always-show),
+  .dig-card p:not(.always-show),
+  .gift-card p:not(.always-show),
+  .etype p:not(.always-show) { display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+  .svc-icon, .dig-icon, .etype-icon, .gift-thumb {
+    width: 32px !important; height: 32px !important;
+    font-size: .95rem !important;
+    margin-bottom: .55rem !important;
+    border-radius: 9px !important;
+  }
+  .gift-thumb { height: 75px !important; font-size: 2rem !important; }
+  .svc-num, .dig-num { font-size: .55rem !important; top: .7rem !important; right: .75rem !important; }
+  /* Hide tag chips on mobile to save vertical space */
+  .svc-tags, .dig-tags, .etype-tags, .gift-tags, .pr-tags { display: none !important; }
+  /* Collapse interactive-details on mobile — just show the toggle button compact */
+  .interactive-details .details-toggle { font-size: .7rem !important; padding: .45rem .7rem !important; margin-top: .55rem !important; }
+  .interactive-details .details-panel { padding: .65rem !important; gap: .5rem !important; }
+
+  /* ── 4. HERO FEATURE IMAGE on lab pages: hide (saves a screen each) ── */
+  .feat-grid-full { display: none !important; }
+
+  /* ── 5. PROCESS STEPS: 2-col dense ── */
+  .process-row,
+  .p-grid,
+  #process .row,
+  .process-section .row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: .55rem !important;
+  }
+  .p-step {
+    padding: 1rem .85rem !important;
+    margin-bottom: 0 !important;
+    min-height: auto !important;
+  }
+  .p-step h3 { font-size: .9rem !important; margin: .2rem 0 .25rem !important; line-height: 1.2 !important; }
+  .p-step p { font-size: .73rem !important; line-height: 1.4 !important; display: -webkit-box !important; -webkit-line-clamp: 3 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+  .p-num { font-size: 1.8rem !important; }
+
+  /* ── 6. STATS: compact 4-col strip (instead of fat 2x2) ── */
+  .stat-bar {
+    grid-template-columns: repeat(4, 1fr) !important;
+    padding: 1.1rem .5rem !important;
+    gap: .25rem !important;
+  }
+  .stat-item { padding: .35rem .15rem !important; border-right: none !important; }
+  .stat-item h3 { font-size: 1.1rem !important; font-weight: 800 !important; }
+  .stat-item p { font-size: .55rem !important; letter-spacing: .03em !important; line-height: 1.2 !important; }
+
+  /* ── 7. MARQUEE: cut height in half on phone ── */
+  .marquee-wrap { padding: .65rem 0 !important; }
+  .marquee-track .m-item, .marquee .m-item { font-size: 1.1rem !important; }
+
+  /* ── 8. OCCASIONS GRID (gifting page) — 4 cards to 2-col compact ── */
+  .occ-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1px !important;
+  }
+  .occ { padding: 1rem .8rem !important; }
+  .occ-emoji { font-size: 1.3rem !important; margin-bottom: .4rem !important; }
+  .occ h4 { font-size: .8rem !important; margin-bottom: .2rem !important; }
+  .occ p { font-size: .65rem !important; line-height: 1.4 !important; -webkit-line-clamp: 2 !important; display: -webkit-box !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+
+  /* ── 9. TECH STACK (digital page) — 6-col → 3-col compact ── */
+  .stack-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: .5rem !important;
+    margin-top: 1.25rem !important;
+  }
+  .stack-item { padding: .75rem .4rem !important; border-radius: 10px !important; }
+  .stack-item span { font-size: 1.15rem !important; margin-bottom: .25rem !important; }
+  .stack-item p { font-size: .58rem !important; }
+
+  /* ── 10. WHY-SPLIT 2-col → stacked but no 3rem gap ── */
+  .why-split, .split-2 { gap: 1.5rem !important; }
+  .feat-grid, .why-list { grid-template-columns: 1fr 1fr !important; gap: .55rem !important; }
+  .feat-item, .why-item { padding: .9rem .8rem !important; }
+  .feat-item h4, .why-item h4 { font-size: .82rem !important; margin-bottom: .25rem !important; }
+  .feat-item p, .why-item p { font-size: .72rem !important; line-height: 1.4 !important; -webkit-line-clamp: 3 !important; display: -webkit-box !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+  .why-icon { width: 32px !important; height: 32px !important; font-size: .9rem !important; }
+
+  /* ── 11. TAG STRIP (home page below labs heading) — single line scroll ── */
+  .tag-strip {
+    display: flex !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    gap: .4rem !important;
+    padding-bottom: .5rem !important;
+    scrollbar-width: none !important;
+  }
+  .tag-strip::-webkit-scrollbar { display: none !important; }
+  .tag-strip span { flex-shrink: 0 !important; font-size: .68rem !important; padding: .35rem .7rem !important; }
+
+  /* ── 12. SECTION-INDEX label: ultra-compact ── */
+  .section-index { font-size: .58rem !important; padding: .35rem .65rem !important; }
+  .giant-mark { display: none !important; }
+
+  /* ── 13. BENEFITS sticky cards → 2-col dense ── */
+  .bs-scroll-col { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: .55rem !important; }
+  .benefit-card { padding: 1rem .85rem !important; }
+  .benefit-card h3 { font-size: .88rem !important; }
+  .benefit-card p { font-size: .72rem !important; line-height: 1.4 !important; -webkit-line-clamp: 3 !important; display: -webkit-box !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+  .bc-num { font-size: 1.6rem !important; }
+
+  /* ── 14. TESTIMONIALS — collapse from 3-col to 1 visible at a time (scroll-snap) ── */
+  #testimonials .t-row,
+  .testimonial-grid {
+    display: flex !important;
+    grid-template-columns: none !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: .75rem !important;
+    padding: 0 1rem 1rem !important;
+    margin: 0 -1.25rem !important;
+    scrollbar-width: none !important;
+  }
+  #testimonials .t-row::-webkit-scrollbar { display: none !important; }
+  .tcard {
+    flex: 0 0 85% !important;
+    scroll-snap-align: start !important;
+    padding: 1.2rem 1.1rem !important;
+  }
+  .tcard p { font-size: .82rem !important; line-height: 1.5 !important; }
+
+  /* ── 15. CTA band — smaller ── */
+  .cta-band { padding: 2.5rem 1.25rem !important; }
+  .cta-band h2 { font-size: 1.6rem !important; line-height: 1.15 !important; }
+  .cta-band p { font-size: .85rem !important; max-width: 90% !important; margin-bottom: 1rem !important; }
+  .cta-btns { gap: .55rem !important; }
+
+  /* ── 16. PROCESS section title gap ── */
+  #process, .process-section { padding: 2.25rem 1.25rem !important; }
+
+  /* ── 17. FOOTER 4-col → 2-col compact ── */
+  footer.footer {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.25rem !important;
+    padding: 2rem 1.25rem 1rem !important;
+  }
+  footer.footer h4 { font-size: .75rem !important; margin-bottom: .45rem !important; }
+  footer.footer a, footer.footer li { font-size: .74rem !important; line-height: 1.5 !important; }
+  footer.footer .f-col:first-child { grid-column: 1 / -1 !important; }
+
+  /* ── 18. Print page product cards: 2-col tight ── */
+  .pr-card { padding: .85rem !important; }
+  .pr-thumb { height: 110px !important; border-radius: 10px !important; margin-bottom: .55rem !important; }
+  .pr-thumb img { object-fit: cover !important; width: 100% !important; height: 100% !important; }
+
+  /* ── 19. Spacer/decorative orbs reduced ── */
+  .orb-hero-1, .orb-hero-2 { opacity: .5 !important; filter: blur(40px) !important; }
+
+  /* ── 20. Page hero photos on print page — keep but reduce gap ── */
+  .print-hero-photos { gap: .5rem !important; margin: 1rem 0 !important; }
+}
+
+/* Ultra-narrow phones (≤420px): single-col fallbacks for tightest grids */
+@media (max-width: 420px) {
+  /* Stat-bar back to 2x2 below 420 — 4 numbers can't read well */
+  .stat-bar { grid-template-columns: 1fr 1fr !important; }
+  .stat-item h3 { font-size: 1.4rem !important; }
+  .stat-item p { font-size: .62rem !important; }
+}
