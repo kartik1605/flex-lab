@@ -1414,8 +1414,78 @@
     // initAuroraOrbs(); // removed — duplicates liquid blobs
     initSectionBeam();
     initMobileCTABar();
+    initMobile3DTilt();
+    initMobileEnterObserver();
     // Remove any leftover big-statement / peek nodes
     document.querySelectorAll('.big-statement, .peek-img').forEach(el => el.remove());
+  }
+
+  /* ─────────────────────────────────────────
+     MOBILE 3D TILT — touch-driven parallax on cards
+     Subtle: max ~6deg rotation, no nausea, eases back on release.
+  ───────────────────────────────────────── */
+  function initMobile3DTilt() {
+    if (window.innerWidth > 900) return;
+    if (reduceMotion) return;
+
+    const sel = '.lab-card, .svc-card, .dig-card, .gift-card, .etype, .pcard, .pr-card, .benefit-card, .tcard';
+    document.querySelectorAll(sel).forEach(card => {
+      card.classList.add('tilt-3d');
+      let raf = null;
+
+      function tilt(e) {
+        const t = e.touches ? e.touches[0] : e;
+        const rect = card.getBoundingClientRect();
+        const x = (t.clientX - rect.left) / rect.width;  // 0-1
+        const y = (t.clientY - rect.top)  / rect.height; // 0-1
+        const ry = clamp((x - 0.5) * 12, -6, 6);   // rotateY -6..6
+        const rx = clamp((0.5 - y) * 8, -4, 4);    // rotateX -4..4
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          card.style.setProperty('--tilt-y', ry + 'deg');
+          card.style.setProperty('--tilt-x', rx + 'deg');
+        });
+      }
+      function reset() {
+        card.classList.remove('tilting');
+        card.style.setProperty('--tilt-y', '0deg');
+        card.style.setProperty('--tilt-x', '0deg');
+      }
+      function start(e) {
+        card.classList.add('tilting');
+        tilt(e);
+      }
+
+      card.addEventListener('touchstart', start, { passive: true });
+      card.addEventListener('touchmove', tilt, { passive: true });
+      card.addEventListener('touchend', reset, { passive: true });
+      card.addEventListener('touchcancel', reset, { passive: true });
+    });
+  }
+
+  /* ─────────────────────────────────────────
+     MOBILE ENTER OBSERVER — adds .in to .rv and key elements
+     when they cross 18% of viewport (triggers CSS 3D reveals)
+  ───────────────────────────────────────── */
+  function initMobileEnterObserver() {
+    if (window.innerWidth > 900) return;
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: just add .in to everything
+      document.querySelectorAll('.rv, .lab-card, .stat-item').forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.rv, .lab-card, .stat-item, .svc-card, .dig-card, .gift-card, .etype, .benefit-card').forEach(el => {
+      io.observe(el);
+    });
   }
 
   /* ─────────────────────────────────────────

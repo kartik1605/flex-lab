@@ -4149,3 +4149,502 @@ html { scroll-behavior: smooth; }
 @media (min-width: 601px) and (max-width: 1100px) {
   #hero .h-ctas { flex-direction: row !important; max-width: 100% !important; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   ╔════════════════════════════════════════════════════════════════╗
+   ║  MOBILE — MINIMAL · BREATHING · 3D MOTION  (final override)    ║
+   ║  Replaces the cramped 2-col approach with luxurious 1-col      ║
+   ║  cinematic layouts + 3D tilt + scroll-triggered depth reveal.  ║
+   ╚════════════════════════════════════════════════════════════════╝
+════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+
+  /* ─── Restore generous section padding (was too tight) ─── */
+  section[style*="padding:9rem 5rem"],
+  section[style*="padding: 9rem 5rem"] { padding: 5rem 1.5rem !important; }
+  section[style*="padding:8rem 5rem"],
+  section[style*="padding: 8rem 5rem"] { padding: 4.5rem 1.5rem !important; }
+  section[style*="padding:7rem 5rem"],
+  section[style*="padding: 7rem 5rem"] { padding: 4rem 1.5rem !important; }
+  section[style*="padding:6rem 5rem"],
+  section[style*="padding: 6rem 5rem"] { padding: 3.75rem 1.5rem !important; }
+  section[style*="padding:5rem 5rem"],
+  section[style*="padding: 5rem 5rem"] { padding: 3.5rem 1.5rem !important; }
+  section[style*="padding:8rem 5rem 6rem"] { padding: 4.5rem 1.5rem 3.5rem !important; }
+  section[style*="padding:5rem 5rem 9rem"] { padding: 3.5rem 1.5rem 5rem !important; }
+
+  /* ─── Section titles: bigger, calmer, more space ─── */
+  .s-title {
+    font-size: clamp(1.85rem, 7.5vw, 2.5rem) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1rem !important;
+    letter-spacing: -.025em !important;
+  }
+  .s-sub {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 2.5rem !important;
+    max-width: 32ch !important;
+    color: rgba(244, 232, 215, .7) !important;
+  }
+  .s-label {
+    font-size: .68rem !important;
+    margin-bottom: 1.1rem !important;
+    letter-spacing: .22em !important;
+  }
+
+  /* ═══════════ LABS GRID → cinematic 1-col tiles ═══════════ */
+  .labs-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    padding: 0 !important;
+    perspective: 1200px;
+  }
+  .labs-grid .lab-card {
+    padding: 2.25rem 1.75rem 2rem !important;
+    min-height: auto !important;
+    border-radius: 22px !important;
+    background: linear-gradient(155deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 88%, var(--violet, #7c3aed) 12%) 100%) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 22%, var(--border)) !important;
+    box-shadow:
+      0 12px 36px rgba(0,0,0,.45),
+      0 2px 6px rgba(0,0,0,.3),
+      inset 0 1px 0 rgba(255,255,255,.05) !important;
+    transform-style: preserve-3d;
+    transition: transform .35s cubic-bezier(.23,1,.32,1), box-shadow .3s !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    overflow: hidden;
+    position: relative;
+  }
+  /* Show description back — there's room for it now */
+  .labs-grid .lab-card p {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    font-size: .9rem !important;
+    line-height: 1.55 !important;
+    color: rgba(244, 232, 215, .68) !important;
+    margin: .35rem 0 1rem !important;
+  }
+  .labs-grid .lab-card h3 {
+    font-size: 1.4rem !important;
+    margin: .65rem 0 .25rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -.02em !important;
+  }
+  .labs-grid .lab-card .lab-num {
+    font-size: .65rem !important;
+    top: 1.25rem !important;
+    right: 1.5rem !important;
+    color: rgba(212, 175, 55, .65) !important;
+    letter-spacing: .12em !important;
+  }
+  .labs-grid .lab-card .lab-icon {
+    width: 56px !important;
+    height: 56px !important;
+    margin-bottom: 1rem !important;
+    border-radius: 14px !important;
+  }
+  .labs-grid .lab-card .lab-icon svg { width: 28px !important; height: 28px !important; }
+  .labs-grid .lab-card .lab-link {
+    font-size: .82rem !important;
+    margin-top: auto !important;
+    color: var(--cyan, #d4af37) !important;
+    font-weight: 600 !important;
+    letter-spacing: .04em !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: .4rem !important;
+    transition: gap .3s ease;
+  }
+  .labs-grid .lab-card:active .lab-link { gap: .85rem !important; }
+  /* Aurora swipe on lab-card (animated) */
+  .labs-grid .lab-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg,
+      transparent 35%,
+      color-mix(in srgb, var(--cyan, #d4af37) 12%, transparent) 50%,
+      transparent 65%);
+    transform: translateX(-100%);
+    transition: transform 1.1s cubic-bezier(.23,1,.32,1);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .labs-grid .lab-card.in::after { transform: translateX(100%); }
+  .labs-grid .lab-card > * { position: relative; z-index: 2; }
+
+  /* ═══════════ HERO — luxury poster ═══════════ */
+  #hero {
+    padding: 5.5rem 1.5rem 4rem !important;
+    min-height: calc(100vh - 60px) !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  #hero .h-badge {
+    margin-bottom: 2rem !important;
+    padding: .65rem 1.25rem !important;
+    font-size: .68rem !important;
+    letter-spacing: .15em !important;
+  }
+  #hero .h-title, #hero h1 {
+    font-size: clamp(2.6rem, 13vw, 4.2rem) !important;
+    line-height: 1 !important;
+    margin-bottom: 1.5rem !important;
+    letter-spacing: -.045em !important;
+  }
+  #hero .h-sub {
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1rem !important;
+    max-width: 30ch !important;
+  }
+  #hero .h-tagline {
+    margin: .5rem 0 2rem !important;
+    font-size: .92rem !important;
+  }
+  #hero .h-ctas {
+    gap: .85rem !important;
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+  #hero .btn-p, #hero .btn-g {
+    padding: 1.15rem 1.8rem !important;
+    font-size: .95rem !important;
+    border-radius: 16px !important;
+  }
+
+  /* ═══════════ STATS — float + breathing ═══════════ */
+  .stat-bar {
+    padding: 3rem 1.5rem !important;
+    gap: 1.25rem !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .stat-item {
+    padding: .85rem .5rem !important;
+    border-right: none !important;
+    animation: statFloat 6s ease-in-out infinite;
+  }
+  .stat-item:nth-child(2) { animation-delay: 1.5s; }
+  .stat-item:nth-child(3) { animation-delay: 3s; }
+  .stat-item:nth-child(4) { animation-delay: 4.5s; }
+  @keyframes statFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+  .stat-item h3 {
+    font-size: 2.4rem !important;
+    font-weight: 800 !important;
+    margin-bottom: .35rem !important;
+    letter-spacing: -.02em !important;
+  }
+  .stat-item p {
+    font-size: .68rem !important;
+    letter-spacing: .12em !important;
+    text-transform: uppercase;
+    line-height: 1.3 !important;
+  }
+
+  /* ═══════════ SERVICE / EVENT / GIFT / DIG / PRINT GRIDS → 1-col cinematic ═══════════ */
+  .svc-big, .dig-grid, .gift-grid, .event-types, .product-cards, .pr-list {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    background: transparent !important;
+    border: 0 !important;
+    perspective: 1200px;
+  }
+  .svc-card, .dig-card, .gift-card, .etype, .pcard, .pr-card {
+    padding: 2rem 1.6rem !important;
+    border-radius: 20px !important;
+    background: linear-gradient(155deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 90%, var(--violet, #7c3aed) 10%) 100%) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 18%, var(--border)) !important;
+    box-shadow:
+      0 10px 30px rgba(0,0,0,.4),
+      inset 0 1px 0 rgba(255,255,255,.04) !important;
+    transform-style: preserve-3d;
+  }
+  .svc-card h3, .dig-card h3, .gift-card h3, .etype h3, .pcard h3, .pr-card h3 {
+    font-size: 1.2rem !important;
+    margin: .65rem 0 .55rem !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.015em !important;
+  }
+  .svc-card p, .dig-card p, .gift-card p, .etype p, .pcard p, .pr-card p {
+    font-size: .9rem !important;
+    line-height: 1.6 !important;
+    color: rgba(244, 232, 215, .7) !important;
+    -webkit-line-clamp: unset !important;
+    display: block !important;
+  }
+  .svc-card .svc-icon, .dig-card .dig-icon, .etype .etype-icon {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 1.4rem !important;
+    margin-bottom: .85rem !important;
+    border-radius: 13px !important;
+  }
+  .svc-num, .dig-num {
+    font-size: .65rem !important;
+    top: 1.15rem !important;
+    right: 1.35rem !important;
+    color: rgba(212, 175, 55, .65) !important;
+    letter-spacing: .12em !important;
+  }
+  /* Show tags back — they add personality */
+  .svc-tags, .dig-tags, .etype-tags, .gift-tags, .pr-tags {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: .4rem !important;
+    margin-top: .9rem !important;
+  }
+  .tag, .dtag, .etag, .gtag, .pr-tag {
+    font-size: .65rem !important;
+    padding: .3rem .75rem !important;
+    background: rgba(255, 255, 255, .04) !important;
+    border: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 22%, var(--border)) !important;
+    color: rgba(244, 232, 215, .65) !important;
+  }
+  /* Gift thumb keeps height */
+  .gift-thumb { height: 160px !important; font-size: 3rem !important; }
+
+  /* Re-enable hero feature images on lab pages — they add visual richness */
+  .feat-grid-full { display: block !important; margin: 2rem 1.5rem !important; }
+  .feat-img-wrap { border-radius: 20px !important; }
+  .feat-caption { bottom: 1.25rem !important; left: 1.5rem !important; right: 1.5rem !important; }
+  .feat-caption .feat-title { font-size: 1rem !important; }
+
+  /* ═══════════ PROCESS — 1-col with arrow connectors ═══════════ */
+  .process-row, .p-grid, #process .row, .process-section .row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  .p-step {
+    padding: 1.85rem 1.6rem !important;
+    border-radius: 20px !important;
+    background: linear-gradient(155deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 92%, var(--violet, #7c3aed) 8%) 100%) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 16%, var(--border)) !important;
+    position: relative;
+  }
+  .p-step h3 {
+    font-size: 1.15rem !important;
+    margin: .35rem 0 .45rem !important;
+    line-height: 1.2 !important;
+  }
+  .p-step p {
+    font-size: .9rem !important;
+    line-height: 1.6 !important;
+    color: rgba(244, 232, 215, .7) !important;
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+  }
+  .p-num {
+    font-size: 2.6rem !important;
+    background: linear-gradient(135deg, var(--cyan, #d4af37), #f5d97a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800 !important;
+  }
+  /* Connector line between steps */
+  .p-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 1rem;
+    background: linear-gradient(180deg,
+      color-mix(in srgb, var(--cyan, #d4af37) 50%, transparent),
+      transparent);
+  }
+
+  /* ═══════════ SHOWCASE — premium swipe reel (kept from prior pass) ═══════════ */
+  #showcase .showcase-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding: 1.5rem !important;
+    gap: 1rem !important;
+    padding: 0 1.5rem 1rem !important;
+    margin: 0 -1.5rem !important;
+    scrollbar-width: none !important;
+  }
+  #showcase .showcase-grid::-webkit-scrollbar { display: none !important; }
+  #showcase .showcase-grid .feat-img-wrap {
+    flex: 0 0 82% !important;
+    scroll-snap-align: start !important;
+    grid-row: auto !important;
+    grid-column: auto !important;
+  }
+  #showcase .showcase-grid .feat-img-wrap .feat-img { aspect-ratio: 4/5 !important; }
+  #showcase::after {
+    content: '← swipe to explore →';
+    display: block;
+    text-align: center;
+    font-family: 'Space Grotesk', monospace;
+    font-size: .6rem;
+    letter-spacing: .25em;
+    color: rgba(212, 175, 55, .55);
+    margin-top: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  /* ═══════════ BENEFITS — clean stack with 3D depth ═══════════ */
+  .bs-scroll-col { display: block !important; }
+  .benefit-card {
+    padding: 1.85rem 1.5rem !important;
+    margin-bottom: 1rem !important;
+    border-radius: 20px !important;
+    background: linear-gradient(155deg, var(--bg2), color-mix(in srgb, var(--bg2) 90%, var(--violet, #7c3aed) 10%)) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 18%, var(--border)) !important;
+  }
+  .benefit-card h3 { font-size: 1.15rem !important; margin: .4rem 0 .5rem !important; }
+  .benefit-card p {
+    font-size: .9rem !important;
+    line-height: 1.6 !important;
+    -webkit-line-clamp: unset !important;
+    display: block !important;
+  }
+  .bc-num {
+    font-size: 2.2rem !important;
+    background: linear-gradient(135deg, var(--cyan, #d4af37), #f5d97a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ═══════════ OCCASIONS / TECH STACK — 2-col, breathing ═══════════ */
+  .occ-grid { grid-template-columns: 1fr 1fr !important; gap: 1px !important; }
+  .occ { padding: 1.5rem 1.1rem !important; }
+  .occ-emoji { font-size: 1.8rem !important; margin-bottom: .65rem !important; }
+  .occ h4 { font-size: .95rem !important; margin-bottom: .3rem !important; }
+  .occ p {
+    font-size: .78rem !important;
+    line-height: 1.5 !important;
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+  }
+
+  .stack-grid { grid-template-columns: repeat(3, 1fr) !important; gap: .75rem !important; }
+  .stack-item { padding: 1.1rem .65rem !important; border-radius: 14px !important; }
+  .stack-item span { font-size: 1.5rem !important; margin-bottom: .4rem !important; }
+  .stack-item p { font-size: .65rem !important; }
+
+  /* ═══════════ TESTIMONIALS — swipe reel ═══════════ */
+  .tcard { padding: 1.85rem 1.5rem !important; }
+  .tcard p { font-size: .95rem !important; line-height: 1.6 !important; }
+
+  /* ═══════════ FOOTER — 1-col, breathing ═══════════ */
+  footer.footer {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    padding: 3rem 1.5rem 1.5rem !important;
+    text-align: left !important;
+  }
+  footer.footer h4 { font-size: .85rem !important; margin-bottom: .75rem !important; }
+  footer.footer a, footer.footer li { font-size: .9rem !important; line-height: 1.7 !important; }
+  footer.footer .f-col:first-child { grid-column: auto !important; }
+
+  /* ═══════════ CTA BAND — luxurious ═══════════ */
+  .cta-band { padding: 4rem 1.5rem !important; }
+  .cta-band h2 {
+    font-size: clamp(1.85rem, 8vw, 2.6rem) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1.25rem !important;
+  }
+  .cta-band p {
+    font-size: .98rem !important;
+    line-height: 1.6 !important;
+    max-width: 32ch !important;
+    margin-bottom: 2rem !important;
+  }
+  .cta-btns { gap: .85rem !important; flex-direction: column !important; }
+
+  /* ═══════════ TAG STRIP — bigger chips, scrollable ═══════════ */
+  .tag-strip span {
+    font-size: .75rem !important;
+    padding: .5rem 1rem !important;
+    border: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 22%, var(--border)) !important;
+  }
+
+  /* ═══════════ MARQUEE — premium minimal ═══════════ */
+  .marquee-wrap { padding: 1.25rem 0 !important; }
+  .marquee-track .m-item, .marquee .m-item { font-size: 1.3rem !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   3D MOTION LAYER — tilt on touch, scroll-triggered depth reveal
+════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  /* Section reveal — soft 3D rise on enter */
+  .rv {
+    transform: translateY(40px) rotateX(8deg);
+    transform-origin: center bottom;
+    perspective: 1000px;
+    opacity: 0;
+    transition: transform 1s cubic-bezier(.23, 1, .32, 1),
+                opacity 1s cubic-bezier(.23, 1, .32, 1);
+  }
+  .rv.in {
+    transform: translateY(0) rotateX(0);
+    opacity: 1;
+  }
+
+  /* 3D tilt-on-touch (driven by JS) */
+  .tilt-3d {
+    transform: perspective(900px)
+               rotateY(var(--tilt-y, 0deg))
+               rotateX(var(--tilt-x, 0deg))
+               translateZ(0);
+    transition: transform .3s cubic-bezier(.23, 1, .32, 1);
+    will-change: transform;
+  }
+  .tilt-3d.tilting { transition: none; }
+
+  /* Floating gentle motion on hero badge + section eyebrows */
+  .h-badge, .section-index {
+    animation: gentleFloat 5s ease-in-out infinite;
+  }
+  @keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+  }
+
+  /* Lab-icon subtle 3D rotation on scroll-in */
+  .labs-grid .lab-card.in .lab-icon {
+    animation: iconSpinIn .9s cubic-bezier(.23, 1, .32, 1);
+  }
+  @keyframes iconSpinIn {
+    from { transform: rotateY(180deg) scale(.6); opacity: 0; }
+    to   { transform: rotateY(0) scale(1); opacity: 1; }
+  }
+
+  /* Stat numbers — depth + soft glow when in view */
+  .stat-item.in h3 {
+    animation: numberRise 1.1s cubic-bezier(.23, 1, .32, 1) both;
+  }
+  @keyframes numberRise {
+    from { transform: perspective(600px) rotateX(45deg) translateY(20px); opacity: 0; }
+    to   { transform: perspective(600px) rotateX(0) translateY(0); opacity: 1; }
+  }
+
+  /* Press-3D for buttons (depth on tap) */
+  .btn-p:active, .btn-g:active {
+    transform: perspective(400px) translateZ(-10px) scale(.97) !important;
+  }
+}
