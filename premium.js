@@ -738,48 +738,6 @@
         '--th-blob-4': '#9333ea'
       }
     },
-    carnival: {
-      name: 'Carnival',
-      desc: 'Magenta · Marigold',
-      swatch: 'linear-gradient(135deg,#ff2d8f 0%,#ffa600 50%,#00d4ff 100%)',
-      vars: {
-        '--violet': '#ff2d8f',  // hot pink
-        '--cyan':   '#ffa600',  // marigold
-        '--rose':   '#7c3aed',  // royal violet
-        '--th-blob-1': '#ff2d8f',
-        '--th-blob-2': '#00d4ff',
-        '--th-blob-3': '#ffa600',
-        '--th-blob-4': '#7c3aed'
-      }
-    },
-    solar: {
-      name: 'Solar',
-      desc: 'Saffron · Sunset',
-      swatch: 'linear-gradient(135deg,#ff6a00 0%,#ff2d6b 50%,#ffd60a 100%)',
-      vars: {
-        '--violet': '#ff6a00',  // saffron
-        '--cyan':   '#ffd60a',  // gold yellow
-        '--rose':   '#ff2d6b',  // hot rose
-        '--th-blob-1': '#ff6a00',
-        '--th-blob-2': '#ffd60a',
-        '--th-blob-3': '#ff2d6b',
-        '--th-blob-4': '#ff9500'
-      }
-    },
-    volt: {
-      name: 'Volt',
-      desc: 'Neon · Electric',
-      swatch: 'linear-gradient(135deg,#7c3aed 0%,#06d6ff 45%,#c1ff00 100%)',
-      vars: {
-        '--violet': '#a855f7',  // electric purple
-        '--cyan':   '#06d6ff',  // neon cyan
-        '--rose':   '#c1ff00',  // electric lime
-        '--th-blob-1': '#a855f7',
-        '--th-blob-2': '#06d6ff',
-        '--th-blob-3': '#c1ff00',
-        '--th-blob-4': '#ec4899'
-      }
-    },
     obsidian: {
       name: 'Obsidian',
       desc: 'Champagne · Bronze',
@@ -836,20 +794,6 @@
         '--th-blob-4': '#8a6b4a'
       }
     },
-    pewter: {
-      name: 'Pewter',
-      desc: 'Stone · Platinum',
-      swatch: 'linear-gradient(135deg,#0e1014 0%,#5e6671 45%,#b8bcc4 100%)',
-      vars: {
-        '--violet': '#7e8794',  // pewter
-        '--cyan':   '#b8bcc4',  // platinum
-        '--rose':   '#9aa3ad',  // gunmetal
-        '--th-blob-1': '#7e8794',
-        '--th-blob-2': '#b8bcc4',
-        '--th-blob-3': '#4a4f57',
-        '--th-blob-4': '#8a93a0'
-      }
-    },
     cognac: {
       name: 'Cognac',
       desc: 'Whisky · Amber',
@@ -891,8 +835,8 @@
       <button class="tp-close" aria-label="Close theme panel">×</button>
       <div class="tp-header">
         <div class="tp-eyebrow">◆ Palette</div>
-        <h3>Vibrant &amp; <em>refined</em></h3>
-        <p>Nine colour worlds — three high-energy festival palettes up top, six restrained premium ones below. Picks re-paint accents, gradients, hero glow, and buttons in real time.</p>
+        <h3>Six refined <em>moods</em></h3>
+        <p>Six premium palettes — each curated to match a creative-house vibe. Pick one and the whole site re-paints in real time: accents, gradients, hero glow, buttons.</p>
       </div>
       <div class="tp-divider"></div>
       <div class="tp-themes">
@@ -1469,8 +1413,66 @@
     initRevealObserver();
     // initAuroraOrbs(); // removed — duplicates liquid blobs
     initSectionBeam();
+    initMobileCTABar();
     // Remove any leftover big-statement / peek nodes
     document.querySelectorAll('.big-statement, .peek-img').forEach(el => el.remove());
+  }
+
+  /* ─────────────────────────────────────────
+     STICKY MOBILE CTA BAR — shows after user scrolls past hero,
+     hides on contact page (already on contact). Premium gold pill.
+  ───────────────────────────────────────── */
+  function initMobileCTABar() {
+    if (window.innerWidth > 900) return;
+    // Skip on contact page
+    if (/contact\.html/i.test(location.pathname)) return;
+
+    // Per-page tagline
+    const page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const taglines = {
+      'index.html':     ['Six labs. One studio.',   'Start Project'],
+      '':               ['Six labs. One studio.',   'Start Project'],
+      'branding.html':  ['Brands that speak first.', 'Start Brief'],
+      'events.html':    ['Lit. Styled. Unforgettable.', 'Plan Event'],
+      'gifting.html':   ['Hampers, hand-curated.',  'Order Now'],
+      'social.html':    ['Strategy that converts.', 'Get Started'],
+      'digital.html':   ['Sites that load fast.',   'Start Project'],
+      'print.html':     ['25+ years of premium print.', 'Get Quote'],
+      'blvckcard.html': ['One tap. Whole brand.',   'Reserve Card']
+    };
+    const [title, btn] = taglines[page] || taglines['index.html'];
+
+    const bar = document.createElement('div');
+    bar.className = 'mobile-cta-bar';
+    bar.innerHTML = `
+      <div class="mcb-text">
+        <span class="mcb-eyebrow">FLex LAB</span>
+        <span class="mcb-title">${title}</span>
+      </div>
+      <a class="mcb-btn" href="contact.html">${btn} →</a>
+    `;
+    document.body.appendChild(bar);
+
+    // Show after scrolling past 60% of viewport height
+    const threshold = window.innerHeight * 0.6;
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY || window.pageYOffset;
+        // Hide near footer (last 600px) to avoid covering it
+        const nearBottom = y + window.innerHeight > document.documentElement.scrollHeight - 600;
+        if (y > threshold && !nearBottom) {
+          bar.classList.add('show');
+        } else {
+          bar.classList.remove('show');
+        }
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 
   if (document.readyState === 'loading') {

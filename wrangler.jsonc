@@ -1,7 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "flex-lab",
-  "account_id": "469a8b384522e704462759480a6bb58c",
   "compatibility_date": "2026-05-23",
   "assets": {
     "directory": "."

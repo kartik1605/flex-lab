@@ -3761,3 +3761,391 @@ footer.footer a:hover {
   .stat-item h3 { font-size: 1.4rem !important; }
   .stat-item p { font-size: .62rem !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ╔══════════════════════════════════════════════════════════╗
+   ║  MOBILE UX POLISH LAYER                                  ║
+   ║  smooth, premium, catchy — for the agency feel           ║
+   ╚══════════════════════════════════════════════════════════╝
+═══════════════════════════════════════════════════════════ */
+
+/* ── Site-wide smooth scroll + momentum ── */
+html { scroll-behavior: smooth; }
+@media (max-width: 900px) {
+  html, body { -webkit-overflow-scrolling: touch; }
+  /* Hide default cursor elements on mobile (they're desktop-only flourishes) */
+  #cur, #cur-ring, #cur-label, #scroll-progress { display: none !important; }
+}
+
+/* ── Honor reduced motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .15s !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ── Mobile-only polish: tap feedback, premium hero, sticky CTA ── */
+@media (max-width: 900px) {
+
+  /* ── 1. TAP RIPPLE & PRESS FEEDBACK on all interactive cards ── */
+  .lab-card, .svc-card, .dig-card, .gift-card, .etype, .pcard, .pr-card,
+  .tcard, .benefit-card, .btn-p, .btn-g, .nav-btn,
+  .interactive-details .details-toggle {
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .22s cubic-bezier(.34, 1.56, .64, 1),
+                box-shadow .25s ease,
+                border-color .25s ease !important;
+    will-change: transform;
+  }
+  .lab-card:active, .svc-card:active, .dig-card:active, .gift-card:active,
+  .etype:active, .pcard:active, .pr-card:active, .tcard:active,
+  .benefit-card:active {
+    transform: scale(.97) !important;
+    transition: transform .12s ease !important;
+  }
+  .btn-p:active, .btn-g:active, .nav-btn:active,
+  .interactive-details .details-toggle:active {
+    transform: scale(.95) !important;
+  }
+
+  /* ── 2. HERO POLISH — bigger, glowy, catchy ── */
+  #hero {
+    padding: 4.5rem 1.25rem 3rem !important;
+    min-height: calc(100vh - 60px) !important;
+    overflow: hidden;
+    position: relative;
+  }
+  /* Animated gradient halo behind hero text */
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 140%;
+    height: 60%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center,
+      color-mix(in srgb, var(--violet, #7c3aed) 24%, transparent) 0%,
+      color-mix(in srgb, var(--cyan, #d4af37) 8%, transparent) 35%,
+      transparent 70%);
+    filter: blur(60px);
+    z-index: 1;
+    animation: heroHaloPulse 7s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes heroHaloPulse {
+    0%, 100% { opacity: .6; transform: translateX(-50%) scale(1); }
+    50%      { opacity: 1;  transform: translateX(-50%) scale(1.08); }
+  }
+
+  #hero .h-badge {
+    background: rgba(255,255,255,.04) !important;
+    border: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 35%, transparent) !important;
+    padding: .55rem 1.1rem !important;
+    border-radius: 999px !important;
+    backdrop-filter: blur(12px);
+    margin-bottom: 1.5rem !important;
+    font-size: .72rem !important;
+    letter-spacing: .08em !important;
+  }
+
+  #hero .h-title, #hero h1 {
+    font-size: clamp(2.4rem, 11vw, 3.6rem) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -.035em !important;
+    margin-bottom: 1.1rem !important;
+    text-shadow: 0 4px 30px color-mix(in srgb, var(--violet, #7c3aed) 35%, transparent);
+  }
+  /* Last line of hero title gets gold accent */
+  #hero .h-title .hl:last-child {
+    background: linear-gradient(135deg, var(--cyan, #d4af37) 0%, #f5d97a 50%, var(--cyan, #d4af37) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: goldShimmer 4s linear infinite;
+  }
+  @keyframes goldShimmer {
+    to { background-position: 200% center; }
+  }
+
+  #hero .h-tagline {
+    font-size: .95rem !important;
+    margin: .5rem 0 1.5rem !important;
+    color: rgba(244, 232, 215, .75) !important;
+  }
+  #hero .h-tagline .gold {
+    color: var(--cyan, #d4af37) !important;
+    font-style: italic;
+  }
+
+  /* Hero CTAs — make them prominent */
+  #hero .h-ctas {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: .65rem !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0 auto !important;
+  }
+  #hero .btn-p {
+    background: linear-gradient(135deg, var(--violet, #7c3aed), color-mix(in srgb, var(--violet, #7c3aed) 60%, var(--cyan, #d4af37))) !important;
+    box-shadow: 0 12px 35px color-mix(in srgb, var(--violet, #7c3aed) 45%, transparent),
+                inset 0 1px 0 rgba(255,255,255,.18) !important;
+    border: none !important;
+    padding: 1rem 1.6rem !important;
+    font-size: .92rem !important;
+    font-weight: 700 !important;
+    letter-spacing: .02em !important;
+    border-radius: 14px !important;
+  }
+  #hero .btn-g {
+    background: rgba(255,255,255,.04) !important;
+    border: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 45%, transparent) !important;
+    backdrop-filter: blur(10px);
+    color: rgba(244,232,215,.95) !important;
+    padding: 1rem 1.6rem !important;
+    font-size: .92rem !important;
+    border-radius: 14px !important;
+  }
+
+  /* Hide scroll-hint chevron on mobile — sticky CTA serves that purpose */
+  .scroll-hint { display: none !important; }
+
+  /* ── 3. SECTION ENTRANCE — staggered fade-in (improves perceived smoothness) ── */
+  .rv:not(.in) {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .65s cubic-bezier(.23,1,.32,1), transform .65s cubic-bezier(.23,1,.32,1);
+  }
+  .rv.in { opacity: 1; transform: none; }
+
+  /* ── 4. LAB CARDS — premium gradient borders + pulse on tap ── */
+  .labs-grid .lab-card {
+    background: linear-gradient(165deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 95%, var(--violet, #7c3aed)) 100%) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 18%, var(--border)) !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,.35),
+                inset 0 1px 0 rgba(255,255,255,.04) !important;
+    position: relative;
+    overflow: hidden;
+  }
+  .labs-grid .lab-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--cyan, #d4af37) 50%,
+      transparent);
+    opacity: .6;
+  }
+  .labs-grid .lab-card .lab-link {
+    color: var(--cyan, #d4af37) !important;
+    font-weight: 600 !important;
+  }
+
+  /* ── 5. STAT-BAR — premium feel with gold dividers ── */
+  .stat-bar {
+    background: linear-gradient(180deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 85%, var(--violet, #7c3aed) 15%) 100%) !important;
+    border-top: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 22%, transparent) !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 22%, transparent) !important;
+  }
+  .stat-item h3 {
+    background: linear-gradient(135deg, var(--cyan, #d4af37), #f5d97a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800 !important;
+  }
+  .stat-item p {
+    color: rgba(244, 232, 215, .55) !important;
+    text-transform: uppercase;
+  }
+
+  /* ── 6. SECTION TITLE — soft glow + gradient ── */
+  .s-title {
+    text-shadow: 0 2px 24px color-mix(in srgb, var(--violet, #7c3aed) 22%, transparent);
+  }
+  .s-title .grad {
+    background: linear-gradient(135deg, var(--cyan, #d4af37), #f5d97a, var(--cyan, #d4af37));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: goldShimmer 5s linear infinite;
+  }
+
+  /* ── 7. MARQUEE — premium gradient mask on edges ── */
+  .marquee-wrap {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+  .marquee-track .m-item, .marquee .m-item {
+    color: rgba(244, 232, 215, .65) !important;
+  }
+  .m-dot { background: var(--cyan, #d4af37) !important; }
+
+  /* ── 8. SHOWCASE — make swipeable reel pop ── */
+  #showcase .feat-img-wrap {
+    box-shadow: 0 20px 50px rgba(0,0,0,.5),
+                0 0 30px color-mix(in srgb, var(--violet, #7c3aed) 12%, transparent) !important;
+  }
+  #showcase .feat-caption .feat-title { font-size: .88rem !important; font-weight: 700 !important; }
+
+  /* ── 9. STICKY MOBILE CTA BAR — always-visible "Start Project" ── */
+  .mobile-cta-bar {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 999;
+    background: linear-gradient(135deg,
+      rgba(10, 8, 22, .92),
+      rgba(20, 12, 35, .92));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 28%, transparent);
+    border-radius: 16px;
+    padding: .65rem .75rem .65rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    box-shadow: 0 18px 45px rgba(0,0,0,.55),
+                0 0 30px color-mix(in srgb, var(--violet, #7c3aed) 18%, transparent);
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform .55s cubic-bezier(.23,1,.32,1), opacity .4s;
+    pointer-events: none;
+  }
+  .mobile-cta-bar.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mobile-cta-bar .mcb-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
+  }
+  .mobile-cta-bar .mcb-eyebrow {
+    font-family: 'Space Grotesk', monospace;
+    font-size: .58rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--cyan, #d4af37);
+    font-weight: 700;
+  }
+  .mobile-cta-bar .mcb-title {
+    font-size: .88rem;
+    font-weight: 700;
+    color: #f4e8d7;
+    margin-top: .15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mobile-cta-bar .mcb-btn {
+    background: linear-gradient(135deg, var(--cyan, #d4af37), #f5d97a);
+    color: #1a0f00;
+    padding: .7rem 1.1rem;
+    border-radius: 11px;
+    font-weight: 800;
+    font-size: .82rem;
+    text-decoration: none;
+    flex-shrink: 0;
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--cyan, #d4af37) 35%, transparent);
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    letter-spacing: .01em;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .mobile-cta-bar .mcb-btn:active { transform: scale(.94); }
+
+  /* Lift content above the sticky CTA bar */
+  body { padding-bottom: 5.5rem; }
+
+  /* ── 10. NAV BLUR + cleaner mobile look ── */
+  #nav {
+    background: rgba(8, 6, 18, .72) !important;
+    backdrop-filter: blur(18px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 12%, transparent) !important;
+  }
+  #nav.stuck {
+    background: rgba(6, 4, 14, .9) !important;
+    box-shadow: 0 6px 24px rgba(0,0,0,.4);
+  }
+
+  /* ── 11. MOBILE MENU overlay — full bleed premium look ── */
+  #mob-menu {
+    background: radial-gradient(ellipse at top,
+      color-mix(in srgb, var(--violet, #7c3aed) 22%, #06040d) 0%,
+      #06040d 60%) !important;
+  }
+  #mob-menu a {
+    transition: color .25s, transform .25s !important;
+  }
+  #mob-menu a:active { transform: scale(.96); color: var(--cyan, #d4af37) !important; }
+
+  /* ── 12. PRELOADER smoother on mobile ── */
+  #preloader { transition: opacity .5s ease, visibility .5s; }
+
+  /* ── 13. CTA BAND — premium gradient ── */
+  .cta-band {
+    background: linear-gradient(165deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 85%, var(--violet, #7c3aed) 15%) 50%,
+      var(--bg2) 100%) !important;
+    border-top: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 18%, transparent) !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 18%, transparent) !important;
+  }
+
+  /* ── 14. THEME TRIGGER — smaller on mobile, doesn't overlap CTA bar ── */
+  #theme-trigger {
+    width: 44px !important;
+    height: 44px !important;
+    bottom: 5.5rem !important;
+    right: .85rem !important;
+  }
+
+  /* ── 15. ALL CARDS — subtle glass effect ── */
+  .lab-card, .svc-card, .dig-card, .gift-card, .etype, .pcard, .pr-card, .tcard, .benefit-card {
+    background: linear-gradient(165deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 92%, transparent) 100%) !important;
+    backdrop-filter: blur(8px);
+  }
+
+  /* ── 16. SMOOTHER buttons ── */
+  .btn-p, .btn-g {
+    border-radius: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: .01em !important;
+  }
+
+  /* ── 17. SECTION DIVIDERS — soft gold hairline ── */
+  section + section {
+    position: relative;
+  }
+
+  /* ── 18. IMAGE LOADING — soft fade-in ── */
+  img { transition: opacity .4s ease; }
+  img[loading="lazy"]:not([src]) { opacity: 0; }
+}
+
+/* ── Tablet polish (601-1100px) ── */
+@media (min-width: 601px) and (max-width: 1100px) {
+  #hero .h-ctas { flex-direction: row !important; max-width: 100% !important; }
+}
