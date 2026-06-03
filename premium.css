@@ -4648,3 +4648,322 @@ html { scroll-behavior: smooth; }
     transform: perspective(400px) translateZ(-10px) scale(.97) !important;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   ╔════════════════════════════════════════════════════════════════╗
+   ║  MOBILE FINAL BALANCE — compact + airy (overrides prior)       ║
+   ║  Goal: cut scroll length ~40% from previous pass while         ║
+   ║  keeping the premium feel and 3D motion. Sweet spot.           ║
+   ╚════════════════════════════════════════════════════════════════╝
+════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+
+  /* ─── Section padding: 3rem (was 5rem) — tight but breathing ─── */
+  section[style*="padding:9rem 5rem"],
+  section[style*="padding: 9rem 5rem"] { padding: 3rem 1.25rem !important; }
+  section[style*="padding:8rem 5rem"],
+  section[style*="padding: 8rem 5rem"] { padding: 2.75rem 1.25rem !important; }
+  section[style*="padding:7rem 5rem"],
+  section[style*="padding: 7rem 5rem"] { padding: 2.5rem 1.25rem !important; }
+  section[style*="padding:6rem 5rem"],
+  section[style*="padding: 6rem 5rem"] { padding: 2.25rem 1.25rem !important; }
+  section[style*="padding:5rem 5rem"],
+  section[style*="padding: 5rem 5rem"] { padding: 2.25rem 1.25rem !important; }
+  section[style*="padding:8rem 5rem 6rem"] { padding: 2.5rem 1.25rem 2rem !important; }
+  section[style*="padding:5rem 5rem 9rem"] { padding: 2rem 1.25rem 3rem !important; }
+
+  /* ─── Section titles: smaller, tighter ─── */
+  .s-title {
+    font-size: clamp(1.55rem, 6.5vw, 2rem) !important;
+    line-height: 1.1 !important;
+    margin-bottom: .65rem !important;
+    letter-spacing: -.02em !important;
+  }
+  .s-sub {
+    font-size: .9rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1.4rem !important;
+    max-width: 34ch !important;
+  }
+  .s-label {
+    font-size: .62rem !important;
+    margin-bottom: .75rem !important;
+    letter-spacing: .18em !important;
+  }
+
+  /* ═══════════ LABS → 2-col tiles, description shown (1 line) ═══════════ */
+  .labs-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: .7rem !important;
+    padding: 0 !important;
+  }
+  .labs-grid .lab-card {
+    padding: 1.1rem .9rem 1rem !important;
+    min-height: auto !important;
+    border-radius: 16px !important;
+  }
+  .labs-grid .lab-card h3 {
+    font-size: 1rem !important;
+    margin: .55rem 0 .25rem !important;
+    line-height: 1.1 !important;
+  }
+  .labs-grid .lab-card p {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    font-size: .72rem !important;
+    line-height: 1.4 !important;
+    margin: 0 0 .5rem !important;
+    color: rgba(244, 232, 215, .6) !important;
+  }
+  .labs-grid .lab-card .lab-num {
+    font-size: .55rem !important;
+    top: .65rem !important;
+    right: .8rem !important;
+  }
+  .labs-grid .lab-card .lab-icon {
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: .45rem !important;
+    border-radius: 10px !important;
+  }
+  .labs-grid .lab-card .lab-icon svg { width: 20px !important; height: 20px !important; }
+  .labs-grid .lab-card .lab-link {
+    font-size: .68rem !important;
+    margin-top: auto !important;
+  }
+
+  /* ═══════════ HERO → tighter ═══════════ */
+  #hero {
+    padding: 4rem 1.25rem 2.5rem !important;
+    min-height: auto !important;
+  }
+  #hero .h-badge {
+    margin-bottom: 1rem !important;
+    padding: .45rem .95rem !important;
+    font-size: .62rem !important;
+  }
+  #hero .h-title, #hero h1 {
+    font-size: clamp(2rem, 9vw, 2.8rem) !important;
+    line-height: 1.05 !important;
+    margin-bottom: .8rem !important;
+    letter-spacing: -.035em !important;
+  }
+  #hero .h-sub {
+    font-size: .88rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: .35rem !important;
+    max-width: 32ch !important;
+  }
+  #hero .h-tagline {
+    margin: .25rem 0 1.25rem !important;
+    font-size: .82rem !important;
+  }
+  #hero .h-ctas {
+    gap: .55rem !important;
+    max-width: 280px !important;
+  }
+  #hero .btn-p, #hero .btn-g {
+    padding: .85rem 1.4rem !important;
+    font-size: .85rem !important;
+    border-radius: 12px !important;
+  }
+
+  /* ═══════════ STATS → 4-col single strip, compact ═══════════ */
+  .stat-bar {
+    padding: 1.4rem .75rem !important;
+    gap: .35rem !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  .stat-item { padding: .35rem .15rem !important; }
+  .stat-item h3 {
+    font-size: 1.35rem !important;
+    margin-bottom: .15rem !important;
+    letter-spacing: -.015em !important;
+  }
+  .stat-item p {
+    font-size: .55rem !important;
+    letter-spacing: .08em !important;
+    line-height: 1.2 !important;
+  }
+
+  /* ═══════════ SERVICE / DIG / GIFT / EVENT / PRINT → 1-col compact ═══════════ */
+  .svc-big, .dig-grid, .gift-grid, .event-types, .product-cards, .pr-list {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: .65rem !important;
+  }
+  .svc-card, .dig-card, .gift-card, .etype, .pcard, .pr-card {
+    padding: 1.2rem 1.15rem !important;
+    border-radius: 14px !important;
+  }
+  .svc-card h3, .dig-card h3, .gift-card h3, .etype h3, .pcard h3, .pr-card h3 {
+    font-size: 1rem !important;
+    margin: .4rem 0 .35rem !important;
+    line-height: 1.2 !important;
+  }
+  .svc-card p, .dig-card p, .gift-card p, .etype p, .pcard p, .pr-card p {
+    font-size: .8rem !important;
+    line-height: 1.5 !important;
+    color: rgba(244, 232, 215, .65) !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  .svc-card .svc-icon, .dig-card .dig-icon, .etype .etype-icon {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 1rem !important;
+    margin-bottom: .45rem !important;
+    border-radius: 9px !important;
+  }
+  .svc-num, .dig-num {
+    font-size: .55rem !important;
+    top: .85rem !important;
+    right: 1rem !important;
+  }
+  /* Tags: keep but tiny */
+  .svc-tags, .dig-tags, .etype-tags, .gift-tags, .pr-tags {
+    display: none !important;  /* hide on mobile to save vertical */
+  }
+  .gift-thumb { height: 90px !important; font-size: 2.2rem !important; }
+
+  /* Hero feature image hidden again (saves a whole screen each lab page) */
+  .feat-grid-full { display: none !important; }
+
+  /* ═══════════ PROCESS → 2-col 2x2 ═══════════ */
+  .process-row, .p-grid, #process .row, .process-section .row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: .55rem !important;
+  }
+  .p-step {
+    padding: 1rem .85rem !important;
+    margin-bottom: 0 !important;
+    border-radius: 13px !important;
+  }
+  .p-step::after { display: none !important; }  /* hide connector lines in 2x2 */
+  .p-step h3 {
+    font-size: .88rem !important;
+    margin: .25rem 0 .25rem !important;
+    line-height: 1.2 !important;
+  }
+  .p-step p {
+    font-size: .72rem !important;
+    line-height: 1.4 !important;
+    -webkit-line-clamp: 3 !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  .p-num { font-size: 1.8rem !important; }
+
+  /* ═══════════ SHOWCASE swipe reel — keep, slightly smaller ═══════════ */
+  #showcase .showcase-grid {
+    padding: 0 1.25rem .5rem !important;
+    margin: 0 -1.25rem !important;
+    scroll-padding: 1.25rem !important;
+  }
+  #showcase .showcase-grid .feat-img-wrap { flex: 0 0 78% !important; }
+  #showcase .showcase-grid .feat-img-wrap .feat-img { aspect-ratio: 4/3 !important; }
+  #showcase::after { margin-top: .85rem !important; font-size: .55rem !important; }
+
+  /* ═══════════ BENEFITS → 2-col compact ═══════════ */
+  .bs-scroll-col {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: .55rem !important;
+  }
+  .benefit-card {
+    padding: 1rem .9rem !important;
+    margin-bottom: 0 !important;
+    border-radius: 13px !important;
+  }
+  .benefit-card h3 { font-size: .88rem !important; margin: .25rem 0 .25rem !important; line-height: 1.2 !important; }
+  .benefit-card p {
+    font-size: .72rem !important;
+    line-height: 1.4 !important;
+    -webkit-line-clamp: 3 !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  .bc-num { font-size: 1.6rem !important; }
+
+  /* ═══════════ OCCASIONS / TECH STACK → tighter ═══════════ */
+  .occ { padding: 1rem .8rem !important; }
+  .occ-emoji { font-size: 1.4rem !important; margin-bottom: .4rem !important; }
+  .occ h4 { font-size: .8rem !important; margin-bottom: .2rem !important; }
+  .occ p {
+    font-size: .65rem !important;
+    line-height: 1.4 !important;
+    -webkit-line-clamp: 2 !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  .stack-grid { grid-template-columns: repeat(3, 1fr) !important; gap: .5rem !important; }
+  .stack-item { padding: .8rem .4rem !important; border-radius: 10px !important; }
+  .stack-item span { font-size: 1.2rem !important; margin-bottom: .25rem !important; }
+  .stack-item p { font-size: .6rem !important; }
+
+  /* ═══════════ TESTIMONIALS swipe reel — smaller ═══════════ */
+  .tcard { padding: 1.3rem 1.15rem !important; }
+  .tcard p { font-size: .85rem !important; line-height: 1.5 !important; }
+
+  /* ═══════════ FOOTER → 2-col, compact ═══════════ */
+  footer.footer {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.25rem !important;
+    padding: 2rem 1.25rem 1.25rem !important;
+  }
+  footer.footer h4 { font-size: .72rem !important; margin-bottom: .45rem !important; }
+  footer.footer a, footer.footer li {
+    font-size: .75rem !important;
+    line-height: 1.55 !important;
+  }
+  footer.footer .f-col:first-child { grid-column: 1 / -1 !important; }
+
+  /* ═══════════ CTA BAND → compact ═══════════ */
+  .cta-band { padding: 2.5rem 1.25rem !important; }
+  .cta-band h2 {
+    font-size: clamp(1.6rem, 7vw, 2.2rem) !important;
+    line-height: 1.1 !important;
+    margin-bottom: .85rem !important;
+  }
+  .cta-band p {
+    font-size: .88rem !important;
+    line-height: 1.5 !important;
+    max-width: 34ch !important;
+    margin-bottom: 1.4rem !important;
+  }
+  .cta-btns { gap: .55rem !important; }
+
+  /* ═══════════ TAG STRIP ═══════════ */
+  .tag-strip span {
+    font-size: .65rem !important;
+    padding: .35rem .75rem !important;
+  }
+
+  /* ═══════════ MARQUEE → minimal ═══════════ */
+  .marquee-wrap { padding: .65rem 0 !important; }
+  .marquee-track .m-item, .marquee .m-item { font-size: 1rem !important; }
+
+  /* ═══════════ Float anim toned down ═══════════ */
+  .stat-item { animation: none !important; }
+
+  /* ═══════════ Lift content above sticky CTA bar ═══════════ */
+  body { padding-bottom: 5rem !important; }
+}
+
+/* Ultra-narrow phones (≤420px) */
+@media (max-width: 420px) {
+  .stat-bar { grid-template-columns: 1fr 1fr !important; }
+  .stat-item h3 { font-size: 1.5rem !important; }
+  .stat-item p { font-size: .6rem !important; }
+  .labs-grid .lab-card h3 { font-size: .92rem !important; }
+  .labs-grid .lab-card p { font-size: .68rem !important; }
+}
