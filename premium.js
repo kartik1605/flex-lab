@@ -100,15 +100,31 @@
   function initFloatingDock() {
     const dock = document.createElement('div');
     dock.id = 'floating-dock';
+    // SVG icon set matching the nav dropdown style — di-stroke (#c8b8f5) + di-dot (#d4af37)
+    const svgIcon = (paths) => `<svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">${paths}</svg>`;
+    const ICONS = {
+      home:     svgIcon(`<path class="di-stroke" d="M3.5 11L12 4L20.5 11V20H14V14H10V20H3.5V11Z"/>`),
+      branding: svgIcon(`<path class="di-stroke" d="M12 2L13.7 8.3L20 10L13.7 11.7L12 18L10.3 11.7L4 10L10.3 8.3L12 2Z"/><circle class="di-dot" cx="18.5" cy="5.5" r="1.4"/>`),
+      events:   svgIcon(`<path class="di-stroke" d="M5 21L12 5L19 21"/><path class="di-stroke" d="M8.5 14H15.5"/><path class="di-stroke" d="M9 18H15"/><circle class="di-dot" cx="12" cy="3" r="1.4"/>`),
+      gift:     svgIcon(`<rect class="di-stroke" x="3.5" y="9" width="17" height="11" rx="1.6"/><path class="di-stroke" d="M3.5 13.2H20.5"/><path class="di-stroke" d="M12 9V20"/><path class="di-stroke" d="M8 6.2C8 4.5 9 3.5 10 3.7C11 3.9 12 5.5 12 9"/><path class="di-stroke" d="M16 6.2C16 4.5 15 3.5 14 3.7C13 3.9 12 5.5 12 9"/>`),
+      social:   svgIcon(`<path class="di-stroke" d="M20.5 12C20.5 16.4 16.7 19.8 12 19.8C10.6 19.8 9.3 19.5 8.1 18.9L3.5 20L4.7 15.7C4 14.6 3.5 13.4 3.5 12C3.5 7.6 7.3 4.2 12 4.2C16.7 4.2 20.5 7.6 20.5 12Z"/><circle class="di-dot" cx="8.3" cy="12" r="1"/><circle class="di-dot" cx="12" cy="12" r="1"/><circle class="di-dot" cx="15.7" cy="12" r="1"/>`),
+      digital:  svgIcon(`<circle class="di-stroke" cx="12" cy="12" r="8.5"/><path class="di-stroke" d="M3.5 12H20.5"/><path class="di-stroke" d="M12 3.5C14.3 6 15.5 8.9 15.5 12C15.5 15.1 14.3 18 12 20.5"/><path class="di-stroke" d="M12 3.5C9.7 6 8.5 8.9 8.5 12C8.5 15.1 9.7 18 12 20.5"/><circle class="di-dot" cx="12" cy="3.5" r="1.2"/>`),
+      print:    svgIcon(`<path class="di-stroke" d="M7 3.5H17V8H7V3.5Z"/><path class="di-stroke" d="M4 8H20C20.6 8 21 8.4 21 9V15.5C21 16.1 20.6 16.5 20 16.5H17V20.5H7V16.5H4C3.4 16.5 3 16.1 3 15.5V9C3 8.4 3.4 8 4 8Z"/><path class="di-stroke" d="M9 13.5H15"/><path class="di-stroke" d="M9 17.5H15"/><circle class="di-dot" cx="17.5" cy="11" r="1"/>`),
+      mail:     svgIcon(`<rect class="di-stroke" x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path class="di-stroke" d="M3.5 7L12 13L20.5 7"/>`),
+      up:       svgIcon(`<path class="di-stroke" d="M12 19V5"/><path class="di-stroke" d="M5.5 11.5L12 5L18.5 11.5"/>`)
+    };
+
     dock.innerHTML = `
-      <a href="index.html"     data-tooltip="Home"     aria-label="Home">⌂</a>
-      <a href="branding.html"  data-tooltip="Branding" aria-label="Branding">◈</a>
-      <a href="events.html"    data-tooltip="Events"   aria-label="Events">✦</a>
-      <a href="blvckcard.html" data-tooltip="BLVCKCARD" aria-label="BLVCKCARD">⬛</a>
-      <a href="print.html"     data-tooltip="Print Lab" aria-label="Print Lab">⎙</a>
+      <a href="index.html"     data-tooltip="Home"         aria-label="Home">${ICONS.home}</a>
+      <a href="branding.html"  data-tooltip="Branding Lab" aria-label="Branding">${ICONS.branding}</a>
+      <a href="events.html"    data-tooltip="Events Lab"   aria-label="Events">${ICONS.events}</a>
+      <a href="gifting.html"   data-tooltip="Gift Lab"     aria-label="Gift">${ICONS.gift}</a>
+      <a href="social.html"    data-tooltip="Social Lab"   aria-label="Social">${ICONS.social}</a>
+      <a href="digital.html"   data-tooltip="Digital Lab"  aria-label="Digital">${ICONS.digital}</a>
+      <a href="print.html"     data-tooltip="Print Lab"    aria-label="Print">${ICONS.print}</a>
       <span class="dock-sep"></span>
-      <a href="contact.html"   data-tooltip="Contact"  aria-label="Contact" style="background:linear-gradient(135deg,rgba(109,40,217,.35),rgba(212,175,55,.22));color:#fff;">✉</a>
-      <button id="dock-top" data-tooltip="Top" aria-label="Scroll to top">↑</button>
+      <a href="contact.html"   data-tooltip="Contact"      aria-label="Contact" class="dock-contact">${ICONS.mail}</a>
+      <button id="dock-top" data-tooltip="Top" aria-label="Scroll to top">${ICONS.up}</button>
     `;
     document.body.appendChild(dock);
 

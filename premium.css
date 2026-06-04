@@ -837,6 +837,34 @@ body.spotlight-hidden #cursor-spotlight { opacity: 0; }
   background: rgba(255, 255, 255, 0.08);
   margin: 0 .15rem;
 }
+/* SVG icons inside the dock */
+#floating-dock svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+#floating-dock svg .di-stroke {
+  stroke: rgba(241, 245, 249, 0.72);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  transition: stroke .3s;
+}
+#floating-dock svg .di-dot {
+  fill: var(--cyan, #d4af37);
+  transition: fill .3s;
+}
+#floating-dock a:hover svg .di-stroke,
+#floating-dock button:hover svg .di-stroke { stroke: #fff; }
+#floating-dock a.active svg .di-stroke { stroke: #fff; }
+/* Contact CTA gets gold-violet treatment */
+#floating-dock .dock-contact {
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.35), rgba(212, 175, 55, 0.22)) !important;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, .25), inset 0 1px 0 rgba(255, 255, 255, .15);
+}
+#floating-dock .dock-contact svg .di-stroke { stroke: var(--cyan, #d4af37); }
+#floating-dock .dock-contact:hover svg .di-stroke { stroke: #f5d97a; }
 
 @media (max-width: 700px) {
   #floating-dock { bottom: 1rem; gap: .25rem; padding: .4rem; }
