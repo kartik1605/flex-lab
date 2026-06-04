@@ -5484,3 +5484,106 @@ html { scroll-behavior: smooth; }
     font-size: 1.3rem !important;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   PRINT PAGE — 2-col product showcase with prominent photos
+   The .pr-grid container had an inline 1-col rule at 700px we override.
+════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  /* Override the inline @media in print.html */
+  .pr-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: .75rem !important;
+    margin-top: 1.5rem !important;
+  }
+
+  /* Print product card — image-first showcase layout */
+  .pr-card {
+    padding: 0 !important;
+    aspect-ratio: 1 / 1.35 !important;       /* taller — product photo + title */
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: var(--bg2) !important;
+    border: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 18%, var(--border)) !important;
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, .4),
+      inset 0 1px 0 rgba(255, 255, 255, .05) !important;
+    position: relative;
+  }
+
+  /* PHOTO takes top ~72% of the card */
+  .pr-card .pr-thumb {
+    width: 100% !important;
+    height: 72% !important;
+    aspect-ratio: auto !important;
+    border-radius: 18px 18px 0 0 !important;
+    overflow: hidden !important;
+    background: var(--bg3) !important;
+    position: relative;
+    flex-shrink: 0;
+    display: block !important;
+    margin: 0 !important;
+  }
+  .pr-card .pr-thumb img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    opacity: .92 !important;
+    border-radius: 0 !important;
+  }
+
+  /* BODY (bottom 28%) — title only, centered */
+  .pr-card .pr-body {
+    padding: .75rem .75rem 1rem !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    background:
+      linear-gradient(180deg,
+        var(--bg2) 0%,
+        color-mix(in srgb, var(--bg2) 88%, var(--violet, #7c3aed) 12%) 100%);
+  }
+  .pr-card .pr-body h3 {
+    font-size: .9rem !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.015em !important;
+    font-weight: 700 !important;
+    color: rgba(244, 232, 215, .96) !important;
+  }
+  .pr-card .pr-body p,
+  .pr-card .pr-tags { display: none !important; }
+
+  /* Hide the "01..09" num badge on print cards on mobile (matches lab-card decision) */
+  .pr-card .pr-num { display: none !important; }
+
+  /* Gold gradient hairline between photo and body */
+  .pr-card .pr-thumb::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 1.5px !important;
+    background: linear-gradient(90deg,
+      transparent,
+      color-mix(in srgb, var(--cyan, #d4af37) 70%, transparent) 50%,
+      transparent) !important;
+    transform: scaleX(1) !important;
+    transform-origin: center !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .pr-card { aspect-ratio: 1 / 1.4 !important; }
+  .pr-card .pr-body h3 { font-size: .82rem !important; }
+}
