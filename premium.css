@@ -5626,3 +5626,152 @@ html { scroll-behavior: smooth; }
   .pr-card { aspect-ratio: 1 / 1.4 !important; }
   .pr-card .pr-body h3 { font-size: .82rem !important; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   SOCIAL LAB — Pricing: all 3 tiers in one row on mobile
+   social.html has inline @media(max-width:1100px) { .pkg-grid: 1fr }
+   — we override with 3-col strict grid + ultra-compact cards.
+════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .pkg-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: .5rem !important;
+    margin-top: 1.5rem !important;
+  }
+
+  .pkg {
+    padding: 1.1rem .65rem 1rem !important;
+    border-radius: 16px !important;
+    background: linear-gradient(165deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 88%, var(--violet, #7c3aed) 12%) 100%) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 20%, var(--border)) !important;
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, .4),
+      inset 0 1px 0 rgba(255, 255, 255, .04) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: .5rem !important;
+    position: relative;
+    overflow: visible;
+  }
+
+  /* HIDE long content on the mobile compact tiers — accessible via the
+     comparison table below or contact page */
+  .pkg .pkg-desc,
+  .pkg .pkg-list { display: none !important; }
+
+  /* Featured (middle) tier: gold ring + soft glow */
+  .pkg.featured {
+    border-color: color-mix(in srgb, var(--cyan, #d4af37) 60%, transparent) !important;
+    background: linear-gradient(165deg,
+      color-mix(in srgb, var(--bg2) 90%, var(--cyan, #d4af37) 10%) 0%,
+      color-mix(in srgb, var(--bg2) 80%, var(--violet, #7c3aed) 20%) 100%) !important;
+    box-shadow:
+      0 10px 24px color-mix(in srgb, var(--cyan, #d4af37) 18%, transparent),
+      0 0 22px color-mix(in srgb, var(--violet, #7c3aed) 22%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, .08) !important;
+    transform: scale(1.02);
+  }
+  .pkg .pkg-badge {
+    position: absolute !important;
+    top: -.65rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: linear-gradient(135deg, var(--cyan, #d4af37), #f5d97a) !important;
+    color: #1a0f00 !important;
+    font-size: .48rem !important;
+    font-weight: 800 !important;
+    letter-spacing: .12em !important;
+    padding: .2rem .55rem !important;
+    border-radius: 100px !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--cyan, #d4af37) 35%, transparent);
+  }
+
+  /* Tier name */
+  .pkg .pkg-name {
+    font-size: .58rem !important;
+    letter-spacing: .14em !important;
+    margin: 0 !important;
+    color: var(--cyan, #d4af37) !important;
+    font-weight: 800 !important;
+  }
+
+  /* Price */
+  .pkg .pkg-price {
+    font-size: 1.05rem !important;
+    margin: 0 !important;
+    letter-spacing: -.03em !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    color: #fff !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: .15rem !important;
+  }
+  .pkg .pkg-price span {
+    font-size: .48rem !important;
+    color: rgba(244, 232, 215, .55) !important;
+    letter-spacing: .05em !important;
+    font-weight: 500 !important;
+  }
+
+  /* Button — full width, compact */
+  .pkg .btn-p, .pkg .btn-g {
+    width: 100% !important;
+    padding: .55rem .35rem !important;
+    font-size: .62rem !important;
+    border-radius: 10px !important;
+    margin-top: auto !important;
+    letter-spacing: .03em !important;
+    font-weight: 700 !important;
+  }
+  .pkg.featured .btn-p {
+    background: linear-gradient(135deg, var(--cyan, #d4af37), #f5d97a) !important;
+    color: #1a0f00 !important;
+    border: none !important;
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--cyan, #d4af37) 35%, transparent);
+  }
+
+  /* COMPARISON TABLE — make horizontally scrollable on mobile */
+  .table-wrapper {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 1.5rem -1.25rem 0 !important;
+    padding: 0 1.25rem !important;
+    scrollbar-width: none !important;
+  }
+  .table-wrapper::-webkit-scrollbar { display: none !important; }
+  .compare-table {
+    min-width: 560px !important;
+    font-size: .72rem !important;
+  }
+  .compare-table th, .compare-table td {
+    padding: .65rem .55rem !important;
+  }
+  .compare-table .th-pkg { font-size: .85rem !important; }
+  .compare-table .th-price { font-size: .68rem !important; }
+  .compare-table .th-price span { font-size: .55rem !important; }
+  .compare-table .featured-th .pkg-badge {
+    position: static !important;
+    transform: none !important;
+    display: inline-block !important;
+    margin-bottom: .3rem !important;
+  }
+  .compare-section-title h3 { font-size: 1.4rem !important; }
+}
+
+/* Ultra-narrow phones (≤380px) — tighter price tiles */
+@media (max-width: 380px) {
+  .pkg { padding: 1rem .5rem .9rem !important; gap: .4rem !important; }
+  .pkg .pkg-price { font-size: .92rem !important; }
+  .pkg .pkg-price span { font-size: .42rem !important; }
+  .pkg .pkg-name { font-size: .52rem !important; }
+  .pkg .btn-p, .pkg .btn-g { font-size: .55rem !important; padding: .5rem .25rem !important; }
+}
