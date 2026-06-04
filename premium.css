@@ -5069,3 +5069,390 @@ html { scroll-behavior: smooth; }
   .labs-grid .lab-card h3 { font-size: .92rem !important; }
   .labs-grid .lab-card p { font-size: .68rem !important; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   ╔════════════════════════════════════════════════════════════════╗
+   ║  UNIVERSAL TILE STYLE — apply lab-card look to every page card  ║
+   ║  Branding · Events · Gifting · Social · Digital · Print ·       ║
+   ║  Contact · BLVCKCARD all get the same compact 2-col tile feel.  ║
+   ╚════════════════════════════════════════════════════════════════╝
+════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+
+  /* ── Universal card grid: turn every service container into 2-col tile grid ── */
+  .svc-big,
+  .dig-grid,
+  .gift-grid,
+  .event-types,
+  .product-cards,
+  .pr-list,
+  .svc-2col,
+  .svc-list {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: .75rem !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    margin-top: 1rem !important;
+  }
+
+  /* ── Every service card becomes a uniform tile ── */
+  .svc-card,
+  .dig-card,
+  .gift-card,
+  .etype,
+  .pcard,
+  .pr-card,
+  .svc2,
+  .svc-row {
+    padding: 1.4rem 1rem 1.3rem !important;
+    aspect-ratio: 1 / 1.15 !important;
+    min-height: auto !important;
+    height: auto !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: .85rem !important;
+    background:
+      radial-gradient(140% 100% at 0% 0%,
+        color-mix(in srgb, var(--violet, #7c3aed) 18%, transparent) 0%,
+        transparent 55%),
+      linear-gradient(160deg,
+        var(--bg2) 0%,
+        color-mix(in srgb, var(--bg2) 88%, var(--violet, #7c3aed) 12%) 100%) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 22%, var(--border)) !important;
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, .4),
+      inset 0 1px 0 rgba(255, 255, 255, .05) !important;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  /* Hide ALL descriptive content on mobile tiles — keep only icon + title */
+  .svc-card p, .dig-card p, .gift-card p, .etype p, .pcard p, .pr-card p,
+  .svc2 p, .svc-row p,
+  .svc-card .svc-tags, .dig-card .dig-tags, .gift-card .gift-tags,
+  .etype .etype-tags, .pcard .pr-tags, .pr-card .pr-tags,
+  .svc-card .svc-num, .dig-card .dig-num,
+  .svc-card .interactive-details, .dig-card .interactive-details,
+  .gift-card .interactive-details, .etype .interactive-details,
+  .pcard .interactive-details, .pr-card .interactive-details,
+  .svc2 .interactive-details, .svc-row .interactive-details {
+    display: none !important;
+  }
+
+  /* Icon — bigger, centered, glowing ring */
+  .svc-card .svc-icon,
+  .dig-card .dig-icon,
+  .gift-card .gift-thumb,
+  .etype .etype-icon,
+  .svc2 .svc2-icon,
+  .svc-row .svc-row-icon {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.5rem !important;
+    margin: 0 !important;
+    border-radius: 14px !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative;
+    background: rgba(255, 255, 255, .04) !important;
+    border: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 25%, transparent) !important;
+  }
+  /* Icon spinning conic ring (same as lab cards) */
+  .svc-card .svc-icon::before,
+  .dig-card .dig-icon::before,
+  .etype .etype-icon::before,
+  .svc2 .svc2-icon::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 15px;
+    background: conic-gradient(from 0deg,
+      transparent 0deg,
+      color-mix(in srgb, var(--cyan, #d4af37) 60%, transparent) 90deg,
+      transparent 180deg);
+    opacity: 0;
+    animation: iconRing 4s linear infinite;
+    z-index: -1;
+  }
+  .svc-card.in .svc-icon::before,
+  .dig-card.in .dig-icon::before,
+  .etype.in .etype-icon::before,
+  .svc2.in .svc2-icon::before { opacity: .85; }
+
+  /* Title — centered, breathing room */
+  .svc-card h3, .dig-card h3, .gift-card h3,
+  .etype h3, .pcard h3, .pr-card h3,
+  .svc2 h3, .svc-row h4 {
+    font-size: 1rem !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.015em !important;
+    font-weight: 700 !important;
+    color: rgba(244, 232, 215, .95) !important;
+  }
+
+  /* Aurora sweep + gold hairline (same as lab cards) */
+  .svc-card::before,
+  .dig-card::before,
+  .gift-card::before,
+  .etype::before,
+  .pcard::before,
+  .pr-card::before,
+  .svc2::before,
+  .svc-row::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -120%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(115deg,
+      transparent 0%,
+      color-mix(in srgb, var(--cyan, #d4af37) 18%, transparent) 50%,
+      transparent 100%);
+    transform: skewX(-18deg);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .svc-card.in::before,
+  .dig-card.in::before,
+  .gift-card.in::before,
+  .etype.in::before,
+  .pcard.in::before,
+  .pr-card.in::before,
+  .svc2.in::before,
+  .svc-row.in::before {
+    animation: cardSweep 1.6s cubic-bezier(.23, 1, .32, 1) .2s 1;
+  }
+  /* Gold hairline at top */
+  .svc-card::after,
+  .dig-card::after,
+  .gift-card::after,
+  .etype::after,
+  .pcard::after,
+  .pr-card::after,
+  .svc2::after,
+  .svc-row::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 10%,
+      color-mix(in srgb, var(--cyan, #d4af37) 60%, transparent) 50%,
+      transparent 90%);
+    pointer-events: none;
+  }
+  /* Content above sweep */
+  .svc-card > *, .dig-card > *, .gift-card > *,
+  .etype > *, .pcard > *, .pr-card > *,
+  .svc2 > *, .svc-row > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* etype-bg / etype-img (events tiles background images) — keep subtle */
+  .etype-bg, .etype-img {
+    opacity: .08 !important;
+    border-radius: 18px !important;
+  }
+  .etype-icon {
+    background: rgba(255, 255, 255, .04) !important;
+  }
+
+  /* ═══════════ GIFT THUMB — emoji block as icon ═══════════ */
+  .gift-card .gift-thumb {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.7rem !important;
+    border-radius: 14px !important;
+  }
+  .gift-body {
+    padding: 0 !important;
+    text-align: center !important;
+    background: transparent !important;
+  }
+
+  /* ═══════════ PRINT — pr-thumb centered, scaled down ═══════════ */
+  .pr-card .pr-thumb {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 !important;
+    border-radius: 12px !important;
+  }
+  .pr-card .pr-thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+  }
+
+  /* ═══════════ SVC-ROW (events) — flex row that we want as tile ═══════════ */
+  .svc-row { gap: .85rem !important; }
+  .svc-row > div { text-align: center !important; }
+  .svc-row > div h4 { font-size: .95rem !important; margin: 0 !important; }
+
+  /* ═══════════ OCCASIONS GRID (gifting) — 2-col tile look ═══════════ */
+  .occ-grid {
+    grid-template-columns: 1fr 1fr !important;
+    background: transparent !important;
+    border: 0 !important;
+    gap: .65rem !important;
+  }
+  .occ {
+    padding: 1.25rem 1rem !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 16px !important;
+    background: linear-gradient(160deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 90%, var(--violet, #7c3aed) 10%) 100%) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 18%, var(--border)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: .5rem !important;
+  }
+  .occ p { display: none !important; }
+  .occ-emoji { font-size: 1.6rem !important; margin: 0 !important; }
+  .occ h4 { font-size: .85rem !important; margin: 0 !important; }
+
+  /* ═══════════ STACK GRID (digital tech stack) — 3-col compact ═══════════ */
+  .stack-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: .55rem !important;
+  }
+  .stack-item {
+    padding: .85rem .5rem !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: .3rem !important;
+    background: linear-gradient(160deg,
+      var(--bg2) 0%,
+      color-mix(in srgb, var(--bg2) 92%, var(--violet, #7c3aed) 8%) 100%) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 15%, var(--border)) !important;
+  }
+  .stack-item span { font-size: 1.4rem !important; margin: 0 !important; }
+  .stack-item p { font-size: .58rem !important; margin: 0 !important; }
+
+  /* ═══════════ GIFT PROCESS — 1-col stack with arrows ═══════════ */
+  .gift-process {
+    flex-direction: column !important;
+    gap: .65rem !important;
+  }
+  .gp-step {
+    padding: 1.2rem 1rem !important;
+    border-radius: 14px !important;
+    text-align: center !important;
+  }
+  .gp-step:first-child,
+  .gp-step:last-child { border-radius: 14px !important; }
+  .gp-step:not(:last-child)::after {
+    content: '↓' !important;
+    right: 50% !important;
+    top: auto !important;
+    bottom: -1.1rem !important;
+    transform: translateX(50%) !important;
+    font-size: 1rem !important;
+    color: var(--cyan, #d4af37) !important;
+  }
+
+  /* ═══════════ CONTACT FORM — single column, larger inputs ═══════════ */
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: .85rem !important;
+  }
+  #contact-form input,
+  #contact-form textarea,
+  #contact-form select {
+    padding: .95rem 1.1rem !important;
+    font-size: .95rem !important;
+    border-radius: 13px !important;
+    background: rgba(255, 255, 255, .03) !important;
+    border: 1px solid color-mix(in srgb, var(--cyan, #d4af37) 18%, var(--border)) !important;
+  }
+  #contact-form input:focus,
+  #contact-form textarea:focus,
+  #contact-form select:focus {
+    border-color: color-mix(in srgb, var(--violet, #7c3aed) 50%, transparent) !important;
+    background: rgba(255, 255, 255, .05) !important;
+  }
+  #contact-form label { font-size: .78rem !important; letter-spacing: .08em !important; }
+  #contact-form button[type="submit"] {
+    width: 100% !important;
+    padding: 1.1rem !important;
+    font-size: .95rem !important;
+    margin-top: .85rem !important;
+    border-radius: 14px !important;
+  }
+  /* Contact info cards (email, phone, whatsapp) — center tile look */
+  .contact-info-grid, .contact-cards {
+    grid-template-columns: 1fr 1fr !important;
+    gap: .75rem !important;
+  }
+  .info-card, .contact-card {
+    padding: 1.25rem 1rem !important;
+    border-radius: 16px !important;
+    aspect-ratio: 1 / 1.05 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: .55rem !important;
+  }
+
+  /* ═══════════ BLVCKCARD page — keep card center, compact spec rows ═══════════ */
+  #blvck-section .blvck-card { transform: scale(.92) !important; margin: 0 auto !important; }
+  .bc-finish, .bc-price-card {
+    padding: 1.4rem 1.1rem !important;
+    border-radius: 18px !important;
+  }
+  /* BLVCKCARD spec/comparison rows */
+  .bc-features, .blvck-features {
+    grid-template-columns: 1fr 1fr !important;
+    gap: .65rem !important;
+  }
+  .bc-feature, .blvck-feature {
+    padding: 1.1rem .9rem !important;
+    aspect-ratio: 1 / 1.05 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: .5rem !important;
+    border-radius: 16px !important;
+  }
+}
+
+/* Ultra-narrow phones (≤420px): tile content further compressed */
+@media (max-width: 420px) {
+  .svc-card, .dig-card, .gift-card, .etype, .pcard, .pr-card, .svc2, .svc-row {
+    padding: 1.2rem .85rem 1.15rem !important;
+    aspect-ratio: 1 / 1.18 !important;
+  }
+  .svc-card h3, .dig-card h3, .gift-card h3,
+  .etype h3, .pcard h3, .pr-card h3, .svc2 h3, .svc-row h4 {
+    font-size: .9rem !important;
+  }
+  .svc-card .svc-icon, .dig-card .dig-icon,
+  .gift-card .gift-thumb, .etype .etype-icon, .svc2 .svc2-icon, .svc-row .svc-row-icon {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1.3rem !important;
+  }
+}
