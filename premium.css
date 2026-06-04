@@ -4699,8 +4699,8 @@ html { scroll-behavior: smooth; }
     padding: 0 !important;
   }
   .labs-grid .lab-card {
-    padding: 1.4rem 1.1rem 1.2rem !important;
-    aspect-ratio: 1 / 1.05 !important;          /* uniform square-ish tiles */
+    padding: 1.6rem 1.25rem 1.5rem !important;
+    aspect-ratio: 1 / 1.2 !important;            /* taller tiles → more breathing */
     min-height: auto !important;
     height: auto !important;
     border-radius: 18px !important;
@@ -4709,6 +4709,7 @@ html { scroll-behavior: smooth; }
     justify-content: space-between !important;
     align-items: flex-start !important;
     text-align: left !important;
+    gap: .75rem !important;                       /* even spacing between rows */
     background:
       radial-gradient(140% 100% at 0% 0%,
         color-mix(in srgb, var(--a1, var(--violet, #7c3aed)) 22%, transparent) 0%,
@@ -4726,32 +4727,27 @@ html { scroll-behavior: smooth; }
   /* HIDE description on mobile lab cards — was clipping ugly mid-word */
   .labs-grid .lab-card p { display: none !important; }
 
+  /* HIDE numbering on mobile — feels cluttered in a tight grid */
+  .labs-grid .lab-card .lab-num { display: none !important; }
+
   .labs-grid .lab-card h3 {
-    font-size: 1.05rem !important;
-    margin: 0 0 .15rem !important;
-    line-height: 1.1 !important;
+    font-size: 1.1rem !important;
+    margin: 0 !important;
+    line-height: 1.15 !important;
     letter-spacing: -.015em !important;
     font-weight: 700 !important;
   }
-  .labs-grid .lab-card .lab-num {
-    font-size: .58rem !important;
-    top: .85rem !important;
-    right: .95rem !important;
-    letter-spacing: .15em !important;
-    color: rgba(212, 175, 55, .55) !important;
-    font-family: 'Space Grotesk', monospace !important;
-  }
   .labs-grid .lab-card .lab-icon {
-    width: 44px !important;
-    height: 44px !important;
+    width: 48px !important;
+    height: 48px !important;
     margin-bottom: 0 !important;
-    border-radius: 12px !important;
+    border-radius: 13px !important;
     flex-shrink: 0;
     position: relative;
   }
   .labs-grid .lab-card .lab-icon svg {
-    width: 24px !important;
-    height: 24px !important;
+    width: 26px !important;
+    height: 26px !important;
     position: relative;
     z-index: 2;
   }
