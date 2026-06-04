@@ -132,10 +132,12 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Mark active
-    const path = location.pathname.split('/').pop() || 'index.html';
+    // Mark active — handles "/", "/index.html", and any /path/file.html
+    const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const normalized = path === '' ? 'index.html' : path;
     qsa('a', dock).forEach(a => {
-      if (a.getAttribute('href') === path) a.classList.add('active');
+      const href = (a.getAttribute('href') || '').toLowerCase();
+      if (href === normalized) a.classList.add('active');
     });
 
     // Show after scroll threshold

@@ -204,28 +204,35 @@ function qsa(sel,scope=document){ return [...scope.querySelectorAll(sel)]; }
   const trans = qs('#page-trans');
   if(!trans) return;
 
+  // Respect reduced-motion preference
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function leave(href){
+    if (reduce) { window.location.href = href; return; }
+    document.body.classList.add('pt-leaving');
     trans.classList.add('active');
-    setTimeout(()=>{ window.location.href = href; }, 650);
+    // Wait for body scale-down/fade + halo fade-in before navigating
+    setTimeout(()=>{ window.location.href = href; }, 480);
   }
 
   qsa('a[href]').forEach(a=>{
     const href = a.getAttribute('href');
     if(!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('tel') || href.startsWith('http') || a.target==='_blank') return;
     a.addEventListener('click',e=>{
+      // Skip if modifier keys (open in new tab) or middle click
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button === 1) return;
       e.preventDefault();
       leave(href);
     });
   });
 
-  // Enter animation
-  trans.classList.add('exit');
-  requestAnimationFrame(()=>{
-    trans.style.transition='none';
-    trans.classList.remove('exit','active');
-    trans.offsetHeight; // reflow
-    trans.style.transition='';
-  });
+  // Enter animation — slide-up + fade-in on arrival
+  if (!reduce) {
+    document.body.classList.add('pt-entering');
+    document.body.addEventListener('animationend', () => {
+      document.body.classList.remove('pt-entering');
+    }, { once: true });
+  }
 })();
 
 /* ─────────────────────────────────────────
