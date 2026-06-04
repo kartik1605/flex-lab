@@ -4699,17 +4699,17 @@ html { scroll-behavior: smooth; }
     padding: 0 !important;
   }
   .labs-grid .lab-card {
-    padding: 1.6rem 1.25rem 1.5rem !important;
+    padding: 1.6rem 1.1rem 1.4rem !important;
     aspect-ratio: 1 / 1.2 !important;            /* taller tiles → more breathing */
     min-height: auto !important;
     height: auto !important;
     border-radius: 18px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
-    align-items: flex-start !important;
-    text-align: left !important;
-    gap: .75rem !important;                       /* even spacing between rows */
+    justify-content: center !important;           /* center vertically */
+    align-items: center !important;               /* center horizontally */
+    text-align: center !important;
+    gap: 1rem !important;                          /* even spacing between rows */
     background:
       radial-gradient(140% 100% at 0% 0%,
         color-mix(in srgb, var(--a1, var(--violet, #7c3aed)) 22%, transparent) 0%,
