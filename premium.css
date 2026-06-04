@@ -4691,48 +4691,151 @@ html { scroll-behavior: smooth; }
     letter-spacing: .18em !important;
   }
 
-  /* ═══════════ LABS → 2-col tiles, description shown (1 line) ═══════════ */
+  /* ═══════════ LABS → 2-col uniform tiles with animations ═══════════ */
   .labs-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: .7rem !important;
+    gap: .75rem !important;
     padding: 0 !important;
   }
   .labs-grid .lab-card {
-    padding: 1.1rem .9rem 1rem !important;
+    padding: 1.4rem 1.1rem 1.2rem !important;
+    aspect-ratio: 1 / 1.05 !important;          /* uniform square-ish tiles */
     min-height: auto !important;
-    border-radius: 16px !important;
+    height: auto !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    background:
+      radial-gradient(140% 100% at 0% 0%,
+        color-mix(in srgb, var(--a1, var(--violet, #7c3aed)) 22%, transparent) 0%,
+        transparent 55%),
+      linear-gradient(160deg,
+        var(--bg2) 0%,
+        color-mix(in srgb, var(--bg2) 88%, var(--violet, #7c3aed) 12%) 100%) !important;
+    border: 1px solid color-mix(in srgb, var(--violet, #7c3aed) 22%, var(--border)) !important;
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, .45),
+      inset 0 1px 0 rgba(255, 255, 255, .06) !important;
+    position: relative;
+    overflow: hidden;
   }
+  /* HIDE description on mobile lab cards — was clipping ugly mid-word */
+  .labs-grid .lab-card p { display: none !important; }
+
   .labs-grid .lab-card h3 {
-    font-size: 1rem !important;
-    margin: .55rem 0 .25rem !important;
+    font-size: 1.05rem !important;
+    margin: 0 0 .15rem !important;
     line-height: 1.1 !important;
-  }
-  .labs-grid .lab-card p {
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-    font-size: .72rem !important;
-    line-height: 1.4 !important;
-    margin: 0 0 .5rem !important;
-    color: rgba(244, 232, 215, .6) !important;
+    letter-spacing: -.015em !important;
+    font-weight: 700 !important;
   }
   .labs-grid .lab-card .lab-num {
-    font-size: .55rem !important;
-    top: .65rem !important;
-    right: .8rem !important;
+    font-size: .58rem !important;
+    top: .85rem !important;
+    right: .95rem !important;
+    letter-spacing: .15em !important;
+    color: rgba(212, 175, 55, .55) !important;
+    font-family: 'Space Grotesk', monospace !important;
   }
   .labs-grid .lab-card .lab-icon {
-    width: 36px !important;
-    height: 36px !important;
-    margin-bottom: .45rem !important;
-    border-radius: 10px !important;
+    width: 44px !important;
+    height: 44px !important;
+    margin-bottom: 0 !important;
+    border-radius: 12px !important;
+    flex-shrink: 0;
+    position: relative;
   }
-  .labs-grid .lab-card .lab-icon svg { width: 20px !important; height: 20px !important; }
+  .labs-grid .lab-card .lab-icon svg {
+    width: 24px !important;
+    height: 24px !important;
+    position: relative;
+    z-index: 2;
+  }
+  /* Icon glow ring (animated) */
+  .labs-grid .lab-card .lab-icon::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 13px;
+    background: conic-gradient(from 0deg,
+      transparent 0deg,
+      color-mix(in srgb, var(--a1, var(--violet, #7c3aed)) 60%, transparent) 90deg,
+      transparent 180deg);
+    opacity: 0;
+    animation: iconRing 4s linear infinite;
+    z-index: 1;
+  }
+  .labs-grid .lab-card.in .lab-icon::before { opacity: .9; }
+  @keyframes iconRing {
+    to { transform: rotate(360deg); }
+  }
+  .labs-grid .lab-card .lab-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: var(--bg2);
+    z-index: 1;
+  }
+
   .labs-grid .lab-card .lab-link {
-    font-size: .68rem !important;
-    margin-top: auto !important;
+    font-size: .72rem !important;
+    margin-top: 0 !important;
+    color: var(--cyan, #d4af37) !important;
+    font-weight: 600 !important;
+    letter-spacing: .04em !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: .35rem !important;
+    transition: gap .35s cubic-bezier(.23, 1, .32, 1);
+  }
+  .labs-grid .lab-card:active .lab-link { gap: .7rem !important; }
+  .labs-grid .lab-card .lab-link::after {
+    content: '→';
+    transition: transform .35s cubic-bezier(.23, 1, .32, 1);
+  }
+  .labs-grid .lab-card:active .lab-link::after { transform: translateX(4px); }
+
+  /* Animated aurora sweep across each card on scroll-in */
+  .labs-grid .lab-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -120%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(115deg,
+      transparent 0%,
+      color-mix(in srgb, var(--cyan, #d4af37) 18%, transparent) 50%,
+      transparent 100%);
+    transform: skewX(-18deg);
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* Ensure card content stays above sweep + hairline */
+  .labs-grid .lab-card > * { position: relative; z-index: 2; }
+  .labs-grid .lab-card.in::before {
+    animation: cardSweep 1.6s cubic-bezier(.23, 1, .32, 1) .2s 1;
+  }
+  @keyframes cardSweep {
+    from { left: -120%; }
+    to   { left: 220%; }
+  }
+
+  /* Gold hairline at top (premium accent) */
+  .labs-grid .lab-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 10%,
+      color-mix(in srgb, var(--cyan, #d4af37) 60%, transparent) 50%,
+      transparent 90%);
+    pointer-events: none;
   }
 
   /* ═══════════ HERO → tighter ═══════════ */
