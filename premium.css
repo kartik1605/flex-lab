@@ -4658,6 +4658,9 @@ html { scroll-behavior: smooth; }
 ════════════════════════════════════════════════════════════════════ */
 @media (max-width: 900px) {
 
+  /* ── Hide floating dock on mobile (was overlapping cards) ── */
+  #floating-dock { display: none !important; }
+
   /* ─── Section padding: 3rem (was 5rem) — tight but breathing ─── */
   section[style*="padding:9rem 5rem"],
   section[style*="padding: 9rem 5rem"] { padding: 3rem 1.25rem !important; }
