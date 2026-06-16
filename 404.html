@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>404 — Page Not Found | FLex LAB</title>
+  <meta name="description" content="The page you're looking for doesn't exist. Head back to FLex LAB."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" type="image/png" href="images/logo/lens-icon-purple.png"/>
+  <link rel="apple-touch-icon" href="images/logo/lens-icon-purple.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="anim.css"/>
+  <link rel="stylesheet" href="premium.css"/>
+  <style>
+    #e404 {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .e404-orb1 {
+      position: absolute;
+      width: 600px; height: 600px;
+      top: -200px; left: -150px;
+      background: radial-gradient(circle, rgba(109,40,217,.18), transparent 65%);
+      animation: drift 12s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .e404-orb2 {
+      position: absolute;
+      width: 450px; height: 450px;
+      bottom: -100px; right: -100px;
+      background: radial-gradient(circle, rgba(212,175,55,.10), transparent 65%);
+      animation: drift 9s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+    .e404-code {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(7rem, 22vw, 14rem);
+      font-weight: 900;
+      letter-spacing: -.06em;
+      line-height: 1;
+      background: linear-gradient(135deg, #6d28d9 0%, #d4af37 50%, #f5d77b 75%, #6d28d9 100%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradShift 5s ease infinite;
+      position: relative;
+      z-index: 2;
+      margin-bottom: .25rem;
+    }
+    @keyframes gradShift {
+      0%, 100% { background-position: 0% 50%; }
+      50%       { background-position: 100% 50%; }
+    }
+    .e404-label {
+      font-size: .7rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold, #d4af37);
+      font-weight: 700;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    .e404-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: #fff;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    .e404-sub {
+      color: var(--muted, #6b7280);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 400px;
+      margin: 0 auto 2.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    .e404-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+    .e404-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold, #d4af37), transparent);
+      margin: 0 auto 2.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 600px) {
+      .e404-orb1 { width: 280px; height: 280px; }
+      .e404-orb2 { width: 220px; height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="logo logo-img" aria-label="FLEX LAB home">
+    <img src="images/logo/lens-lockup-trans.png" alt="FLEX LAB" width="200" height="70"/>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Labs ▾</a>
+      <ul class="dropdown">
+        <li><a href="branding.html">Branding Lab</a></li>
+        <li><a href="events.html">Events Lab</a></li>
+        <li><a href="gifting.html">Gift Lab</a></li>
+        <li><a href="social.html">Social Lab</a></li>
+        <li><a href="digital.html">Digital Lab</a></li>
+        <li><a href="print.html">Print Lab</a></li>
+      </ul>
+    </li>
+    <li><a href="blvckcard.html">BLVCKCARD</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-btn btn-g">Start Project</a>
+  <button id="ham" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="mob-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+  <button id="mob-close" aria-label="Close menu">✕</button>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="branding.html">Branding Lab</a>
+    <a href="events.html">Events Lab</a>
+    <a href="gifting.html">Gift Lab</a>
+    <a href="social.html">Social Lab</a>
+    <a href="digital.html">Digital Lab</a>
+    <a href="print.html">Print Lab</a>
+    <a href="blvckcard.html">BLVCKCARD</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</div>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="page-trans"></div>
+
+<section id="e404">
+  <div class="e404-orb1"></div>
+  <div class="e404-orb2"></div>
+
+  <p class="e404-label">Error</p>
+  <div class="e404-code">404</div>
+  <div class="e404-divider"></div>
+  <h1 class="e404-heading">Page not found</h1>
+  <p class="e404-sub">The page you're looking for has moved, been removed, or never existed. Let's get you back on track.</p>
+  <div class="e404-btns">
+    <a href="index.html" class="btn-g">← Back to Home</a>
+    <a href="contact.html" class="btn-p">Contact Us</a>
+  </div>
+</section>
+
+<script src="main.js"></script>
+<script src="premium.js"></script>
+<script src="animations.js"></script>
+</body>
+</html>
