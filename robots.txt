@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /node_modules/
-Disallow: /scripts/
-Disallow: /.claude/
 
-Sitemap: https://www.flexlab.co.in/sitemap.xml
+Sitemap: https://flexlab.co.in/sitemap.xml
