@@ -4,54 +4,60 @@
     <loc>https://www.flexlab.co.in/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-06-27</lastmod>
   </url>
   <url>
-    <loc>https://www.flexlab.co.in/branding.html</loc>
-    <priority>0.9</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2026-06-16</lastmod>
-  </url>
-  <url>
-    <loc>https://www.flexlab.co.in/events.html</loc>
-    <priority>0.9</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2026-06-16</lastmod>
-  </url>
-  <url>
-    <loc>https://www.flexlab.co.in/gifting.html</loc>
-    <priority>0.9</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2026-06-16</lastmod>
-  </url>
-  <url>
-    <loc>https://www.flexlab.co.in/social.html</loc>
-    <priority>0.9</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2026-06-16</lastmod>
-  </url>
-  <url>
-    <loc>https://www.flexlab.co.in/digital.html</loc>
-    <priority>0.9</priority>
-    <changefreq>monthly</changefreq>
-    <lastmod>2026-06-16</lastmod>
+    <loc>https://www.flexlab.co.in/instant.html</loc>
+    <priority>0.95</priority>
+    <changefreq>weekly</changefreq>
+    <lastmod>2026-06-27</lastmod>
   </url>
   <url>
     <loc>https://www.flexlab.co.in/print.html</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-06-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.flexlab.co.in/branding.html</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.flexlab.co.in/events.html</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.flexlab.co.in/gifting.html</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.flexlab.co.in/social.html</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.flexlab.co.in/digital.html</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-06-27</lastmod>
   </url>
   <url>
     <loc>https://www.flexlab.co.in/blvckcard.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-06-27</lastmod>
   </url>
   <url>
     <loc>https://www.flexlab.co.in/contact.html</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-06-27</lastmod>
   </url>
 </urlset>
